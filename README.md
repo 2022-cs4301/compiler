@@ -1,2 +1,2 @@
 # compiler
-Compiler project for Algorithmic Languages and COmpilers — Fall 2022
+Compiler project for Algorithmic Languages and Compilers — Fall 2022
