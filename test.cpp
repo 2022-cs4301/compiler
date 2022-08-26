@@ -4,14 +4,14 @@
 #define MAX 100
 int tmp[MAX] = {};
 int* brr;
-void merge(int arr[], int, int);
-void mergeSort(int arr[], int, int);
+void merge(int[], int, int);
+void mergeSort(int[], int, int);
 
 
 
 int main()
 {
-    
+
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(NULL);
     std::cout.tie(NULL);
@@ -19,26 +19,25 @@ int main()
 
     std::cout << "Welcome to CS 4301!\n";
     std::cout << "This is going to be fun!\n";
-    Kim testThis;
 
 
     int testnum;
 
-    std::cout << "How many numbers you would like to put? : "; 
+    std::cout << "How many numbers you would like to put? : ";
     std::cin >> testnum;
 
-   brr = new int[testnum];
+    brr = new int[testnum];
 
-    for(int i = 0; i < testnum; i++)
+    for (int i = 0; i < testnum; i++)
     {
         std::cin >> brr[i];
     }
 
-    mergeSort(brr, 0, testnum-1);
+    mergeSort(brr, 0, testnum - 1);
 
     std::cout << "Here are MergeSorted numbers : ";
-    
-    for(int i = 0; i < testnum; i++)
+
+    for (int i = 0; i < testnum; i++)
     {
         std::cout << brr[i] << " ";
     }
@@ -48,37 +47,37 @@ int main()
 
 void merge(int arr[], int low, int mid, int high)
 {
-    int i = low, j = mid+1, k = 0;
-    while(i <= mid && j <= high)
+    int i = low, j = mid + 1, k = 0;
+    while (i <= mid && j <= high)
     {
-        if(arr[i] <= arr[j])
+        if (arr[i] <= arr[j])
         {
             tmp[k] = arr[i];
-            ++i,++k;
+            ++i, ++k;
         }
         else
         {
             tmp[k] = arr[j];
-            ++j,++k;
+            ++j, ++k;
         }
     }
 
-    while(i <= mid)
+    while (i <= mid)
     {
         tmp[k] = arr[i];
-        ++i,++k;
+        ++i, ++k;
     }
 
-    while(j <= high)
+    while (j <= high)
     {
         tmp[k] = arr[j];
-        ++j,++k;
+        ++j, ++k;
     }
     k--;
 
-    while(k>=0)
+    while (k >= 0)
     {
-        arr[low+k] = tmp[k];
+        arr[low + k] = tmp[k];
         k--;
     }
 
@@ -87,16 +86,16 @@ void merge(int arr[], int low, int mid, int high)
 
 void mergeSort(int arr[], int low, int high)
 {
-    int mid = (low+high)/2;
+    int mid = (low + high) / 2;
 
-    if(low < high)
+    if (low < high)
     {
-        mergeSort(arr,low,mid);
-        mergeSort(arr,mid+1,high);
-        merge(arr,low,mid,high);
+        mergeSort(arr, low, mid);
+        mergeSort(arr, mid + 1, high);
+        merge(arr, low, mid, high);
     }
     else
-    return;
+        return;
 }
 
 class Kim
@@ -110,7 +109,7 @@ public:
     {
         m_ID = 0;
     }
-    
+
     Kim(int id)
     {
         SetID(id);
@@ -125,7 +124,7 @@ public:
     {
         return m_ID;
     }
-    
+
     void printThis()
     {
         std::cout << this;
