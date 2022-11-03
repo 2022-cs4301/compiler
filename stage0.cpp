@@ -5,6 +5,8 @@
 #include <ctime>
 #include <cstring>
 
+# A test comment!
+
 Compiler::Compiler(char **argv)
 {
   sourceFile.open(argv[ 1 ]);
