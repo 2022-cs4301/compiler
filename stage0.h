@@ -11,8 +11,8 @@ using namespace std;
 const char END_OF_FILE = '$';
 
 enum storeTypes { INTEGER, BOOLEAN, PROG_NAME };
-enum modes { VARIABLE, CONSTANT }
-enum allocation { YES, NO }
+enum modes { VARIABLE, CONSTANT };
+enum allocation { YES, NO };
 
 class SymbolTableEntry
 {
@@ -58,7 +58,7 @@ public:
     return units;
   }
 
-  void setInternalNamme(string s)
+  void setInternalName(string s)
   {
     internalName = s;
   }
