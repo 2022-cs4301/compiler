@@ -6,8 +6,6 @@
 #include <ctime>
 #include <cstring>
 
-// Test comment by Jeff
-
 Compiler::Compiler(char **argv)
 {
   sourcFile.open(argv[ 1 ]);
