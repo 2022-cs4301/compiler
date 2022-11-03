@@ -6,6 +6,10 @@ Jeff Caldwell
 Kangmin Kim
 
 
+# Lecture references
+## First look at project
+Week 9, October 20, 50:00
+
 # Notes
 
 _Check lecture from November 3, 2022 — Dr Motl talks about the need to patch something that's not in the pseudocode._
