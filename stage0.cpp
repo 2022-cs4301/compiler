@@ -5,7 +5,7 @@
 #include <ctime>
 #include <cstring>
 
-# A test comment!
+aaaa
 
 Compiler::Compiler(char **argv)
 {
