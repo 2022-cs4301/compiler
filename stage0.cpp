@@ -312,6 +312,9 @@ string Compiler::ids() //token should be NON_KEY_ID
 /** TYPE CHECKING FUNCTIONS **/
 bool Compiler::isKeyword(string s) const // - Jeff
 {
+
+  // instead of using a crazy, long string of conditional operators (||),
+  // just make an array and loop through that
   string keywords[ 23 ] = {
     "program", "const", "var",
     "integer", "boolean", "begin",
@@ -335,7 +338,7 @@ bool Compiler::isKeyword(string s) const // - Jeff
   return false;
 }
 
-bool Compiler::isSpecialSymbol(char c) const // - Jeff
+bool Compiler::isSpecialSymbol(char c) const // - Jeff - all the tests need to be done!
 {
   char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.', '*', '<', '>', '(', ')'};
 
@@ -370,7 +373,7 @@ bool Compiler::isBoolean(string s) const // Jeff - (better test this one!)
   return s == "true" || "false";
 }
 
-bool Compiler::isLiteral(string s) const // Jeff
+bool Compiler::isLiteral(string s) const // Test me! - Jeff
 {
   if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-')
   {
@@ -380,7 +383,7 @@ bool Compiler::isLiteral(string s) const // Jeff
   return false;
 }
 
-bool Compiler::isNonKeyId(string s) const // Jeff
+bool Compiler::isNonKeyId(string s) const // Test me! - Jeff
 {
   if (!isInteger(s) && !isKeyword(s) && !isSpecialSymbol(s[ 0 ]))
   {
@@ -452,7 +455,6 @@ void Compiler::insert(
 // Needs testing! - Jeff
 storeTypes Compiler::whichType(string name) //tells which data type a name has
 {
-  map<string, SymbolTableEntry>::iterator i = symbolTable.find(name);
   storeTypes type;
 
   if (isLiteral(name))
@@ -468,13 +470,13 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
   }
   else //name is an identifier and hopefully a constant
   {
-    if (i != symbolTable.end())
+    if (symbolTable.find(name) != symbolTable.end())
     {
-      type = i->second.getDataType();
+      type = symbolTable.find(name)->second.getDataType();
     }
     else
     {
-      processError("reference to undefined constant");
+      processError("variable " + name + " is undefined");
     }
   }
   return type;
@@ -483,7 +485,6 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
 // needs work and testing! - Jeff
 string Compiler::whichValue(string name) //tells which value a name has
 {
-  map<string, SymbolTableEntry>::iterator i = symbolTable.find(name);
   string value;
 
   if (isLiteral(name))
@@ -493,13 +494,13 @@ string Compiler::whichValue(string name) //tells which value a name has
 
   else //name is an identifier and hopefully a constant
   {
-    if (i != symbolTable.end() && i->second.getValue() != "")
+    if (symbolTable.find(name) != symbolTable.end())
     {
-      value = i->second.getValue();
+      value = symbolTable.at(name).getValue();
     }
     else
     {
-      processError("reference to undefined constant");
+      processError("constant " + name + " is undefined");
     }
   }
   return value;
