@@ -291,7 +291,7 @@ string Compiler::ids() //token should be NON_KEY_ID
 {
   string temp, tempString;
 
-  if (token is not a NON_KEY_ID)
+  if (!isNonKeyId(token))
   {
     processError("non-keyword identifier expected");
   }
@@ -301,19 +301,19 @@ string Compiler::ids() //token should be NON_KEY_ID
 
   if (nextToken() == ",")
   {
-    if (nextToken() is not a NON_KEY_ID)
+    if (!isNonKeyId(nextToken()))
     {
       processError("non-keyword identifier expected");
     }
 
     tempString = temp + "," + ids();
   }
-  return tempString
+  return tempString;
 }
 
 void Compiler::insert(
   string externalName,
-  storeType inType,
+  storeTypes inType,
   modes inMode,
   string inValue,
   allocation inAlloc,
