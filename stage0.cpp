@@ -430,39 +430,48 @@ void Compiler::insert(
   }
 }
 
+// Needs testing! - Jeff
 storeTypes Compiler::whichType(string name) //tells which data type a name has
 {
-  if (name is a literal)
+  map<string, SymbolTableEntry>::iterator i = symbolTable.find(name);
+  storeTypes type;
+
+  if (isLiteral(name))
   {
-    if (name is a boolean literal)
+    if (isBoolean(name))
     {
-      data type = BOOLEAN;
+      type = BOOLEAN;
     }
     else
     {
-      data type = INTEGER;
+      type = INTEGER;
     }
   }
   else //name is an identifier and hopefully a constant
   {
-    if (symbolTable[ name ] is defined)
+    if (symbolTable.find(name) != symbolTable.end())
     {
-      data type = type of symbolTable[ name ];
+      type = i->second.getDataType();
     }
     else
     {
       processError("reference to undefined constant");
     }
   }
-  return data type;
+  return type;
 }
 
+
+// needs work (and probably a symbol table!)
 string Compiler::whichValue(string name) //tells which value a name has
 {
-  if (name is a literal)
+  string value;
+
+  if (isLiteral(name))
   {
     value = name;
   }
+
   else //name is an identifier and hopefully a constant
   {
     if (symbolTable[ name ] is defined and has a value)
