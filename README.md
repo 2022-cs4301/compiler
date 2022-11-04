@@ -18,7 +18,7 @@ Week 9, October 20, 50:00
 - Symbol table entries will be stored as maps
   - key will be the name the user has given to the symbol (external name)
   - value: internal name, data type, data mode, value, allocation, units
-    - Values added during `insert statement`
+    - Values added during `insert statement` in `progStmt`
 # Notes
 
 The focus of Stage 0 is just the _declaration of our data_.

@@ -111,12 +111,12 @@ public:
   //Note/Jeff: I'm using full words instead of Motl's
   // abbreviated forms to make things easier to read.
   void prog();
-  void progStatement();
+  void progStmt();
   void consts();
   void vars();
-  void beginEndStatement();
-  void constStatements();
-  void varStatements();
+  void beginEndStmt();
+  void constStmts();
+  void varStmts();
   string ids();
 
   // Helper functions for Pascallite lexicon
