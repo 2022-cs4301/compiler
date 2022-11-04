@@ -403,30 +403,50 @@ void Compiler::insert(
   //Multiple inserted names are illegal
 {
   string name;
-  string::iterator i = externalName.begin();
+  uint i;
 
-  // while (name broken from list of external names and put into name != "")
-  // {
-  //   if (symbolTable[ name ] is defined)
-  //   {
-  //     processError("multiple name definition");
-  //   }
-  //   else if (name is a keyword)
-  //   {
-  //     processError("illegal use of keyword")
-  //   }
-  //   else //create table entry
-  //   {
-  //     if (name begins with uppercase)
-  //     {
-  //       symbolTable[ name ] = (name, inType, inMode, inValue, inAlloc, inUnits);
-  //     }
-  //     else
-  //     {
-  //       symbolTable[ name ] = (genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits);
-  //     }
-  //   }
-  // }
+  while (i < externalName.length())
+  {
+    name = "";
+
+    while (i < externalName.length() && externalName[ i ] != ',')
+    {
+      name = name + externalName[ i ];
+      i++;
+    }
+
+    if (!name.empty())
+    {
+      name = name.substr(0, 15);
+
+      if (symbolTable.find(name) != symbolTable.end())
+      {
+        processError("symbol " + name + " is defined multiple times");
+      }
+      else if (isKeyword(name))
+      {
+        processError("illegal use of " + name + " keyword"); // do we need to look out for booleans?
+      }
+      else
+      {
+        if (isupper(name[ 0 ]))
+        {
+          symbolTable.insert({name, SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
+        }
+        else
+        {
+          symbolTable.insert({name, SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
+        }
+      }
+    }
+
+    if (symbolTable.size() > 256)
+    {
+      processError("symbol table overflow");
+    }
+
+    i++;
+  }
 }
 
 // Needs testing! - Jeff
