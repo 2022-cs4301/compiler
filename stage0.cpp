@@ -180,19 +180,21 @@ void Compiler::constStmts() //token should be NON_KEY_ID
 
   if (nextToken() != "=")
   {
-    processError("=" expected)
+    processError("\"=\" expected");
   }
 
   y = nextToken();
 
-  if (y is not one of "+", "-", "not", NON_KEY_ID, "true", "false", INTEGER)
+  if (y != "+" && y != "-" && y != "not" && !(isNonKeyId(y)) && !(isBoolean(y)) && !(isInteger(y)))
   {
     processError("token to right of \"=\" illegal");
   }
 
-  if (y is one of "+", "-")
+  if (y == "+" || y == "-")
   {
-    if (nextToken() is not an INTEGER)
+    string next = nextToken();
+
+    if (!isInteger(next))
     {
       processError("integer expected after sign");
     }
@@ -201,9 +203,11 @@ void Compiler::constStmts() //token should be NON_KEY_ID
 
   if (y == "not")
   {
-    if (nextToken() != "BOOLEAN")
+    string next = nextToken();
+
+    if (!isBoolean(next))
     {
-      processError("boolean expected after \"not\");
+      processError("boolean expected after \"not\"");
     }
 
     if (token == "true")
@@ -215,13 +219,14 @@ void Compiler::constStmts() //token should be NON_KEY_ID
     }
   }
 
-  /**  */
-
   if (nextToken() != ";")
   {
     processError("semicolon expected");
   }
-  if (the data type of y is not INTEGER or BOOLEAN)
+
+  storeTypes currentType = whichType(y);
+
+  if (currentType != INTEGER && currentType != BOOLEAN)
   {
     processError("data type of token on the right - hand side must be INTEGER or BOOLEAN");
   }
@@ -230,12 +235,12 @@ void Compiler::constStmts() //token should be NON_KEY_ID
 
   x = nextToken();
 
-  if (x is not one of "begin", "var", NON_KEY_ID)
+  if (x != "begin" && x != "var" && !(isNonKeyId(x)))
   {
-    processError(non - keyword identifier, "begin", or "var" expected)
+    processError("non - keyword identifier, \"begin\", or \"var\" expected");
   }
 
-  if (x is a NON_KEY_ID)
+  if (isNonKeyId(x))
   {
     constStmts();
   }
