@@ -311,6 +311,49 @@ string Compiler::ids() //token should be NON_KEY_ID
   return tempString;
 }
 
+/** TYPE CHECKING FUNCTIONS **/
+bool Compiler::isKeyword(string s) const // - Jeff
+{
+  string keywords[ 23 ] = {
+    "program", "const", "var",
+    "integer", "boolean", "begin",
+    "end", "true", "false",
+    "not", "mod", "div", "and",
+    "or", "read", "write", "if",
+    "then", "else", "while",
+    "do", "repeat", "until"
+  };
+
+  int len = *(&keywords + 1) - keywords;
+
+  for (int i = 0; i < len; i++)
+  {
+    if (keywords[ i ] == s)
+    {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+bool Compiler::isSpecialSymbol(char c) const // - Jeff
+{
+  char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.', '*', '<', '>', '(', ')'};
+
+  int len = *(&symbols + 1) - symbols;
+
+  for (int i = 0; i < len; i++)
+  {
+    if (symbols[ i ] == c)
+    {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 void Compiler::insert(
   string externalName,
   storeTypes inType,
