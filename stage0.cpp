@@ -213,7 +213,8 @@ void Compiler::constStmts() //token should be NON_KEY_ID
     if (token == "true")
     {
       y = "false";
-    } else
+    }
+    else
     {
       y = "true";
     }
@@ -354,6 +355,44 @@ bool Compiler::isSpecialSymbol(char c) const // - Jeff
   return false;
 }
 
+bool Compiler::isInteger(string s) const // Jeff - (needs testing)
+{
+  for (int i = 0; i < s.length(); i++)
+  {
+    if (!isdigit(s[ i ]))
+    {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool Compiler::isBoolean(string s) const // Jeff - (better test this one!)
+{
+  return s == "true" || "false";
+}
+
+bool Compiler::isLiteral(string s) const // Jeff
+{
+  if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-')
+  {
+    return true;
+  }
+
+  return false;
+}
+
+bool Compiler::isNonKeyId(string s) const // Jeff
+{
+  if (!isInteger(s) && !isKeyword(s) && !isSpecialSymbol(s[ 0 ]))
+  {
+    return true;
+  }
+
+  return false;
+}
+
 void Compiler::insert(
   string externalName,
   storeTypes inType,
@@ -370,15 +409,18 @@ void Compiler::insert(
     if (symbolTable[ name ] is defined)
     {
       processError("multiple name definition");
-    } else if (name is a keyword)
+    }
+    else if (name is a keyword)
     {
       processError("illegal use of keyword")
-    } else //create table entry
+    }
+    else //create table entry
     {
       if (name begins with uppercase)
       {
         symbolTable[ name ] = (name, inType, inMode, inValue, inAlloc, inUnits);
-      } else
+      }
+      else
       {
         symbolTable[ name ] = (genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits);
       }
@@ -393,16 +435,19 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
     if (name is a boolean literal)
     {
       data type = BOOLEAN;
-    } else
+    }
+    else
     {
       data type = INTEGER;
     }
-  } else //name is an identifier and hopefully a constant
+  }
+  else //name is an identifier and hopefully a constant
   {
     if (symbolTable[ name ] is defined)
     {
       data type = type of symbolTable[ name ];
-    } else
+    }
+    else
     {
       processError("reference to undefined constant");
     }
@@ -415,12 +460,14 @@ string Compiler::whichValue(string name) //tells which value a name has
   if (name is a literal)
   {
     value = name;
-  } else //name is an identifier and hopefully a constant
+  }
+  else //name is an identifier and hopefully a constant
   {
     if (symbolTable[ name ] is defined and has a value)
     {
       value = value of symbolTable[ name ];
-    } else
+    }
+    else
     {
       processError("reference to undefined constant");
     }
@@ -433,10 +480,12 @@ void Compiler::code(string op, string operand1, string operand2)
   if (op == "program")
   {
     emitPrologue(operand1);
-  } else if (op == "end")
+  }
+  else if (op == "end")
   {
     emitEpilogue();
-  } else
+  }
+  else
   {
     processError("compiler error since function code should not be called with illegal arguments");
   }
@@ -493,7 +542,8 @@ string Compiler::nextToken() //returns the next token or end of file marker
         if (ch == END_OF_FILE)
         {
           processError("unexpected end of file");
-        } else
+        }
+        else
         {
           nextChar();
         }
@@ -539,7 +589,8 @@ string Compiler::nextToken() //returns the next token or end of file marker
     if (sourceFile.eof())
     {
       ch = END_OF_FILE;
-    } else
+    }
+    else
     {
       ch = next character;
     }
