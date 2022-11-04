@@ -28,7 +28,6 @@ void Compiler::createListingHeader()
   char* currentTime = ctime(&now);
   cout << "STAGE0\t Jeff Caldwell and Kangmin Kim," << time << "\n\n";
   cout << "LINE NO:\t\t\t\t" << "SOURCE STATEMENT\n\n";
-
 }
 
 void Compiler::parser()
@@ -59,6 +58,8 @@ void Compiler::processError(string error)
   exit(0);
 }
 
+/** PRODUCTIONS **/
+
 void Compiler::prog()           // stage 0, production 1
 {
   if (token != "program")
@@ -66,10 +67,12 @@ void Compiler::prog()           // stage 0, production 1
     processError("keyword \"program\" expected");
     progStmt();
   }
+
   if (token == "const")
   {
-    consts()
+    consts();
   }
+
   if (token == "var")
   {
     vars();
@@ -80,6 +83,7 @@ void Compiler::prog()           // stage 0, production 1
     processError("keyword \"begin\" expected");
     beginEndStmt();
   }
+
   if (token != END_OF_FILE)
   {
     processError("no text may follow \"end\"");
@@ -91,7 +95,7 @@ void Compiler::progStmt()       // token should be program
   if (token != "program")
   {
     processError("keyword \"program\" expected");
-    x = NextToken();
+    x = nextToken();
 
   }
 
@@ -130,6 +134,8 @@ void Compiler::vars() //token should be "var"
     processError("keyword \"var\" expected");
   }
 
+  string tkn = nextToken();
+
   if (nextToken() is not a NON_KEY_ID)
   {
     processError("non-keyword identifier must follow \"var\"");
@@ -141,20 +147,23 @@ void Compiler::beginEndStmt() //token should be "begin"
 {
   if (token != "begin")
   {
-    procesError("keyword \"begin\" expected");
+    processError("keyword \"begin\" expected");
   }
 
-  if (nextToken() != "end")
+  string tkn = nextToken();
+
+  if (tkn != "end")
   {
     processError("keyword \"end\" expected");
   }
 
-  if (nextToken() != ".")
+  if (tkn != ".")
   {
     processError("period expected");
   }
 
-  nextToken();
+  tkn = nextToken();
+
   code("end", ".");
 }
 
@@ -192,19 +201,21 @@ void Compiler::constStmts() //token should be NON_KEY_ID
 
   if (y == "not")
   {
-    if (nextToken() is not a BOOLEAN)
+    if (nextToken() != "BOOLEAN")
     {
-      processError("boolean expected after \“not\”);
+      processError("boolean expected after \"not\");
     }
 
     if (token == "true")
     {
-      y = "false"
+      y = "false";
     } else
     {
-      y = "true"
+      y = "true";
     }
   }
+
+  /**  */
 
   if (nextToken() != ";")
   {
@@ -473,8 +484,11 @@ string Compiler::nextToken() //returns the next token or end of file marker
 
   char Compiler::nextChar() //returns the next character or end of file marker
   {
+    // get the next character
+    sourceFile.get(ch);
+
     // read in next character
-    if (end of file)
+    if (sourceFile.eof())
     {
       ch = END_OF_FILE;
     } else

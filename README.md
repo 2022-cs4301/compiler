@@ -9,6 +9,16 @@ Kangmin Kim
 ## First look at project
 Week 9, October 20, 50:00
 
+## Producing two other files
+- Listing file
+- Object file
+- Errors should be printed to listing file and compilation should stop
+  - Motl says "You should find that first error and stop"
+
+- Symbol table entries will be stored as maps
+  - key will be the name the user has given to the symbol (external name)
+  - value: internal name, data type, data mode, value, allocation, units
+    - Values added during `insert statement`
 # Notes
 
 The focus of Stage 0 is just the _declaration of our data_.
