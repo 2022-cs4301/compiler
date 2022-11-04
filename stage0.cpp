@@ -84,7 +84,7 @@ void Compiler::prog()           // stage 0, production 1
     beginEndStmt();
   }
 
-  if (token != END_OF_FILE)
+  if (token[ 0 ] != END_OF_FILE)
   {
     processError("no text may follow \"end\"");
   }
@@ -92,14 +92,15 @@ void Compiler::prog()           // stage 0, production 1
 
 void Compiler::progStmt()       // token should be program
 {
+  string x;
+
   if (token != "program")
   {
     processError("keyword \"program\" expected");
     x = nextToken();
-
   }
 
-  if (token is not a NON_KEY_ID)
+  if (!isNonKeyId(token))
   {
     processError("program name expected");
   }
@@ -118,9 +119,9 @@ void Compiler::consts() //token should be "const"
 {
   if (token != "const")
   {
-    processError("keyword "\const\" expected");
+    processError("keyword \"const\" expected");
   }
-  if (nextToken() is not a NON_KEY_ID)
+  if (!isNonKeyId(nextToken()))
   {
     processError("non-keyword identifier must follow \"const\"");
   }
@@ -134,9 +135,7 @@ void Compiler::vars() //token should be "var"
     processError("keyword \"var\" expected");
   }
 
-  string tkn = nextToken();
-
-  if (nextToken() is not a NON_KEY_ID)
+  if (!isNonKeyId(nextToken()))
   {
     processError("non-keyword identifier must follow \"var\"");
   }
@@ -150,19 +149,17 @@ void Compiler::beginEndStmt() //token should be "begin"
     processError("keyword \"begin\" expected");
   }
 
-  string tkn = nextToken();
-
-  if (tkn != "end")
+  if (nextToken() != "end")
   {
     processError("keyword \"end\" expected");
   }
 
-  if (tkn != ".")
+  if (nextToken() != ".")
   {
     processError("period expected");
   }
 
-  tkn = nextToken();
+  nextToken();
 
   code("end", ".");
 }
@@ -171,7 +168,7 @@ void Compiler::constStmts() //token should be NON_KEY_ID
 {
   string x, y;
 
-  if (token is not a NON_KEY_ID)
+  if (!isNonKeyId(token))
   {
     processError("non-keyword identifier expected");
   }
