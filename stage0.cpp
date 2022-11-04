@@ -21,6 +21,13 @@ Compiler::~Compiler()
 
 void Compiler::createListingHeader()
 {
+  // print "STAGE0:", name(s), DATE, TIME OF DAY
+  // print "LINE NO:", "SOURCE STATEMENT"
+  //line numbers and source statements should be aligned under the headings
+  time_t now = time(0);
+  char* currentTime = ctime(&now);
+  cout << "STAGE0\t Jeff Caldwell and Kangmin Kim," << time << "\n\n";
+  cout << "LINE NO:\t\t\t\t" << "SOURCE STATEMENT\n\n";
 
 }
 
