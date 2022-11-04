@@ -11,6 +11,8 @@ Week 9, October 20, 50:00
 
 # Notes
 
+The focus of Stage 0 is just the _declaration of our data_.
+
 _We have the benefit of being in very different time zones! One of us can be working on the project at almost all times this weekend._
 
 _Check the lecture from November 3, 2022 — Dr. Motl talks about the need to patch something that's not in the pseudocode._
