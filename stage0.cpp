@@ -449,7 +449,7 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
   }
   else //name is an identifier and hopefully a constant
   {
-    if (symbolTable.find(name) != symbolTable.end())
+    if (i != symbolTable.end())
     {
       type = i->second.getDataType();
     }
@@ -462,9 +462,10 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
 }
 
 
-// needs work (and probably a symbol table!)
+// needs work and testing! - Jeff
 string Compiler::whichValue(string name) //tells which value a name has
 {
+  map<string, SymbolTableEntry>::iterator i = symbolTable.find(name);
   string value;
 
   if (isLiteral(name))
@@ -474,9 +475,9 @@ string Compiler::whichValue(string name) //tells which value a name has
 
   else //name is an identifier and hopefully a constant
   {
-    if (symbolTable[ name ] is defined and has a value)
+    if (i != symbolTable.end() && i->second.getValue() != "")
     {
-      value = value of symbolTable[ name ];
+      value = i->second.getValue();
     }
     else
     {
