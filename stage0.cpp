@@ -37,7 +37,7 @@ void Compiler::parser()
   //ch must be initialized to the first character of the source file
   if (nextToken() != "program")
   {
-    // processError(keyword "program" expected);
+    processError("keyword \"program\" expected");
   }
   // a call to nextToken() has two effects
   // (1) the variable, token, is assigned the value of the next token
@@ -53,13 +53,13 @@ void Compiler::createListingTrailer()
   cout << "COMPILATION TERMINATED, # ERRORS ENCOUNTERED\n";
 }
 
-void processError(string error)
+void Compiler::processError(string error)
 {
   ofstream cout("error has occured");
   exit(0);
 }
 
-void prog()           // stage 0, production 1
+void Compiler::prog()           // stage 0, production 1
 {
   if (token != "program")
   {
@@ -86,7 +86,7 @@ void prog()           // stage 0, production 1
   }
 }
 
-void progStmt()       // token should be program
+void Compiler::progStmt()       // token should be program
 {
   if (token != "program")
   {
@@ -110,7 +110,7 @@ void progStmt()       // token should be program
   insert(x, PROG_NAME, CONSTANT, x, NO, 0);
 }
 
-void consts() //token should be "const"
+void Compiler::consts() //token should be "const"
 {
   if (token != "const")
   {
@@ -123,7 +123,7 @@ void consts() //token should be "const"
   constStmts();
 }
 
-void vars() //token should be "var"
+void Compiler::vars() //token should be "var"
 {
   if (token != "var")
   {
@@ -137,7 +137,7 @@ void vars() //token should be "var"
   varStmts();
 }
 
-void beginEndStmt() //token should be "begin"
+void Compiler::beginEndStmt() //token should be "begin"
 {
   if (token != "begin")
   {
@@ -158,7 +158,7 @@ void beginEndStmt() //token should be "begin"
   code("end", ".");
 }
 
-void constStmts() //token should be NON_KEY_ID
+void Compiler::constStmts() //token should be NON_KEY_ID
 {
   string x, y;
 
@@ -230,7 +230,7 @@ void constStmts() //token should be NON_KEY_ID
   }
 }
 
-void varStmts() //token should be NON_KEY_ID
+void Compiler::varStmts() //token should be NON_KEY_ID
 {
   string x, y;
 
@@ -271,7 +271,7 @@ void varStmts() //token should be NON_KEY_ID
   }
 }
 
-string ids() //token should be NON_KEY_ID
+string Compiler::ids() //token should be NON_KEY_ID
 {
   string temp, tempString;
 
@@ -295,7 +295,7 @@ string ids() //token should be NON_KEY_ID
   return tempString
 }
 
-void insert(
+void Compiler::insert(
   string externalName,
   storeType inType,
   modes inMode,
@@ -327,7 +327,7 @@ void insert(
   }
 }
 
-storeTypes whichType(string name) //tells which data type a name has
+storeTypes Compiler::whichType(string name) //tells which data type a name has
 {
   if (name is a literal)
   {
@@ -351,7 +351,7 @@ storeTypes whichType(string name) //tells which data type a name has
   return data type;
 }
 
-string whichValue(string name) //tells which value a name has
+string Compiler::whichValue(string name) //tells which value a name has
 {
   if (name is a literal)
   {
@@ -369,7 +369,7 @@ string whichValue(string name) //tells which value a name has
   return value;
 }
 
-void code(string op, string operand1, string operand2)
+void Compiler::code(string op, string operand1, string operand2)
 {
   if (op == "program")
   {
@@ -383,7 +383,7 @@ void code(string op, string operand1, string operand2)
   }
 }
 
-void emit(string label, string instruction, string operands, string comment)
+void Compiler::emit(string label, string instruction, string operands, string comment)
 {
   Turn on left justification in objectFile
     Output label in a field of width 8
@@ -392,7 +392,7 @@ void emit(string label, string instruction, string operands, string comment)
     Output the comment
 }
 
-void emitPrologue(string progName, string operand2)
+void Compiler::emitPrologue(string progName, string operand2)
 {
   Output identifying comments at beginning of objectFile
     Output the %INCLUDE directives
@@ -401,13 +401,13 @@ void emitPrologue(string progName, string operand2)
     emit("_start:")
 }
 
-void emitEpilogue(string operand1, string operand2)
+void Compiler::emitEpilogue(string operand1, string operand2)
 {
   emit("", "Exit", "{0}");
   emitStorage();
 }
 
-void emitStorage()
+void Compiler::emitStorage()
 {
   emit("SECTION", ".data")
     for those entries in the symbolTable that have
@@ -419,7 +419,7 @@ void emitStorage()
       {call emit to output a line to objectFile}
 }
 
-string nextToken() //returns the next token or end of file marker
+string Compiler::nextToken() //returns the next token or end of file marker
 {
   token = "";
   while (token == "")
@@ -471,7 +471,7 @@ string nextToken() //returns the next token or end of file marker
     return token;
   }
 
-  char nextChar() //returns the next character or end of file marker
+  char Compiler::nextChar() //returns the next character or end of file marker
   {
     // read in next character
     if (end of file)
