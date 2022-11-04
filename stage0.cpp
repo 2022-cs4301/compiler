@@ -250,7 +250,7 @@ void Compiler::varStmts() //token should be NON_KEY_ID
 {
   string x, y;
 
-  if (token is not a NON_KEY_ID)
+  if (!(isNonKeyId(token)))
   {
     processError("non-keyword identifier expected");
   }
@@ -262,7 +262,7 @@ void Compiler::varStmts() //token should be NON_KEY_ID
     processError("\":\" expected");
   }
 
-  if (nextToken() is not one of "integer", "boolean")
+  if (nextToken() != "integer" && nextToken() != "boolean")
   {
     processError("illegal type follows \":\"");
   }
@@ -274,14 +274,14 @@ void Compiler::varStmts() //token should be NON_KEY_ID
     processError("semicolon expected");
   }
 
-  insert(x, y, VARIABLE, "", YES, 1);
+  insert(x, INTEGER, VARIABLE, "1", YES, 1);
 
-  if (nextToken() is not one of "begin", NON_KEY_ID)
+  if (nextToken() != "begin" && !(isNonKeyId(nextToken())))
   {
     processError("non - keyword identifier or \"begin\" expected");
   }
 
-  if (token is a NON_KEY_ID)
+  if (isNonKeyId(token))
   {
     varStmts();
   }
