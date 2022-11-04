@@ -549,54 +549,81 @@ string Compiler::nextToken() //returns the next token or end of file marker
   token = "";
   while (token == "")
   {
-    switch (ch)
     {
-      case '{': //process comment
-        while (nextChar() != END_OF_FILE && nextChar() != '}')
+      if (ch == '{')
+      {
+        while (nextChar() && ch != END_OF_FILE && ch != '}')
         {
-        } //empty body
+        }	// do nothing, just skip the words
 
         if (ch == END_OF_FILE)
-        {
           processError("unexpected end of file");
-        }
         else
-        {
           nextChar();
-        }
+      }
 
-      case '}':
+      else if (ch == '}')
         processError("'}' cannot begin token");
-        break;
 
-      case isspace(ch):
+      else if (isspace(ch))
         nextChar();
-        break;
-      case isSpecialSymbol(ch):
+
+      else if (isSpecialSymbol(ch))
+      {
         token = ch;
         nextChar();
-        break;
-      case islower(ch):
-        token = ch;
-        break;
-      case isdigit(ch):
-        while (isdigit(ch) && ch != END_OF_FILE)
+
+        // token now represent the first char in operators
+        // ch represent the second one
+        if (token == ":" && ch == '=')
         {
           token += ch;
+          nextChar();
         }
+        else if (token == "<" && (ch == '>' || ch == '='))
+        {
+          token += ch;
+          nextChar();
+        }
+        else if (token == ">" && ch == '=')
+        {
+          token += ch;
+          nextChar();
+        }
+      }
+
+      else if (islower(ch))
+      {
+        token += ch;
+
+        while (nextChar() && ((islower(ch) || isdigit(ch) || ch == '_')
+          && ch != END_OF_FILE))
+          token += ch;
 
         if (ch == END_OF_FILE)
-        {
           processError("unexpected end of file");
-        }
+      }
 
-        break;
-      case END_OF_FILE:
+      else if (isdigit(ch))
+      {
         token = ch;
-        break;
-      default:
+
+        // build up the number or characters
+        while (isdigit(nextChar()) && ch != END_OF_FILE
+          && !isSpecialSymbol(ch))
+          token += ch;
+
+        if (ch == END_OF_FILE)
+          processError("unexpected end of file");
+      }
+
+      else if (ch == END_OF_FILE)
+        token = ch;
+
+      else
         processError("illegal symbol");
     }
+
     return token;
   }
 }
@@ -606,16 +633,21 @@ char Compiler::nextChar() //returns the next character or end of file marker
   // get the next character
   sourceFile.get(ch);
 
-  // read in next character
+  static char prevChar = '\n';
+
   if (sourceFile.eof())
   {
     ch = END_OF_FILE;
+    return ch;
   }
   else
   {
-    ch = nextChar();
+    if (prevChar == '\n')
+      listingFile << setw(5) << ++lineNo << '|';
+
+    listingFile << ch;
   }
 
-  print to listing file;
+  prevChar = ch;
   return ch;
 }
