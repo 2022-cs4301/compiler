@@ -130,6 +130,7 @@ public:
   // Action routines
   void insert(string externalName, storeTypes inType, modes inMode, string inValue, allocation inAlloc, int inUnits);
   storeTypes whichType(string name);
+  string whichValue(string name);
   void code(string op, string operand1 = ", string operand2 = ");
 
   // Emit functions
@@ -143,7 +144,7 @@ public:
   string nextToken(); // Returns next token or END_OF_FILE marker
 
   // Other
-  string generateInternalName(storeTypes stype) const;
+  string genInternalName(storeTypes stype) const;
   void processError(string error);
 
 private:

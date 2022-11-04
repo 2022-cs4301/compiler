@@ -393,6 +393,8 @@ bool Compiler::isNonKeyId(string s) const // Jeff
   return false;
 }
 
+/** ACTION ROUTINES **/
+
 void Compiler::insert(
   string externalName,
   storeTypes inType,
@@ -490,6 +492,8 @@ void Compiler::code(string op, string operand1, string operand2)
     processError("compiler error since function code should not be called with illegal arguments");
   }
 }
+
+/** EMIT FUNCTIONS **/
 
 void Compiler::emit(string label, string instruction, string operands, string comment)
 {
