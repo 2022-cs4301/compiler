@@ -403,31 +403,33 @@ void Compiler::insert(
   allocation inAlloc,
   int inUnits)
   //create symbol table entry for each identifier in list of external names
-  //Multiply inserted names are illegal
+  //Multiple inserted names are illegal
 {
   string name;
-  while (name broken from list of external names and put into name != "")
-  {
-    if (symbolTable[ name ] is defined)
-    {
-      processError("multiple name definition");
-    }
-    else if (name is a keyword)
-    {
-      processError("illegal use of keyword")
-    }
-    else //create table entry
-    {
-      if (name begins with uppercase)
-      {
-        symbolTable[ name ] = (name, inType, inMode, inValue, inAlloc, inUnits);
-      }
-      else
-      {
-        symbolTable[ name ] = (genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits);
-      }
-    }
-  }
+  string::iterator i = externalName.begin();
+
+  // while (name broken from list of external names and put into name != "")
+  // {
+  //   if (symbolTable[ name ] is defined)
+  //   {
+  //     processError("multiple name definition");
+  //   }
+  //   else if (name is a keyword)
+  //   {
+  //     processError("illegal use of keyword")
+  //   }
+  //   else //create table entry
+  //   {
+  //     if (name begins with uppercase)
+  //     {
+  //       symbolTable[ name ] = (name, inType, inMode, inValue, inAlloc, inUnits);
+  //     }
+  //     else
+  //     {
+  //       symbolTable[ name ] = (genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits);
+  //     }
+  //   }
+  // }
 }
 
 // Needs testing! - Jeff
@@ -460,7 +462,6 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
   }
   return type;
 }
-
 
 // needs work and testing! - Jeff
 string Compiler::whichValue(string name) //tells which value a name has
@@ -507,20 +508,20 @@ void Compiler::code(string op, string operand1, string operand2)
 
 void Compiler::emit(string label, string instruction, string operands, string comment)
 {
-  Turn on left justification in objectFile
-    Output label in a field of width 8
-    Output instruction in a field of width 8
-    Output the operands in a field of width 24
-    Output the comment
+  // Turn on left justification in objectFile
+  //   Output label in a field of width 8
+  //   Output instruction in a field of width 8
+  //   Output the operands in a field of width 24
+  //   Output the comment
 }
 
 void Compiler::emitPrologue(string progName, string operand2)
 {
-  Output identifying comments at beginning of objectFile
-    Output the %INCLUDE directives
-    emit("SECTION", ".text")
-    emit("global", "_start", "", "; program" + progName)
-    emit("_start:")
+  // Output identifying comments at beginning of objectFile
+  //   Output the %INCLUDE directives
+  //   emit("SECTION", ".text")
+  //   emit("global", "_start", "", "; program" + progName)
+  //   emit("_start:")
 }
 
 void Compiler::emitEpilogue(string operand1, string operand2)
@@ -531,16 +532,18 @@ void Compiler::emitEpilogue(string operand1, string operand2)
 
 void Compiler::emitStorage()
 {
-  emit("SECTION", ".data")
-    for those entries in the symbolTable that have
-      an allocation of YES and a storage mode of CONSTANT
-    {call emit to output a line to objectFile}
-      emit("SECTION", ".bss")
-      for those entries in the symbolTable that have
-        an allocation of YES and a storage mode of VARIABLE
-      {call emit to output a line to objectFile}
+  // emit("SECTION", ".data")
+  //   for those entries in the symbolTable that have
+  //     an allocation of YES and a storage mode of CONSTANT
+  //   {call emit to output a line to objectFile}
+  //     emit("SECTION", ".bss")
+  //     for those entries in the symbolTable that have
+  //       an allocation of YES and a storage mode of VARIABLE
+  //     {call emit to output a line to objectFile}
 }
 
+
+// We're going to have to untangle this crazy switch statement
 string Compiler::nextToken() //returns the next token or end of file marker
 {
   token = "";
@@ -549,7 +552,7 @@ string Compiler::nextToken() //returns the next token or end of file marker
     switch (ch)
     {
       case '{': //process comment
-        while (nextChar() is not one of END_OF_FILE, '}')
+        while (nextChar() != END_OF_FILE && nextChar() != '}')
         {
         } //empty body
 
@@ -561,9 +564,11 @@ string Compiler::nextToken() //returns the next token or end of file marker
         {
           nextChar();
         }
+
       case '}':
         processError("'}' cannot begin token");
         break;
+
       case isspace(ch):
         nextChar();
         break;
@@ -574,16 +579,17 @@ string Compiler::nextToken() //returns the next token or end of file marker
       case islower(ch):
         token = ch;
         break;
-      case isDigit(ch):
-        while (nextChar is digit but not end of file)
+      case isdigit(ch):
+        while (isdigit(ch) && ch != END_OF_FILE)
         {
           token += ch;
         }
 
-        if (ch is END_OF_FILE)
+        if (ch == END_OF_FILE)
         {
           processError("unexpected end of file");
         }
+
         break;
       case END_OF_FILE:
         token = ch;
@@ -593,22 +599,23 @@ string Compiler::nextToken() //returns the next token or end of file marker
     }
     return token;
   }
+}
 
-  char Compiler::nextChar() //returns the next character or end of file marker
+char Compiler::nextChar() //returns the next character or end of file marker
+{
+  // get the next character
+  sourceFile.get(ch);
+
+  // read in next character
+  if (sourceFile.eof())
   {
-    // get the next character
-    sourceFile.get(ch);
-
-    // read in next character
-    if (sourceFile.eof())
-    {
-      ch = END_OF_FILE;
-    }
-    else
-    {
-      ch = next character;
-    }
-
-    print to listing file;
-    return ch;
+    ch = END_OF_FILE;
   }
+  else
+  {
+    ch = nextChar();
+  }
+
+  print to listing file;
+  return ch;
+}

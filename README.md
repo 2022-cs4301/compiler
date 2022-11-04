@@ -19,6 +19,38 @@ Week 9, October 20, 50:00
   - key will be the name the user has given to the symbol (external name)
   - value: internal name, data type, data mode, value, allocation, units
     - Values added during `insert statement` in `progStmt`
+_Womack gave us some scripts!_
+
+`setup.sh` and `createData.sh`
+
+To run them:
+
+```bash
+chmod 771 setup.sh
+chmod 771 createData.sh
+```
+
+"setup can be ran anywhere and will make a data folder in that directory, createData needs to be moved into the data folder and will creat a output file and diffs and what not"
+
+"Note that to use to use shell scripts after the chmod they can be activated like:"
+
+```bash
+./setup.sh
+```
+"Note that this does not make a stage0.cpp in the data folder. You need to copy or move one in there before calling createData 
+
+Also calling setup again will clean out and remake said data folder"
+
+"Also if your wondering why it says you have diffs and there's no obvious difference, instead of using"
+
+```bash
+<< "\n"
+
+Do instead 
+
+<< "\r\n"
+```
+
 # Notes
 
 The focus of Stage 0 is just the _declaration of our data_.
