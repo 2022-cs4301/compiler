@@ -63,23 +63,26 @@ string Compiler::genInternalName(storeTypes stype) const
 {
   static int B = 0;
   static int I = 0;
+  string iName;
 
   if (stype == PROG_NAME)
   {
-    return "P0";
+    iName = "P0";
   }
 
   if (stype == INTEGER)
   {
-    return "I" + to_string(I);
+    iName = "I" + to_string(I);
     I++;
   }
 
   if (stype == BOOLEAN)
   {
-    return "B" + to_string(B);
+    iName = "B" + to_string(B);
     B++;
   }
+
+  return iName;
 }
 
 /** PRODUCTIONS **/
