@@ -519,7 +519,7 @@ void Compiler::code(string op, string operand1, string operand2)
   }
   else
   {
-    processError("compiler error: function code should not be called with illegal arguments" + op);
+    processError("compiler error: function code called with illegal arguments " + op);
   }
 }
 
@@ -532,6 +532,10 @@ void Compiler::emit(string label, string instruction, string operands, string co
   //   Output instruction in a field of width 8
   //   Output the operands in a field of width 24
   //   Output the comment
+  objectFile << left << setw(8) << label;
+  objectFile << setw(8) << instruction;
+  objectFile << setw(24) << operands;
+  objectFile << setw(8) << comment;
 }
 
 void Compiler::emitPrologue(string progName, string operand2)
@@ -541,6 +545,14 @@ void Compiler::emitPrologue(string progName, string operand2)
   //   emit("SECTION", ".text")
   //   emit("global", "_start", "", "; program" + progName)
   //   emit("_start:")
+
+  time_t now = time(0);
+  objectFile << "; Kangmin Kim, Jeff Caldwell" << setw(8) << right << ctime(&now) << "\n";
+  objectFile << "%INCLUDE \"Along32.inc\"\n" << "%INCLUDE \"Macros_Along.inc\"\n\n";
+
+  emit("SECTION", ".text");
+  emit("global", "_start", "", "; program " + progName + "\n");
+  emit("_start:");
 }
 
 void Compiler::emitEpilogue(string operand1, string operand2)
@@ -551,6 +563,7 @@ void Compiler::emitEpilogue(string operand1, string operand2)
 
 void Compiler::emitStorage()
 {
+  map<string, SymbolTableEntry>::iterator i = symbolTable.begin();
   // emit("SECTION", ".data")
   //   for those entries in the symbolTable that have
   //     an allocation of YES and a storage mode of CONSTANT
@@ -559,6 +572,28 @@ void Compiler::emitStorage()
   //     for those entries in the symbolTable that have
   //       an allocation of YES and a storage mode of VARIABLE
   //     {call emit to output a line to objectFile}
+
+  emit("SECTION .data");
+
+  for (i = symbolTable.begin(); i != symbolTable.end(); i++)
+  {
+    if (i->second.getAlloc() == YES && i->second.getMode() == CONSTANT)
+    {
+      emit(i->second.getInternalName(), "dd", i->second.getValue(), "; " + i->first);
+    }
+  }
+
+  objectFile << "\n";
+  emit("SECTION", ".bss");
+
+  for (i = symbolTable.begin(); i != symbolTable.end(); i++)
+  {
+    if (i->second.getAlloc() == YES && i-> second.getMode() == VARIABLE)
+    {
+      emit(i->second.getInternalName(), "resd", i->second.getValue(), "; " + i->first);
+    }
+  }
+
 }
 
 
