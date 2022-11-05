@@ -5,3 +5,5 @@ alldifs.txt
 allouts.txt
 stage0.o
 stage0main.o
+*.lst
+*.o

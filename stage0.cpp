@@ -34,6 +34,7 @@ void Compiler::createListingHeader()
 void Compiler::parser()
 {
   nextChar();
+
   //ch must be initialized to the first character of the source file
   if (nextToken() != "program")
   {
@@ -46,17 +47,18 @@ void Compiler::parser()
   // the next token.
   prog();
   //parser implements the grammar rules, calling first rule
+  cout << "Made it to the end of parser!!\n";
 }
 
 void Compiler::createListingTrailer()
 {
   listingFile << "COMPILATION TERMINATED" << setw(6) << "" << right << errorCount << " ERRORS ENCOUNTERED\n";
+  cout << "Made it to the end of listing trailer!!\n";
 }
 
 void Compiler::processError(string error)
 {
   listingFile << "\n" << "Error: Line " << lineNo << ": " << error << "\n";
-  // ofstream cout("error has occured");
   exit(0);
 }
 
@@ -93,29 +95,34 @@ void Compiler::prog()           // stage 0, production 1
   if (token != "program")
   {
     processError("keyword \"program\" expected");
-    progStmt();
   }
+
+  progStmt();
 
   if (token == "const")
   {
     consts();
+    cout << "Made it past consts() call\n";
   }
 
   if (token == "var")
   {
     vars();
+    cout << "Made it past vars() call\n";
   }
 
   if (token != "begin")
   {
     processError("keyword \"begin\" expected");
     beginEndStmt();
+    cout << "Made it past beginEndStmt() call\n";
   }
 
   if (token[ 0 ] != END_OF_FILE)
   {
     processError("no text may follow \"end\"");
   }
+  cout << "Made it to end of prog()\n";
 }
 
 void Compiler::progStmt()       // token should be program
@@ -125,8 +132,10 @@ void Compiler::progStmt()       // token should be program
   if (token != "program")
   {
     processError("keyword \"program\" expected");
-    x = nextToken();
   }
+
+  x = nextToken();
+
 
   if (!isNonKeyId(token))
   {
@@ -160,6 +169,7 @@ void Compiler::vars() //token should be "var"
 {
   if (token != "var")
   {
+    cout << "Made it to error of vars\n";
     processError("keyword \"var\" expected");
   }
 
@@ -625,7 +635,6 @@ void Compiler::emitStorage()
 }
 
 
-// We're going to have to untangle this crazy switch statement
 string Compiler::nextToken() //returns the next token or end of file marker
 {
   token = "";
@@ -636,27 +645,33 @@ string Compiler::nextToken() //returns the next token or end of file marker
       {
         while (nextChar() && ch != END_OF_FILE && ch != '}')
         {
-        }	// do nothing, just skip the words
+        }	// empty body, skip
 
         if (ch == END_OF_FILE)
+        {
           processError("unexpected end of file");
+        }
         else
+        {
           nextChar();
+        }
       }
 
       else if (ch == '}')
+      {
         processError("'}' cannot begin token");
+      }
 
       else if (isspace(ch))
+      {
         nextChar();
+      }
 
       else if (isSpecialSymbol(ch))
       {
         token = ch;
         nextChar();
 
-        // token now represent the first char in operators
-        // ch represent the second one
         if (token == ":" && ch == '=')
         {
           token += ch;
@@ -690,22 +705,27 @@ string Compiler::nextToken() //returns the next token or end of file marker
       {
         token = ch;
 
-        // build up the number or characters
-        while (isdigit(nextChar()) && ch != END_OF_FILE
-          && !isSpecialSymbol(ch))
+        while (isdigit(nextChar()) && ch != END_OF_FILE && !isSpecialSymbol(ch))
+        {
           token += ch;
+        }
 
         if (ch == END_OF_FILE)
+        {
           processError("unexpected end of file");
+        }
       }
 
       else if (ch == END_OF_FILE)
+      {
         token = ch;
+      }
 
       else
+      {
         processError("illegal symbol");
+      }
     }
-
   }
   return token;
 }
@@ -722,11 +742,13 @@ char Compiler::nextChar() //returns the next character or end of file marker
     ch = END_OF_FILE;
     return ch;
   }
+
   else
   {
     if (prevChar == '\n')
+    {
       listingFile << setw(5) << ++lineNo << '|';
-
+    }
     listingFile << ch;
   }
 
