@@ -1,4 +1,0 @@
-program stage0no042;
-
-	const big = 17; small = -big;   {digit expected after sign}
-      begin end.

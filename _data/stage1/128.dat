@@ -1,4 +1,0 @@
-program stage1no128;
-begin
-  read(5); {non-keyword identifier expected}
-end.

@@ -1,4 +1,0 @@
-program stage0no031;
-  { smallest syntactically correct program }
-    begin
-    end.    

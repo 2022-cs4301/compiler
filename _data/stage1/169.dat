@@ -1,7 +1,0 @@
-program stage1no169;
-const w=3;x=true;
-var   a,b,c,d,e:integer;
-begin
-  read(a);
-  d := a mod x;   {binary 'mod' requires integer operands}
-end.

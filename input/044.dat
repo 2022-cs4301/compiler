@@ -1,4 +1,0 @@
-program stage0no044;
-  var
-    a, b, c : integer, {semicolon expected after type}
-begin end.
