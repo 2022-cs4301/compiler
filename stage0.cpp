@@ -429,16 +429,16 @@ bool Compiler::isSpecialSymbol(char c) const // - Jeff - all the tests need to b
 
 bool Compiler::isInteger(string s) const // Jeff - (needs testing)
 {
-  uint i;
-  for (i = 0; i < s.length(); i++)
-  {
-    if (!isdigit(s[ i ]))
-    {
-      return false;
-    }
-  }
-
-  return true;
+ 	try
+	{
+		stoi(s);
+	}
+	catch (invalid_argument&)
+	{
+		return false;
+	}
+	
+	return true;
 }
 
 bool Compiler::isBoolean(string s) const // Jeff - (better test this one!) //11. BOOLEAN → 'true' | 'false'
@@ -520,7 +520,7 @@ void Compiler::insert(
     {
       break;
     }
-    i++;
+   i++;
   }
 }
 
@@ -533,13 +533,13 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
 
   if (isLiteral(name))
   {
-    if (isBoolean(name))
-    {
-      type = BOOLEAN;
-    }
-    else
+    if (isInteger(name))
     {
       type = INTEGER;
+    }
+    else if(isBoolean(name))
+    {
+      type = BOOLEAN;
     }
   }
   else //name is an identifier and hopefully a constant
