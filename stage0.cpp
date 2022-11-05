@@ -29,8 +29,8 @@ void Compiler::createListingHeader() // destructor
   time_t now = time(0);
 
   //line numbers and source statements should be aligned under the headings
-  listingFile << "STAGE0:" << setw(3) << right << "Jeff Caldwell, Kangmin Kim," << ctime(&now) << "\n\n";
-  listingFile << "LINE NO:" << setw(14) << right << "SOURCE STATEMENT\n\n";
+  listingFile << "STAGE0:" << setw(3)  << right << "Jeff Caldwell, Kangmin Kim," << ctime(&now) << "\n\n";
+  listingFile << "LINE NO:"<< setw(14) << right << "SOURCE STATEMENT\n\n";
 }
 // private: uint lineNo = 0; // line numbers for the listing
 
@@ -42,7 +42,7 @@ void Compiler::parser()
   if (nextToken() != "program") // string nextToken() returns the next token or END_OF_FILE marker
   {
     processError("keyword \"program\" expected"); // Output err to listingFile
-    // Call exit() to terminate program
+												  // Call exit() to terminate program
   }
   // a call to nextToken() has two effects
   // (1) the variable, token, is assigned the value of the next token
@@ -51,20 +51,21 @@ void Compiler::parser()
   // the next token.
   prog();
   //parser implements the grammar rules, calling first rule
-  // cout << "Made it to the end of parser!!\n";
+  cout << "Made it to the end of parser!!\n";
 }
 
 void Compiler::createListingTrailer()
 {
   listingFile << "COMPILATION TERMINATED" << setw(6) << "" << right << errorCount << " ERRORS ENCOUNTERED\n";
-  // cout << "Made it to the end of listing trailer!!\n";
+  cout << "Made it to the end of listing trailer!!\n";
 }
 // private: uint errorCount = 0; // total number of errors encountered
 
 void Compiler::processError(string error)
 {
-  // cout << "\n" << "Error: Line " << lineNo << ": " << error << "\n";
   listingFile << "\n" << "Error: Line " << lineNo << ": " << error << "\n";
+  errorCount++;
+  listingFile << "\nCOMPILATION TERMINATED      " << errorCount << " ERROR ENCOUNTERED\n";
   exit(0);
 }
 /*
@@ -80,7 +81,7 @@ void Compiler::processError(string error)
   external and internal forms will be the same. The code for insert() treats any external name beginning with
   an uppercase character as defined by the compiler.
 */
-string Compiler::genInternalName(storeTypes stype) const
+string Compiler::genInternalName(storeTypes stype) const 
 {
   static int B = 0;
   static int I = 0;
@@ -91,13 +92,13 @@ string Compiler::genInternalName(storeTypes stype) const
     iName = "P0";
   }
 
-  if (stype == INTEGER)
+  else if (stype == INTEGER)
   {
     iName = "I" + to_string(I);
     I++;
   }
 
-  if (stype == BOOLEAN)
+  else if (stype == BOOLEAN)
   {
     iName = "B" + to_string(B);
     B++;
@@ -120,27 +121,30 @@ void Compiler::prog()           // stage 0, production 1
   if (token == "const")
   {
     consts();
-    // cout << "Made it past consts() call\n";
+    cout << "Made it past consts() call\n";
   }
 
   if (token == "var")
   {
     vars();
-    // cout << "Made it past vars() call\n";
+    cout << "Made it past vars() call\n";
   }
 
   if (token != "begin")
   {
     processError("keyword \"begin\" expected");
-    beginEndStmt();
-    // cout << "Made it past beginEndStmt() call\n";
+   
+   
   }
-
+  cout << "Made it past beginEndStmt() call\n";
+  
+  beginEndStmt();
+  
   if (token[ 0 ] != END_OF_FILE)
   {
     processError("no text may follow \"end\"");
   }
-  // cout << "Made it to end of prog()\n";
+  cout << "Made it to end of prog()\n";
 }
 
 void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
@@ -187,7 +191,7 @@ void Compiler::vars() //4. VARS → 'var' VAR_STMTS
 {					  //   → ε
   if (token != "var")
   {
-    // cout << "Made it to error of vars\n";
+    cout << "Made it to error of vars\n";
     processError("keyword \"var\" expected");
   }
 
@@ -199,7 +203,8 @@ void Compiler::vars() //4. VARS → 'var' VAR_STMTS
 }
 
 void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘end’, ‘.’)
-{
+{			
+			  
   if (token != "begin")
   {
     processError("keyword \"begin\" expected");
@@ -217,6 +222,7 @@ void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘
 
   nextToken();
 
+	
   code("end", ".");
 }
 
@@ -300,47 +306,52 @@ void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 
   }
 }
 
-void Compiler::varStmts() //7. VAR_STMTS → IDSx ':' TYPEy ';'
-{						  //   insert(x,y,VARIABLE,ε,YES,1)
-  string x, y;			  //   ( VAR_STMTS | ε ) 
+void Compiler::varStmts() //token should be NON_KEY_ID
+{
+	string x,y;
+	if (!isNonKeyId(token))
+	{
+		processError("non-keyword identifier expected");
+	}
 
-  if (!(isNonKeyId(token)))
-  {
-    processError("non-keyword identifier expected");
-  }
+	x = ids();
 
-  x = ids();
+	if (token != ":")
+	{
+		processError("\":\" expected");
+	}
 
-  if (token != ":")
-  {
-    processError("\":\" expected");
-  }
+	if (nextToken() != "integer" && token != "boolean") 
+	{
+		processError("illegal type follows \":\"");
+	}
 
-  if (nextToken() != "integer" && nextToken() != "boolean")
-  {
-    processError("illegal type follows \":\"");
-  }
+	y = token;
 
-  y = token;
+	if (nextToken() != ";")
+	{
+		processError("semicolon expected");
+	}
 
-  if (nextToken() != ";")
-  {
-    processError("semicolon expected");
-  }
+	if (y == "integer")
+	{
+		insert(x,INTEGER,VARIABLE,"1",YES,1);
+	}
+	else
+	{
+		insert(x,BOOLEAN,VARIABLE,"1",YES,1);    
+	}
+	 
+	if (nextToken() != "begin" && !(isNonKeyId(token)))   
+	{
+		processError("non-keyword identifier or \"begin\" expected");
+	}
 
-  insert(x, INTEGER, VARIABLE, "1", YES, 1);
-
-  if (nextToken() != "begin" && !(isNonKeyId(nextToken())))
-  {
-    processError("non - keyword identifier or \"begin\" expected");
-  }
-
-  if (isNonKeyId(token))
-  {
-    varStmts();
-  }
+	if (isNonKeyId(token))
+	{
+		varStmts();
+	}
 }
-
 string Compiler::ids() //8. IDS → NON_KEY_ID ( ',' IDS | ε )
 {
   string temp, tempString;
@@ -376,9 +387,13 @@ bool Compiler::isKeyword(string s) const // - Jeff
   // instead of using a crazy, long string of conditional operators (||),
   // just make an array and loop through that
   string keywords[ 23 ] = {
-    "program", "begin", "end",
-    "var", "const", "integer",
-    "boolean", "true", "false", "not"
+    "program", "const", "var",
+    "integer", "boolean", "begin",
+    "end", "true", "false",
+    "not", "mod", "div", "and",
+    "or", "read", "write", "if",
+    "then", "else", "while",
+    "do", "repeat", "until"
   };
 
   int len = *(&keywords + 1) - keywords; // length of keywords
@@ -396,7 +411,7 @@ bool Compiler::isKeyword(string s) const // - Jeff
 
 bool Compiler::isSpecialSymbol(char c) const // - Jeff - all the tests need to be done!
 {
-  char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.'};
+  char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.', '*', '<', '>', '(', ')'};
 
   int len = *(&symbols + 1) - symbols;
 
@@ -429,7 +444,7 @@ bool Compiler::isBoolean(string s) const // Jeff - (better test this one!) //11.
 {
   return s == "true" || "false";
 }
-
+										
 bool Compiler::isLiteral(string s) const // Test me! - Jeff
 {										 //10. LIT → INTEGER | BOOLEAN | 'not' BOOLEAN | '+' INTEGER | '-' INTEGER
   if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-')
@@ -563,8 +578,6 @@ string Compiler::whichValue(string name) //tells which value a name has
   return value;
 }
 
-/** EMIT FUNCTIONS **/
-
 void Compiler::code(string op, string operand1, string operand2)
 {
   if (op == "program")
@@ -583,6 +596,19 @@ void Compiler::code(string op, string operand1, string operand2)
 
 /** EMIT FUNCTIONS **/
 
+void Compiler::emit(string label, string instruction, string operands, string comment)
+{
+  // Turn on left justification in objectFile
+  //   Output label in a field of width 8
+  //   Output instruction in a field of width 8
+  //   Output the operands in a field of width 24
+  //   Output the comment
+  objectFile << left << setw(8) << label;
+  objectFile << setw(8) << instruction;
+  objectFile << setw(24) << operands;
+  objectFile << setw(8) << comment;
+}
+
 void Compiler::emitPrologue(string progName, string operand2)
 {
   // Output identifying comments at beginning of objectFile
@@ -597,30 +623,12 @@ void Compiler::emitPrologue(string progName, string operand2)
 
   emit("SECTION", ".text");
   emit("global", "_start", "", "; program " + progName + "\n");
-  emit("_start:\n");
-}
-
-void Compiler::emit(string label, string instruction, string operands, string comment)
-{
-  // Turn on left justification in objectFile
-  //   Output label in a field of width 8
-  //   Output instruction in a field of width 8
-  //   Output the operands in a field of width 24
-  //   Output the comment
-  cout << left << setw(8) << label;
-  cout << setw(8) << instruction;
-  cout << setw(24) << operands;
-  cout << setw(8) << comment;
-
-  // objectFile << left << setw(8) << label;
-  // objectFile << setw(8) << instruction;
-  // objectFile << setw(24) << operands;
-  // objectFile << setw(8) << comment;
+  emit("_start:");
+  
 }
 
 void Compiler::emitEpilogue(string operand1, string operand2)
 {
-  emit("", "Exit", "{0}");
   emit("", "Exit", "{0}");
   emitStorage();
 }
@@ -753,7 +761,6 @@ string Compiler::nextToken() //returns the next token or end of file marker
       }
     }
   }
-  // cout << token;
   return token;
 }
 
@@ -780,7 +787,6 @@ char Compiler::nextChar() //returns the next character or end of file marker
   }
 
   prevChar = ch;
-  // cout << ch;
   return ch;
 }
 
