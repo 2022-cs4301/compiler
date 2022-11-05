@@ -147,8 +147,8 @@ void Compiler::prog()           // stage 0, production 1
 }
 
 void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
-{								//   code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
-  string x,y;						//   → 'program' NON_KEY_IDx ';'
+{								                //   code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
+  string x,y;						        //   → 'program' NON_KEY_IDx ';'
 
   if (token != "program")
   {
@@ -338,10 +338,12 @@ void Compiler::varStmts() //token should be NON_KEY_ID
 	{
 		insert(x,INTEGER,VARIABLE,"1",YES,1);
 	}
-	else
-	{
+	else	
+  {
 		insert(x,BOOLEAN,VARIABLE,"1",YES,1);    
 	}
+
+  
 	 
 	if (nextToken() != "begin" && !(isNonKeyId(token)))   
 	{
@@ -443,7 +445,14 @@ bool Compiler::isInteger(string s) const // Jeff - (needs testing)
 
 bool Compiler::isBoolean(string s) const // Jeff - (better test this one!) //11. BOOLEAN → 'true' | 'false'
 {
-  return s == "true" || "false" ;
+    if (s == "true" || s == "false")
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+	}
 }
 										
 bool Compiler::isLiteral(string s) const // Test me! - Jeff
@@ -726,7 +735,7 @@ string Compiler::nextToken() //returns the next token or end of file marker
           token += ch;
           nextChar();
         }
-        else if (token == ">" && ch == '=')
+        else if (token == ">" && ch == '=') 
         {
           token += ch;
           nextChar();
@@ -771,6 +780,8 @@ string Compiler::nextToken() //returns the next token or end of file marker
       }
     }
   }
+  token = token.substr(0,15);
+
   return token;
 }
 
