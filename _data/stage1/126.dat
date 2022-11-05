@@ -1,4 +1,0 @@
-program stage1no126;
-begin
-  write(a); {reference to undefined variable 'a'}
-end.

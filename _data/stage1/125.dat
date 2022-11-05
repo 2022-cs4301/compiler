@@ -1,4 +1,0 @@
-program stage1no125;
-begin
-  read(a); {reference to undefined variable 'a'}
-end.

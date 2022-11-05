@@ -1,4 +1,0 @@
-{ comments are OK before the program statement }
-program stage0no035;
-    begin
-    end.    {comments are OK after end.}

@@ -1,4 +1,0 @@
-program stage0no043;
-
-	const big = -1; small = not big;   {boolean expected after not}
-      begin end.
