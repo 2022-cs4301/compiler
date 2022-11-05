@@ -92,7 +92,7 @@ COMPILERNAME=./stage0
 #
 #DEFAULT:
 #ASM_NAME_STRING=""
-ASM_NAME_STRING=""
+ASM_NAME_STRING="Kangmin Kim and Jeff Caldwell"
 #
 #Lines in your generated .asm files containing this text will 
 #not cause color changes in the output chart at the end.
@@ -173,19 +173,19 @@ FANCY_OUTPUT=true;
 #Directory containing the provided Pascallite .dat files.
 #Default:
 #PROVIDED_DATS=./input/
-PROVIDED_DATS=./input/
+PROVIDED_DATS=./input
 #
 #Directory containing any provided Pascallite compiler .lst files. 
 #These are the files your output will be checked against.
 #DEFAULT:
 #PROVIDED_LSTS=./input/
-PROVIDED_LSTS=./input/
+PROVIDED_LSTS=./input
 #
 #Directory containing any provided Assembly language .asm files.
 #These are the files your output will be checked against.
 #DEFAULT:
 #PROVIDED_ASMS=./input/
-PROVIDED_ASMS=./input/
+PROVIDED_ASMS=./input
 #
 #Directory for the storage and generation of .lst files from your compiler.
 #DEFAULT:

@@ -19,6 +19,7 @@ Week 9, October 20, 50:00
   - key will be the name the user has given to the symbol (external name)
   - value: internal name, data type, data mode, value, allocation, units
     - Values added during `insert statement` in `progStmt`
+
 _Womack gave us some scripts!_
 
 `setup.sh` and `createData.sh`
@@ -30,7 +31,7 @@ chmod 771 setup.sh
 chmod 771 createData.sh
 ```
 
-"setup can be ran anywhere and will make a data folder in that directory, createData needs to be moved into the data folder and will creat a output file and diffs and what not"
+"setup can be ran anywhere and will make a data folder in that directory, createData needs to be moved into the data folder and will create an output file and diffs and whatnot"
 
 "Note that to use to use shell scripts after the chmod they can be activated like:"
 
