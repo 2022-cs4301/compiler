@@ -6,39 +6,43 @@
 #include <ctime>
 #include <cstring>
 
-Compiler::Compiler(char **argv)
+
+
+Compiler::Compiler(char **argv) // constructor
 {
-  sourceFile.open(argv[ 1 ]);
-  listingFile.open(argv[ 2 ]);
-  objectFile.open(argv[ 3 ]);
+  sourceFile.open(argv[ 1 ]); // open sourceFile using argv[1] (input from argv[1])
+  listingFile.open(argv[ 2 ]);// open listingFile using argv[2] (generate a listing to argv[2])
+  objectFile.open(argv[ 3 ]); // open objectFile using argv[3] (write object code to argv[3])
 }
 
-Compiler::~Compiler()
+Compiler::~Compiler() //  close all open files
 {
   sourceFile.close();
   listingFile.close();
   objectFile.close();
 }
 
-void Compiler::createListingHeader()
+void Compiler::createListingHeader() // destructor
 {
   // print "STAGE0:", name(s), DATE, TIME OF DAY
   // print "LINE NO:", "SOURCE STATEMENT"
   time_t now = time(0);
 
   //line numbers and source statements should be aligned under the headings
-  listingFile << "STAGE0:" << setw(3) << right << "Jeff Caldwell, Kangmin Kim," << ctime(&now) << "\n\n";
-  listingFile << "LINE NO:" << setw(14) << right << "SOURCE STATEMENT\n\n";
+  listingFile << "STAGE0:" << setw(3)  << right << "Jeff Caldwell, Kangmin Kim," << ctime(&now) << "\n\n";
+  listingFile << "LINE NO:"<< setw(14) << right << "SOURCE STATEMENT\n\n";
 }
+// private: uint lineNo = 0; // line numbers for the listing
 
 void Compiler::parser()
 {
-  nextChar();
+  nextChar(); //returns the next character or end of file marker
 
   //ch must be initialized to the first character of the source file
-  if (nextToken() != "program")
+  if (nextToken() != "program") // string nextToken() returns the next token or END_OF_FILE marker
   {
-    processError("keyword \"program\" expected");
+    processError("keyword \"program\" expected"); // Output err to listingFile
+												  // Call exit() to terminate program
   }
   // a call to nextToken() has two effects
   // (1) the variable, token, is assigned the value of the next token
@@ -55,14 +59,27 @@ void Compiler::createListingTrailer()
   listingFile << "COMPILATION TERMINATED" << setw(6) << "" << right << errorCount << " ERRORS ENCOUNTERED\n";
   cout << "Made it to the end of listing trailer!!\n";
 }
+// private: uint errorCount = 0; // total number of errors encountered
 
 void Compiler::processError(string error)
 {
   listingFile << "\n" << "Error: Line " << lineNo << ": " << error << "\n";
   exit(0);
 }
-
-string Compiler::genInternalName(storeTypes stype) const
+/*
+  Note that insert() calls genInternalName(), a function that has one argument, the type of the name being
+  inserted. genInternalName() returns a unique internal name each time it is called, a name that is known to
+  be a valid symbolic name. As a visual aid, we use different forms of internal names for each data-type of interest.
+  The general form is:
+  dn
+  where d denotes the data-type of the name ("I" for integer, "B" for boolean) and n is a non-negative integer
+  starting at 0. The generated source code for 001.dat clearly shows the effects of calling
+  genInternalName(). The compiler itself will also need to generate names to appear in the object code, but
+  since the compiler is defining these itself, there is no need to convert these names into any other form. The
+  external and internal forms will be the same. The code for insert() treats any external name beginning with
+  an uppercase character as defined by the compiler.
+*/
+string Compiler::genInternalName(storeTypes stype) const 
 {
   static int B = 0;
   static int I = 0;
@@ -91,7 +108,7 @@ string Compiler::genInternalName(storeTypes stype) const
 /** PRODUCTIONS **/
 
 void Compiler::prog()           // stage 0, production 1
-{
+{								// 1. PROG → PROG_STMT CONSTS VARS BEGIN_END_STMT
   if (token != "program")
   {
     processError("keyword \"program\" expected");
@@ -125,9 +142,9 @@ void Compiler::prog()           // stage 0, production 1
   cout << "Made it to end of prog()\n";
 }
 
-void Compiler::progStmt()       // token should be program
-{
-  string x;
+void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
+{								//   code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
+  string x;						//   → 'program' NON_KEY_IDx ';'
 
   if (token != "program")
   {
@@ -152,8 +169,8 @@ void Compiler::progStmt()       // token should be program
   insert(x, PROG_NAME, CONSTANT, x, NO, 0);
 }
 
-void Compiler::consts() //token should be "const"
-{
+void Compiler::consts() //3. CONSTS → 'const' CONST_STMTS
+{						//   → ε
   if (token != "const")
   {
     processError("keyword \"const\" expected");
@@ -165,8 +182,8 @@ void Compiler::consts() //token should be "const"
   constStmts();
 }
 
-void Compiler::vars() //token should be "var"
-{
+void Compiler::vars() //4. VARS → 'var' VAR_STMTS
+{					  //   → ε
   if (token != "var")
   {
     cout << "Made it to error of vars\n";
@@ -180,8 +197,8 @@ void Compiler::vars() //token should be "var"
   varStmts();
 }
 
-void Compiler::beginEndStmt() //token should be "begin"
-{
+void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘end’, ‘.’)
+{							  
   if (token != "begin")
   {
     processError("keyword \"begin\" expected");
@@ -202,9 +219,9 @@ void Compiler::beginEndStmt() //token should be "begin"
   code("end", ".");
 }
 
-void Compiler::constStmts() //token should be NON_KEY_ID
-{
-  string x, y;
+void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 'not' NON_KEY_IDy | LITy ) ';' 
+{							//   insert(x,whichType(y),CONSTANT,whichValue(y),YES,1)
+  string x, y;				//   ( CONST_STMTS | ε )
 
   if (!isNonKeyId(token))
   {
@@ -282,9 +299,9 @@ void Compiler::constStmts() //token should be NON_KEY_ID
   }
 }
 
-void Compiler::varStmts() //token should be NON_KEY_ID
-{
-  string x, y;
+void Compiler::varStmts() //7. VAR_STMTS → IDSx ':' TYPEy ';'
+{						  //   insert(x,y,VARIABLE,ε,YES,1)
+  string x, y;			  //   ( VAR_STMTS | ε ) 
 
   if (!(isNonKeyId(token)))
   {
@@ -323,7 +340,7 @@ void Compiler::varStmts() //token should be NON_KEY_ID
   }
 }
 
-string Compiler::ids() //token should be NON_KEY_ID
+string Compiler::ids() //8. IDS → NON_KEY_ID ( ',' IDS | ε )
 {
   string temp, tempString;
 
@@ -347,6 +364,10 @@ string Compiler::ids() //token should be NON_KEY_ID
   return tempString;
 }
 
+
+
+
+
 /** TYPE CHECKING FUNCTIONS **/
 bool Compiler::isKeyword(string s) const // - Jeff
 {
@@ -363,7 +384,7 @@ bool Compiler::isKeyword(string s) const // - Jeff
     "do", "repeat", "until"
   };
 
-  int len = *(&keywords + 1) - keywords;
+  int len = *(&keywords + 1) - keywords; // length of keywords
 
   for (int i = 0; i < len; i++)
   {
@@ -407,13 +428,13 @@ bool Compiler::isInteger(string s) const // Jeff - (needs testing)
   return true;
 }
 
-bool Compiler::isBoolean(string s) const // Jeff - (better test this one!)
+bool Compiler::isBoolean(string s) const // Jeff - (better test this one!) //11. BOOLEAN → 'true' | 'false'
 {
   return s == "true" || "false";
 }
-
+										
 bool Compiler::isLiteral(string s) const // Test me! - Jeff
-{
+{										 //10. LIT → INTEGER | BOOLEAN | 'not' BOOLEAN | '+' INTEGER | '-' INTEGER
   if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-')
   {
     return true;
@@ -493,8 +514,8 @@ void Compiler::insert(
 
 // Needs testing! - Jeff
 storeTypes Compiler::whichType(string name) //tells which data type a name has
-{
-  storeTypes type;
+{											//9. TYPE → 'integer'
+  storeTypes type;							//		  → 'boolean'
 
   if (isLiteral(name))
   {
@@ -755,3 +776,22 @@ char Compiler::nextChar() //returns the next character or end of file marker
   prevChar = ch;
   return ch;
 }
+
+/*
+#include <stage0.h>
+int main(int argc, char **argv)
+{
+ if (argc != 4) // Check to see if pgm was invoked correctly
+ {
+ // No; print error msg and terminate program
+ cerr << "Usage: " << argv[0] << " SourceFileName ListingFileName "
+ << "ObjectFileName" << endl;
+ exit(EXIT_FAILURE);
+ }
+ Compiler myCompiler(argv);
+ myCompiler.createListingHeader();
+ myCompiler.parser();
+ myCompiler.createListingTrailer();
+ return 0;
+}
+*/
