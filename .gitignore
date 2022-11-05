@@ -1,3 +1,7 @@
 .vscode
 stage0
 stage0.o
+alldifs.txt
+allouts.txt
+stage0.o
+stage0main.o

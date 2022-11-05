@@ -55,7 +55,8 @@ void Compiler::createListingTrailer()
 
 void Compiler::processError(string error)
 {
-  ofstream cout("error has occured");
+  listingFile << "\n" << "Error: Line " << lineNo << ": " << error << "\n";
+  // ofstream cout("error has occured");
   exit(0);
 }
 

@@ -1,4 +1,4 @@
-#include <stage0.h>
+#include "stage0.h"
 
 int main(int argc, char **argv)
 {
@@ -14,7 +14,10 @@ int main(int argc, char **argv)
 
   Compiler compiler(argv);
 
+  cout << argv[ 0 ] << "\n";
   compiler.createListingHeader();
   compiler.parser();
   compiler.createListingTrailer();
+
+  return 0;
 }
