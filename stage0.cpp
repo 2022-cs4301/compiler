@@ -51,13 +51,11 @@ void Compiler::parser()
   // the next token.
   prog();
   //parser implements the grammar rules, calling first rule
-  cout << "Made it to the end of parser!!\n";
 }
 
 void Compiler::createListingTrailer()
 {
-  listingFile << "\nCOMPILATION TERMINATED" << setw(6) << "" << right << errorCount << " ERRORS ENCOUNTERED\n";
-  cout << "Made it to the end of listing trailer!!\n";
+  listingFile << "\nCOMPILATION TERMINATED" << setw(6) << "" << right << errorCount << (errorCount != 1 ? " ERRORS " : " ERROR ") << "ENCOUNTERED\n";
 }
 // private: uint errorCount = 0; // total number of errors encountered
 
@@ -65,8 +63,13 @@ void Compiler::processError(string error)
 {
   listingFile << "\n" << "Error: Line " << lineNo << ": " << error << "\n";
   errorCount++;
-  listingFile << "\nCOMPILATION TERMINATED      " << errorCount << " ERROR ENCOUNTERED\n";
-  exit(0);
+  createListingTrailer();
+  // close files to ensure output will be written
+  // calling exit() before closing the files seems
+  // to preempt writing to them
+  listingFile.close();
+  objectFile.close();
+  exit(EXIT_FAILURE);
 }
 /*
   Note that insert() calls genInternalName(), a function that has one argument, the type of the name being
@@ -83,8 +86,8 @@ void Compiler::processError(string error)
 */
 string Compiler::genInternalName(storeTypes stype) const
 {
-  static int I = 0;
-  static int B = 0;
+  static int I = 0; // integer
+  static int B = 0; // boolean
   string iName;
   if (stype == PROG_NAME)
   {
@@ -120,22 +123,17 @@ void Compiler::prog()           // stage 0, production 1
   if (token == "const")
   {
     consts();
-    cout << "Made it past consts() call\n";
   }
 
   if (token == "var")
   {
     vars();
-    cout << "Made it past vars() call\n";
   }
 
   if (token != "begin")
   {
     processError("keyword \"begin\" expected");
-
-
   }
-  cout << "Made it past beginEndStmt() call\n";
 
   beginEndStmt();
 
@@ -143,7 +141,6 @@ void Compiler::prog()           // stage 0, production 1
   {
     processError("no text may follow \"end\"");
   }
-  cout << "Made it to end of prog()\n";
 }
 
 void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
@@ -192,7 +189,6 @@ void Compiler::vars() //4. VARS → 'var' VAR_STMTS
 {					  //   → ε
   if (token != "var")
   {
-    cout << "Made it to error of vars\n";
     processError("keyword \"var\" expected");
   }
 
@@ -502,7 +498,7 @@ void Compiler::insert(
     {
       if (symbolTable.find(name) != symbolTable.end())
       {
-        processError("symbol " + name + " is defined multiple times");
+        processError("symbol " + name + " is multiply defined");
       }
       else if (isKeyword(name))
       {
@@ -808,6 +804,7 @@ char Compiler::nextChar() //returns the next character or end of file marker
   }
 
   prevChar = ch;
+  cout << ch;
   return ch;
 }
 
