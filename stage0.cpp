@@ -122,7 +122,7 @@ void Compiler::consts() //token should be "const"
   {
     processError("keyword \"const\" expected");
   }
-  if (!isNonKeyId(nextToken()))We should be able to start testingWe should be able to start testing
+  if (!isNonKeyId(nextToken()))
   {
     processError("non-keyword identifier must follow \"const\"");
   }
