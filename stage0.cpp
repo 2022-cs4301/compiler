@@ -29,8 +29,8 @@ void Compiler::createListingHeader() // destructor
   time_t now = time(0);
 
   //line numbers and source statements should be aligned under the headings
-  listingFile << "STAGE0:" << setw(3)  << right << "Jeff Caldwell, Kangmin Kim," << ctime(&now) << "\n\n";
-  listingFile << "LINE NO:"<< setw(14) << right << "SOURCE STATEMENT\n\n";
+  listingFile << "STAGE0:  " << "Jeff Caldwell, Kangmin Kim       " << ctime(&now) << "\n";
+  listingFile << "LINE NO." << "              SOURCE STATEMENT\n\n";
 }
 // private: uint lineNo = 0; // line numbers for the listing
 
@@ -56,7 +56,7 @@ void Compiler::parser()
 
 void Compiler::createListingTrailer()
 {
-  listingFile << "COMPILATION TERMINATED" << setw(6) << "" << right << errorCount << " ERRORS ENCOUNTERED\n";
+  listingFile << "\nCOMPILATION TERMINATED" << setw(6) << "" << right << errorCount << " ERRORS ENCOUNTERED\n";
   cout << "Made it to the end of listing trailer!!\n";
 }
 // private: uint errorCount = 0; // total number of errors encountered
@@ -83,29 +83,28 @@ void Compiler::processError(string error)
 */
 string Compiler::genInternalName(storeTypes stype) const 
 {
-  static int B = 0;
   static int I = 0;
+  static int B = 0;
   string iName;
-
   if (stype == PROG_NAME)
   {
     iName = "P0";
   }
-
   else if (stype == INTEGER)
   {
     iName = "I" + to_string(I);
-    I++;
+   I++;
   }
 
   else if (stype == BOOLEAN)
   {
-    iName = "B" + to_string(B);
-    B++;
-  }
-
+   iName = "B" + to_string(B);
+   B++;
+  } 
   return iName;
 }
+  
+
 
 /** PRODUCTIONS **/
 
@@ -149,7 +148,7 @@ void Compiler::prog()           // stage 0, production 1
 
 void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
 {								//   code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
-  string x;						//   → 'program' NON_KEY_IDx ';'
+  string x,y;						//   → 'program' NON_KEY_IDx ';'
 
   if (token != "program")
   {
@@ -168,6 +167,8 @@ void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
   {
     processError("semicolon expected");
   }
+
+  
 
   nextToken();
   code("program", x);
@@ -442,7 +443,7 @@ bool Compiler::isInteger(string s) const // Jeff - (needs testing)
 
 bool Compiler::isBoolean(string s) const // Jeff - (better test this one!) //11. BOOLEAN → 'true' | 'false'
 {
-  return s == "true" || "false";
+  return s == "true" || "false" ;
 }
 										
 bool Compiler::isLiteral(string s) const // Test me! - Jeff
@@ -472,10 +473,8 @@ void Compiler::insert(
   storeTypes inType,
   modes inMode,
   string inValue,
-  allocation inAlloc,
-  int inUnits)
-  //create symbol table entry for each identifier in list of external names
-  //Multiple inserted names are illegal
+  allocation inAlloc,  //create symbol table entry for each identifier in list of external names
+  int inUnits)         //Multiple inserted names are illegal
 {
   string name;
   uint i = 0;
@@ -492,8 +491,6 @@ void Compiler::insert(
 
     if (!name.empty())
     {
-      name = name.substr(0, 15);
-
       if (symbolTable.find(name) != symbolTable.end())
       {
         processError("symbol " + name + " is defined multiple times");
@@ -506,11 +503,11 @@ void Compiler::insert(
       {
         if (isupper(name[ 0 ]))
         {
-          symbolTable.insert({name, SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
+          symbolTable.insert({name.substr(0,15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
         }
         else
         {
-          symbolTable.insert({name, SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
+          symbolTable.insert({name.substr(0.15), SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
         }
       }
     }
@@ -519,15 +516,20 @@ void Compiler::insert(
     {
       processError("symbol table overflow");
     }
-
+    if(i == externalName.length())
+    {
+      break;
+    }
     i++;
   }
 }
+
 
 // Needs testing! - Jeff
 storeTypes Compiler::whichType(string name) //tells which data type a name has
 {											//9. TYPE → 'integer'
   storeTypes type;							//		  → 'boolean'
+
 
   if (isLiteral(name))
   {
@@ -561,9 +563,17 @@ string Compiler::whichValue(string name) //tells which value a name has
 
   if (isLiteral(name))
   {
+    if(name == "false")
+    {
+      value = "0";
+    }
+    else if(name == "true")
+    {
+      value = "-1";
+    }
+    else
     value = name;
   }
-
   else //name is an identifier and hopefully a constant
   {
     if (symbolTable.find(name) != symbolTable.end())
@@ -606,7 +616,7 @@ void Compiler::emit(string label, string instruction, string operands, string co
   objectFile << left << setw(8) << label;
   objectFile << setw(8) << instruction;
   objectFile << setw(24) << operands;
-  objectFile << setw(8) << comment;
+  objectFile << setw(8) << comment << '\n';
 }
 
 void Compiler::emitPrologue(string progName, string operand2)
@@ -618,7 +628,7 @@ void Compiler::emitPrologue(string progName, string operand2)
   //   emit("_start:")
 
   time_t now = time(0);
-  objectFile << "; Kangmin Kim, Jeff Caldwell" << setw(8) << right << ctime(&now) << "\n";
+  objectFile << "; Kangmin Kim, Jeff Caldwell       " << setw(8) << right << ctime(&now);
   objectFile << "%INCLUDE \"Along32.inc\"\n" << "%INCLUDE \"Macros_Along.inc\"\n\n";
 
   emit("SECTION", ".text");
@@ -629,7 +639,7 @@ void Compiler::emitPrologue(string progName, string operand2)
 
 void Compiler::emitEpilogue(string operand1, string operand2)
 {
-  emit("", "Exit", "{0}");
+  emit("", "Exit", "{0}\n");
   emitStorage();
 }
 
@@ -645,7 +655,7 @@ void Compiler::emitStorage()
   //       an allocation of YES and a storage mode of VARIABLE
   //     {call emit to output a line to objectFile}
 
-  emit("SECTION .data");
+  emit("SECTION", ".data");
 
   for (i = symbolTable.begin(); i != symbolTable.end(); i++)
   {
@@ -656,7 +666,7 @@ void Compiler::emitStorage()
   }
 
   objectFile << "\n";
-  emit("SECTION", ".bss");
+  emit("SECTION", ".bss");	
 
   for (i = symbolTable.begin(); i != symbolTable.end(); i++)
   {
