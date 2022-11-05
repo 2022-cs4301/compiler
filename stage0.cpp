@@ -59,6 +59,29 @@ void Compiler::processError(string error)
   exit(0);
 }
 
+string Compiler::genInternalName(storeTypes stype) const
+{
+  static int B = 0;
+  static int I = 0;
+
+  if (stype == PROG_NAME)
+  {
+    return "P0";
+  }
+
+  if (stype == INTEGER)
+  {
+    return "I" + to_string(I);
+    I++;
+  }
+
+  if (stype == BOOLEAN)
+  {
+    return "B" + to_string(B);
+    B++;
+  }
+}
+
 /** PRODUCTIONS **/
 
 void Compiler::prog()           // stage 0, production 1
@@ -358,7 +381,8 @@ bool Compiler::isSpecialSymbol(char c) const // - Jeff - all the tests need to b
 
 bool Compiler::isInteger(string s) const // Jeff - (needs testing)
 {
-  for (int i = 0; i < s.length(); i++)
+  uint i;
+  for (i = 0; i < s.length(); i++)
   {
     if (!isdigit(s[ i ]))
     {
@@ -407,7 +431,7 @@ void Compiler::insert(
   //Multiple inserted names are illegal
 {
   string name;
-  uint i;
+  uint i = 0;
 
   while (i < externalName.length())
   {
@@ -678,8 +702,8 @@ string Compiler::nextToken() //returns the next token or end of file marker
         processError("illegal symbol");
     }
 
-    return token;
   }
+  return token;
 }
 
 char Compiler::nextChar() //returns the next character or end of file marker
