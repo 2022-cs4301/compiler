@@ -42,7 +42,7 @@ void Compiler::parser()
   if (nextToken() != "program") // string nextToken() returns the next token or END_OF_FILE marker
   {
     processError("keyword \"program\" expected"); // Output err to listingFile
-												  // Call exit() to terminate program
+    // Call exit() to terminate program
   }
   // a call to nextToken() has two effects
   // (1) the variable, token, is assigned the value of the next token
@@ -81,7 +81,7 @@ void Compiler::processError(string error)
   external and internal forms will be the same. The code for insert() treats any external name beginning with
   an uppercase character as defined by the compiler.
 */
-string Compiler::genInternalName(storeTypes stype) const 
+string Compiler::genInternalName(storeTypes stype) const
 {
   static int I = 0;
   static int B = 0;
@@ -93,17 +93,17 @@ string Compiler::genInternalName(storeTypes stype) const
   else if (stype == INTEGER)
   {
     iName = "I" + to_string(I);
-   I++;
+    I++;
   }
 
   else if (stype == BOOLEAN)
   {
-   iName = "B" + to_string(B);
-   B++;
-  } 
+    iName = "B" + to_string(B);
+    B++;
+  }
   return iName;
 }
-  
+
 
 
 /** PRODUCTIONS **/
@@ -132,13 +132,13 @@ void Compiler::prog()           // stage 0, production 1
   if (token != "begin")
   {
     processError("keyword \"begin\" expected");
-   
-   
+
+
   }
   cout << "Made it past beginEndStmt() call\n";
-  
+
   beginEndStmt();
-  
+
   if (token[ 0 ] != END_OF_FILE)
   {
     processError("no text may follow \"end\"");
@@ -148,7 +148,7 @@ void Compiler::prog()           // stage 0, production 1
 
 void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
 {								                //   code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
-  string x,y;						        //   → 'program' NON_KEY_IDx ';'
+  string x, y;						        //   → 'program' NON_KEY_IDx ';'
 
   if (token != "program")
   {
@@ -168,7 +168,7 @@ void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
     processError("semicolon expected");
   }
 
-  
+
 
   nextToken();
   code("program", x);
@@ -204,8 +204,8 @@ void Compiler::vars() //4. VARS → 'var' VAR_STMTS
 }
 
 void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘end’, ‘.’)
-{			
-			  
+{
+
   if (token != "begin")
   {
     processError("keyword \"begin\" expected");
@@ -223,7 +223,7 @@ void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘
 
   nextToken();
 
-	
+
   code("end", ".");
 }
 
@@ -309,51 +309,51 @@ void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 
 
 void Compiler::varStmts() //token should be NON_KEY_ID
 {
-	string x,y;
-	if (!isNonKeyId(token))
-	{
-		processError("non-keyword identifier expected");
-	}
-
-	x = ids();
-
-	if (token != ":")
-	{
-		processError("\":\" expected");
-	}
-
-	if (nextToken() != "integer" && token != "boolean") 
-	{
-		processError("illegal type follows \":\"");
-	}
-
-	y = token;
-
-	if (nextToken() != ";")
-	{
-		processError("semicolon expected");
-	}
-
-	if (y == "integer")
-	{
-		insert(x,INTEGER,VARIABLE,"1",YES,1);
-	}
-	else	
+  string x, y;
+  if (!isNonKeyId(token))
   {
-		insert(x,BOOLEAN,VARIABLE,"1",YES,1);    
-	}
+    processError("non-keyword identifier expected");
+  }
 
-  
-	 
-	if (nextToken() != "begin" && !(isNonKeyId(token)))   
-	{
-		processError("non-keyword identifier or \"begin\" expected");
-	}
+  x = ids();
 
-	if (isNonKeyId(token))
-	{
-		varStmts();
-	}
+  if (token != ":")
+  {
+    processError("\":\" expected");
+  }
+
+  if (nextToken() != "integer" && token != "boolean")
+  {
+    processError("illegal type follows \":\"");
+  }
+
+  y = token;
+
+  if (nextToken() != ";")
+  {
+    processError("semicolon expected");
+  }
+
+  if (y == "integer")
+  {
+    insert(x, INTEGER, VARIABLE, "1", YES, 1);
+  }
+  else
+  {
+    insert(x, BOOLEAN, VARIABLE, "1", YES, 1);
+  }
+
+
+
+  if (nextToken() != "begin" && !(isNonKeyId(token)))
+  {
+    processError("non-keyword identifier or \"begin\" expected");
+  }
+
+  if (isNonKeyId(token))
+  {
+    varStmts();
+  }
 }
 string Compiler::ids() //8. IDS → NON_KEY_ID ( ',' IDS | ε )
 {
@@ -431,30 +431,30 @@ bool Compiler::isSpecialSymbol(char c) const // - Jeff - all the tests need to b
 
 bool Compiler::isInteger(string s) const // Jeff - (needs testing)
 {
- 	try
-	{
-		stoi(s);
-	}
-	catch (invalid_argument&)
-	{
-		return false;
-	}
-	
-	return true;
+  try
+  {
+    stoi(s);
+  }
+  catch (invalid_argument&)
+  {
+    return false;
+  }
+
+  return true;
 }
 
 bool Compiler::isBoolean(string s) const // Jeff - (better test this one!) //11. BOOLEAN → 'true' | 'false'
 {
-    if (s == "true" || s == "false")
-	{
-		return true;
-	}
-	else 
-	{
-		return false;
-	}
+  if (s == "true" || s == "false")
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
-										
+
 bool Compiler::isLiteral(string s) const // Test me! - Jeff
 {										 //10. LIT → INTEGER | BOOLEAN | 'not' BOOLEAN | '+' INTEGER | '-' INTEGER
   if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-')
@@ -512,7 +512,7 @@ void Compiler::insert(
       {
         if (isupper(name[ 0 ]))
         {
-          symbolTable.insert({name.substr(0,15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
+          symbolTable.insert({name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
         }
         else
         {
@@ -525,11 +525,11 @@ void Compiler::insert(
     {
       processError("symbol table overflow");
     }
-    if(i == externalName.length())
+    if (i == externalName.length())
     {
       break;
     }
-   i++;
+    i++;
   }
 }
 
@@ -546,7 +546,7 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
     {
       type = INTEGER;
     }
-    else if(isBoolean(name))
+    else if (isBoolean(name))
     {
       type = BOOLEAN;
     }
@@ -572,16 +572,16 @@ string Compiler::whichValue(string name) //tells which value a name has
 
   if (isLiteral(name))
   {
-    if(name == "false")
+    if (name == "false")
     {
       value = "0";
     }
-    else if(name == "true")
+    else if (name == "true")
     {
       value = "-1";
     }
     else
-    value = name;
+      value = name;
   }
   else //name is an identifier and hopefully a constant
   {
@@ -643,7 +643,7 @@ void Compiler::emitPrologue(string progName, string operand2)
   emit("SECTION", ".text");
   emit("global", "_start", "", "; program " + progName + "\n");
   emit("_start:");
-  
+
 }
 
 void Compiler::emitEpilogue(string operand1, string operand2)
@@ -675,7 +675,7 @@ void Compiler::emitStorage()
   }
 
   objectFile << "\n";
-  emit("SECTION", ".bss");	
+  emit("SECTION", ".bss");
 
   for (i = symbolTable.begin(); i != symbolTable.end(); i++)
   {
@@ -735,7 +735,7 @@ string Compiler::nextToken() //returns the next token or end of file marker
           token += ch;
           nextChar();
         }
-        else if (token == ">" && ch == '=') 
+        else if (token == ">" && ch == '=')
         {
           token += ch;
           nextChar();
@@ -780,7 +780,7 @@ string Compiler::nextToken() //returns the next token or end of file marker
       }
     }
   }
-  token = token.substr(0,15);
+  token = token.substr(0, 15);
 
   return token;
 }
