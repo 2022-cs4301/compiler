@@ -6,7 +6,7 @@
 - [x] 003
 - [x] 004
 - [x] 005
-- [ ] 006 ? - we catch an error, but I'm not sure about the error message
+- [x] 006
 - [x] 007
 - [x] 008
 - [ ] 009 ? - (we catch the `=` error, but we need to catch the two `{` error first)
@@ -15,7 +15,7 @@
 - [x] 012
 - [x] 013
 - [x] 014
-- [ ] 015 ? - double check - all of the other errors don't write `.data` or `.bss`, this one does because the error is after the `.end` of the sourceFile.
+- [ ] 015 ? - double check - all of the other errors don't write `.data` or `.bss`, this one does because the error is after the `.end` of the sourceFile. We might need to fix that (but I'm not sure).
 - [ ] 016 ? - we catch the error but no text is written to asm. Is that okay?
 - [ ] 017 ? - not sure if this should be a non-keyword id error
 - [x] 018
@@ -23,14 +23,14 @@
 - [x] 020
 - [x] 021
 - [x] 022
-- [ ] 023 - no asm written
+- [ ] 023 - no asm written, might be fine
 - [x] 024 - no asm written, I think that's fine on this one
 - [ ] 025 - I don't think the error's right on this one, should be catching the missing comment bracket
 - [x] 026
 - [x] 027
 - [x] 028
 - [x] 029
-- [ ] 030 - need to write extra 3 lines of whitespace in .lst
+- [x] 030
 - [x] 031
 - [x] 032
 - [x] 033
@@ -38,7 +38,7 @@
 - [x] 035
 - [x] 036
 - [x] 037
-- [x] 038 - no asm output but error occurs in line 0
+- [x] 038
 - [x] 039 - double check! Looks good but no guidance in .dat
 - [ ] 040 - I think we're supposed to catch an earlier semicolon error
 - [x] 041
