@@ -161,8 +161,7 @@ void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
     processError("program name expected");
   }
 
-  // if (nextToken() != ";")
-  if (x != ";")
+  if (nextToken() != ";")
   {
     processError("semicolon expected");
   }
