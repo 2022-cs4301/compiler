@@ -33,7 +33,7 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 014
 - [x]
 - [ ] 016 ? - we catch the error but no text is written to asm. Is that okay?
-- [ ] 017 ? - not sure if this should be a non-keyword id error
+- [x] 017
 - [x] 018
 - [x] 019
 - [x] 020
