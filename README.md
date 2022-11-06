@@ -56,7 +56,7 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 037
 - [x] 038
 - [x] 039 - double check! Looks good but no guidance in .dat
-- [ ] 040 - I think we're supposed to catch an earlier semicolon error
+- [ ] 040 - We catch the semicolon error, but `.lst` output continues, don't know if that's okay
 - [x] 041
 - [x] 042
 - [x] 043
