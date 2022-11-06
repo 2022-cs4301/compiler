@@ -219,7 +219,7 @@ void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘
   // check for tokens after .end
   if (nextToken() != "$")
   {
-    processError("syntax error: no tokens may appear after \"end.\"");
+    processError("no tokens may appear after \"end.\"");
   }
   else
   {
@@ -855,22 +855,3 @@ char Compiler::nextChar() //returns the next character or end of file marker
   // done
   return ch;
 }
-
-/*
-#include <stage0.h>
-int main(int argc, char **argv)
-{
- if (argc != 4) // Check to see if pgm was invoked correctly
- {
- // No; print error msg and terminate program
- cerr << "Usage: " << argv[0] << " SourceFileName ListingFileName "
- << "ObjectFileName" << endl;
- exit(EXIT_FAILURE);
- }
- Compiler myCompiler(argv);
- myCompiler.createListingHeader();
- myCompiler.parser();
- myCompiler.createListingTrailer();
- return 0;
-}
-*/

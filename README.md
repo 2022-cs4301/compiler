@@ -41,7 +41,7 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 022
 - [x] 023
 - [x] 024
-- [ ] 025 - I don't think the error's right on this one, should be catching the missing comment bracket
+- [x] 025
 - [x] 026
 - [x] 027
 - [x] 028
