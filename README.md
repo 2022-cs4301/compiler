@@ -32,15 +32,15 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 013
 - [x] 014
 - [x] 015
-- [ ] 016 ? - we catch the error but no text is written to asm. Is that okay?
+- [x] 016
 - [x] 017
 - [x] 018
 - [x] 019
 - [x] 020
 - [x] 021
 - [x] 022
-- [ ] 023 - no asm written, might be fine
-- [x] 024 - no asm written, I think that's fine on this one
+- [x] 023
+- [x] 024
 - [ ] 025 - I don't think the error's right on this one, should be catching the missing comment bracket
 - [x] 026
 - [x] 027
@@ -55,7 +55,7 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 036
 - [x] 037
 - [x] 038
-- [x] 039 - double check! Looks good but no guidance in .dat
+- [x] 039
 - [x] 040
 - [x] 041
 - [x] 042
@@ -66,7 +66,7 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 047
 - [x] 048
 - [x] 049
-- [ ] 050 - I think this one is supposed to be a multiply defined error
+- [x] 050
 - [ ] 051 - we should just check this one, there's a lot going on in this file
 - [x] 052 - Joel submitted this one last year!
 
