@@ -20,7 +20,7 @@
 - [ ] 017 ? - not sure if this should be a non-keyword id error
 - [x] 018
 - [x] 019
-- [ ] 020 - need to figure this one out
+- [x] 020
 - [x] 021
 - [x] 022
 - [ ] 023 - no asm written
