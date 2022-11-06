@@ -171,7 +171,7 @@ void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
 }
 
 void Compiler::consts() //3. CONSTS → 'const' CONST_STMTS
-{						//   → ε
+{						            //   → ε
   if (token != "const")
   {
     processError("keyword \"const\" expected");
@@ -228,6 +228,12 @@ void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 
   if (!isNonKeyId(token))
   {
     processError("non-keyword identifier expected");
+  }
+
+  // check for illegal '_' at end of variable name
+  if (token.back() == '_')
+  {
+    processError("illegal character '_'");
   }
 
   x = token;
@@ -307,6 +313,12 @@ void Compiler::varStmts() //token should be NON_KEY_ID
   if (!isNonKeyId(token))
   {
     processError("non-keyword identifier expected");
+  }
+
+  // check for illegal '_' at end of variable name
+  if (token.back() == '_')
+  {
+    processError("illegal character '_'");
   }
 
   x = ids();
