@@ -30,7 +30,7 @@ void Compiler::createListingHeader() // destructor
 
   //line numbers and source statements should be aligned under the headings
   listingFile << "STAGE0:  " << "Jeff Caldwell, Kangmin Kim       " << ctime(&now) << "\n";
-  listingFile << "LINE NO." << "              SOURCE STATEMENT\n\n";
+  listingFile << "LINE NO." << "               SOURCE STATEMENT\n\n";
 }
 // private: uint lineNo = 0; // line numbers for the listing
 
@@ -145,8 +145,7 @@ void Compiler::prog()           // stage 0, production 1
 
 void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
 {								                //   code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
-  string x; 						        //   → 'program' NON_KEY_IDx ';'
-  // string x, y;						        //   → 'program' NON_KEY_IDx ';'
+  string x;						        //   → 'program' NON_KEY_IDx ';'
 
   if (token != "program")
   {
@@ -165,8 +164,6 @@ void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
   {
     processError("semicolon expected");
   }
-
-
 
   nextToken();
   code("program", x);
@@ -225,8 +222,8 @@ void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘
 }
 
 void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 'not' NON_KEY_IDy | LITy ) ';' 
-{							//   insert(x,whichType(y),CONSTANT,whichValue(y),YES,1)
-  string x, y;				//   ( CONST_STMTS | ε )
+{							              //   insert(x,whichType(y),CONSTANT,whichValue(y),YES,1)
+  string x, y;				      //   ( CONST_STMTS | ε )
 
   if (!isNonKeyId(token))
   {
@@ -428,15 +425,20 @@ bool Compiler::isSpecialSymbol(char c) const // - Jeff - all the tests need to b
 
 bool Compiler::isInteger(string s) const // Jeff - (needs testing)
 {
+  // this gets called on chars that will fail stoi() conversion
+  // so, if they fail, it's not an integer
   try
   {
-    stoi(s);
+    stoi(s); // give it a shot
   }
-  catch (invalid_argument&)
+  catch (exception &error)
   {
+    // oops! not an int!
+    // ignore the error and return false
     return false;
   }
 
+  // if we made it this far we have an integer!
   return true;
 }
 
