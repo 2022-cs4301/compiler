@@ -25,7 +25,7 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 006
 - [x] 007
 - [x] 008
-- [ ] 009 ? - (we catch the `=` error, but we need to catch the two `{` error first)
+- [x] 009
 - [x] 010
 - [x] 011
 - [x] 012
