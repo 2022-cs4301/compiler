@@ -56,7 +56,7 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 037
 - [x] 038
 - [x] 039
-- [x] 040
+- [ ] 040
 - [x] 041
 - [x] 042
 - [x] 043
@@ -67,7 +67,7 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 048
 - [x] 049
 - [x] 050
-- [ ] 051 - we should just check this one, there's a lot going on in this file
+- [x] 051
 - [x] 052 - Joel submitted this one last year!
 
 ## Compiler project for Algorithmic Languages and Compilers — Fall 2022

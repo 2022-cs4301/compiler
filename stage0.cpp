@@ -7,8 +7,6 @@
 #include <cstring>
 #include <string>
 
-
-
 Compiler::Compiler(char **argv) // constructor
 {
   sourceFile.open(argv[ 1 ]); // open sourceFile using argv[1] (input from argv[1])
@@ -153,8 +151,7 @@ void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
     processError("keyword \"program\" expected");
   }
 
-  x = nextToken();
-
+  x = nextToken(); // program name
 
   if (!isNonKeyId(token))
   {
@@ -716,7 +713,6 @@ void Compiler::emitStorage()
   }
 
 }
-
 
 string Compiler::nextToken() //returns the next token or end of file marker
 {
