@@ -1,5 +1,21 @@
 # compiler
 
+Note: Use Joel's `compilerFastCheck.sh`! Read the instructions. I should have the config set up properly but you'll need to copy the `stage0` dat files:
+
+From the `compiler` directory on `csunix`:
+
+```bash
+cp /usr/local/4301/data/stage0 input
+```
+
+Then, while still in the `compiler` directory:
+
+```bash
+mkdir output
+```
+
+Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print all kinds of magical information!
+
 ## DIFF CHECKLIST
 - [x] 001 
 - [x] 002
