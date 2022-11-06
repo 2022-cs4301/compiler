@@ -789,10 +789,13 @@ char Compiler::nextChar() //returns the next character or end of file marker
   // get the next character
   sourceFile.get(ch);
 
+  // set prevChar at the beginning so we know when to start
+  // a new line number. Needs to be static because this fn is
+  // called from outside repeatedly.
   static char prevChar = '\n';
 
-  if (sourceFile.eof())
-  {
+  if (!sourceFile)    // works like if(sourcefile.eof())
+  {                   // see Dr Motl's lecture from 11/01
     ch = END_OF_FILE;
     return ch;
   }
@@ -801,13 +804,24 @@ char Compiler::nextChar() //returns the next character or end of file marker
   {
     if (prevChar == '\n')
     {
+      // we have a new line, increment the
+      // line number and add it to the left
+      // with a separator
       listingFile << setw(5) << ++lineNo << '|';
     }
+    // add the current character
     listingFile << ch;
   }
 
+  // now set the previous character (static!) to the
+  // current character. When we reach a new line again,
+  // it will be reset to '\n'
   prevChar = ch;
+
+  // print output to stdout so we can make sure.
   cout << ch;
+
+  // done
   return ch;
 }
 
