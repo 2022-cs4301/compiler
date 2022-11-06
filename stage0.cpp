@@ -146,7 +146,7 @@ void Compiler::prog()           // stage 0, production 1
 
 void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
 {								                //   code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
-  string x;						        //   → 'program' NON_KEY_IDx ';'
+  string x;						          //   → 'program' NON_KEY_IDx ';'
 
   if (token != "program")
   {
@@ -161,7 +161,8 @@ void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
     processError("program name expected");
   }
 
-  if (nextToken() != ";")
+  // if (nextToken() != ";")
+  if (x != ";")
   {
     processError("semicolon expected");
   }
@@ -185,7 +186,7 @@ void Compiler::consts() //3. CONSTS → 'const' CONST_STMTS
 }
 
 void Compiler::vars() //4. VARS → 'var' VAR_STMTS
-{					  //   → ε
+{					            //   → ε
   if (token != "var")
   {
     processError("keyword \"var\" expected");
@@ -223,7 +224,7 @@ void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘
   }
   else
   {
-    nextToken();
+    // nextToken();
 
     code("end", ".");
   }
