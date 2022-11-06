@@ -5,6 +5,7 @@
 #include <stage0.h>
 #include <ctime>
 #include <cstring>
+#include <string>
 
 
 
@@ -236,6 +237,12 @@ void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 
     processError("illegal character '_'");
   }
 
+  //check for '__' in middle of var/const
+  if (token.find("__") != string::npos)
+  {
+    processError("illegal character '_'");
+  }
+
   x = token;
 
   if (nextToken() != "=")
@@ -321,6 +328,12 @@ void Compiler::varStmts() //token should be NON_KEY_ID
     processError("illegal character '_'");
   }
 
+  //check for '__' in middle of var/const
+  if (token.find("__") != string::npos)
+  {
+    processError("illegal character '_'");
+  }
+
   x = ids();
 
   if (token != ":")
@@ -384,9 +397,6 @@ string Compiler::ids() //8. IDS → NON_KEY_ID ( ',' IDS | ε )
   }
   return tempString;
 }
-
-
-
 
 
 /** TYPE CHECKING FUNCTIONS **/

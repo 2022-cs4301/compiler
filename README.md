@@ -15,7 +15,7 @@
 - [x] 012
 - [x] 013
 - [x] 014
-- [x] 015 ? - double check - all of the other errors don't write `.data` or `.bss`, this one does because the error is after the `.end` of the sourceFile.
+- [ ] 015 ? - double check - all of the other errors don't write `.data` or `.bss`, this one does because the error is after the `.end` of the sourceFile.
 - [ ] 016 ? - we catch the error but no text is written to asm. Is that okay?
 - [ ] 017 ? - not sure if this should be a non-keyword id error
 - [x] 018
@@ -49,7 +49,7 @@
 - [x] 046
 - [x] 047
 - [x] 048
-- [ ] 049 - need to catch double underscores in const names
+- [x] 049
 - [ ] 050 - I think this one is supposed to be a multiply defined error
 - [ ] 051 - we should just check this one, there's a lot going on in this file
 - [x] 052 - Joel submitted this one last year!
