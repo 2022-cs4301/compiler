@@ -11,48 +11,48 @@
 - [x] 008
 - [ ] 009 ? - (we catch the `=` error, but we might need to catch the two `{` error first)
 - [x] 010
-- [ ] 011
-- [ ] 012
-- [ ] 013
-- [ ] 014
-- [ ] 015
-- [ ] 016
-- [ ] 017
+- [x] 011
+- [x] 012
+- [x] 013
+- [x] 014
+- [x] 015
+- [ ] 016 ? - we catch the error but no text is written to asm. Is that okay?
+- [ ] 017 ? - not sure if this should be a non-keyword id error
 - [x] 018
-- [ ] 019
-- [ ] 020
-- [ ] 021
-- [ ] 022
-- [ ] 023
-- [ ] 024
-- [ ] 025
+- [x] 019
+- [ ] 020 - need to figure this one out
+- [x] 021
+- [x] 022
+- [ ] 023 - no asm written
+- [x] 024 - no asm written, I think that's fine on this one
+- [ ] 025 - I don't think the error's right on this one, should be catching the missing comment bracket
 - [x] 026
-- [ ] 027
+- [x] 027
 - [x] 028
 - [x] 029
-- [ ] 030
+- [ ] 030 - need to write extra 3 lines of whitespace in .lst
 - [x] 031
 - [x] 032
 - [x] 033
 - [x] 034
 - [x] 035
 - [x] 036
-- [ ] 037
-- [ ] 038
-- [ ] 039
-- [ ] 040
-- [ ] 041
-- [ ] 042
-- [ ] 043
-- [ ] 044
-- [ ] 045
-- [ ] 046
-- [ ] 047
-- [ ] 048
-- [ ] 049
-- [ ] 050
-- [ ] 051
-- [ ] 052
+- [x] 037
+- [x] 038 - no asm output but error occurs in line 0
+- [x] 039 - double check! Looks good but no guidance in .dat
+- [ ] 040 - I think we're supposed to catch an earlier semicolon error
+- [x] 041
+- [x] 042
+- [x] 043
+- [x] 044
+- [x] 045
+- [x] 046
+- [x] 047
+- [x] 048
+- [ ] 049 - need to catch double underscores in const names
+- [ ] 050 - I think this one is supposed to be a multiply defined error
+- [ ] 051 - we should just check this one, there's a lot going on in this file
+- [x] 052 - Joel submitted this one last year!
 
 ## Compiler project for Algorithmic Languages and Compilers — Fall 2022
 
