@@ -6,16 +6,16 @@
 - [x] 003
 - [x] 004
 - [x] 005
-- [ ] 006 ?
+- [ ] 006 ? - we catch an error, but I'm not sure about the error message
 - [x] 007
 - [x] 008
-- [ ] 009 ? - (we catch the `=` error, but we might need to catch the two `{` error first)
+- [ ] 009 ? - (we catch the `=` error, but we need to catch the two `{` error first)
 - [x] 010
 - [x] 011
 - [x] 012
 - [x] 013
 - [x] 014
-- [x] 015
+- [x] 015 ? - double check - all of the other errors don't write `.data` or `.bss`, this one does because the error is after the `.end` of the sourceFile.
 - [ ] 016 ? - we catch the error but no text is written to asm. Is that okay?
 - [ ] 017 ? - not sure if this should be a non-keyword id error
 - [x] 018
