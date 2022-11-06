@@ -220,8 +220,6 @@ void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘
   }
   else
   {
-    // nextToken();
-
     code("end", ".");
   }
 
