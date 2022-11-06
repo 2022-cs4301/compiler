@@ -31,7 +31,7 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 012
 - [x] 013
 - [x] 014
-- [x]
+- [x] 015
 - [ ] 016 ? - we catch the error but no text is written to asm. Is that okay?
 - [x] 017
 - [x] 018
