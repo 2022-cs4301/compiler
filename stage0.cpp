@@ -216,10 +216,19 @@ void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘
     processError("period expected");
   }
 
-  nextToken();
+  // check for tokens after .end
+  if (nextToken() != "$")
+  {
+    processError("syntax error: no tokens may appear after \"end.\"");
+  }
+  else
+  {
+    nextToken();
+
+    code("end", ".");
+  }
 
 
-  code("end", ".");
 }
 
 void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 'not' NON_KEY_IDy | LITy ) ';' 

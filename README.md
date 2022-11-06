@@ -31,7 +31,7 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 012
 - [x] 013
 - [x] 014
-- [ ] 015 ? - double check - all of the other errors don't write `.data` or `.bss`, this one does because the error is after the `.end` of the sourceFile. We might need to fix that (but I'm not sure).
+- [x]
 - [ ] 016 ? - we catch the error but no text is written to asm. Is that okay?
 - [ ] 017 ? - not sure if this should be a non-keyword id error
 - [x] 018
