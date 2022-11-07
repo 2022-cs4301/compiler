@@ -538,10 +538,24 @@ void Compiler::insert(
         if (isupper(name[ 0 ]))
         {
           symbolTable.insert({name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
+          cout << name.substr(0, 15) << "(\n"
+            << name << ",\n"
+            << inType << ",\n"
+            << inMode << ",\n"
+            << inValue << ",\n"
+            << inAlloc << ",\n"
+            << inUnits << "\n)\n";
         }
         else
         {
           symbolTable.insert({name.substr(0.15), SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
+          cout << name.substr(0, 15) << "(\n"
+            << genInternalName(inType) << ",\n"
+            << inType << ",\n"
+            << inMode << ",\n"
+            << inValue << ",\n"
+            << inAlloc << ",\n"
+            << inUnits << "\n)\n";
         }
       }
     }
