@@ -7,6 +7,10 @@
 #include <cstring>
 #include <string>
 
+// Kangmin Kim and Jeff Caldwell
+// CS 4301
+// Compiler - Stage0
+
 Compiler::Compiler(char **argv) // constructor
 {
   sourceFile.open(argv[ 1 ]); // open sourceFile using argv[1] (input from argv[1])
@@ -378,6 +382,7 @@ void Compiler::varStmts() //token should be NON_KEY_ID
     varStmts();
   }
 }
+
 string Compiler::ids() //8. IDS → NON_KEY_ID ( ',' IDS | ε )
 {
   string temp, tempString;
@@ -434,7 +439,7 @@ bool Compiler::isKeyword(string s) const
 
 bool Compiler::isSpecialSymbol(char c) const
 {
-  char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.', '*', '<', '>', '(', ')'};
+  char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.'};
 
   int len = *(&symbols + 1) - symbols;
 
