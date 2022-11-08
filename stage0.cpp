@@ -111,7 +111,7 @@ string Compiler::genInternalName(storeTypes stype) const
 /** PRODUCTIONS **/
 
 void Compiler::prog()           // stage 0, production 1
-{								// 1. PROG → PROG_STMT CONSTS VARS BEGIN_END_STMT
+{								                // 1. PROG → PROG_STMT CONSTS VARS BEGIN_END_STMT
   if (token != "program")
   {
     processError("keyword \"program\" expected");
@@ -404,7 +404,7 @@ string Compiler::ids() //8. IDS → NON_KEY_ID ( ',' IDS | ε )
 
 
 /** TYPE CHECKING FUNCTIONS **/
-bool Compiler::isKeyword(string s) const // - Jeff
+bool Compiler::isKeyword(string s) const
 {
 
   // instead of using a crazy, long string of conditional operators (||),
@@ -432,7 +432,7 @@ bool Compiler::isKeyword(string s) const // - Jeff
   return false;
 }
 
-bool Compiler::isSpecialSymbol(char c) const // - Jeff - all the tests need to be done!
+bool Compiler::isSpecialSymbol(char c) const
 {
   char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.', '*', '<', '>', '(', ')'};
 
@@ -449,26 +449,33 @@ bool Compiler::isSpecialSymbol(char c) const // - Jeff - all the tests need to b
   return false;
 }
 
-bool Compiler::isInteger(string s) const // Jeff - (needs testing)
+bool Compiler::isInteger(string s) const
 {
-  // this gets called on chars that will fail stoi() conversion
-  // so, if they fail, it's not an integer
-  try
+  // Check for '+' or '-' without digits
+  if (s.length() == 1)
   {
-    stoi(s); // give it a shot
-  }
-  catch (exception &error)
-  {
-    // oops! not an int!
-    // ignore the error and return false
-    return false;
+    if (s == "+" || s == "-")
+    {
+      return false;
+    }
   }
 
-  // if we made it this far we have an integer!
+  for (uint i = 0; i < s.length(); ++i)
+  {
+    // if the first character is not a '+' or a '-'
+    // of if any character is not a digit, it is not an integer
+    if (!(isdigit(s[ i ]) || s[ 0 ] == '+' || s[ 0 ] == '-'))
+    {
+      return false;
+    }
+
+  }
+
+  // if we made it this far we have an integer
   return true;
 }
 
-bool Compiler::isBoolean(string s) const // Jeff - (better test this one!) //11. BOOLEAN → 'true' | 'false'
+bool Compiler::isBoolean(string s) const
 {
   if (s == "true" || s == "false")
   {
@@ -480,8 +487,8 @@ bool Compiler::isBoolean(string s) const // Jeff - (better test this one!) //11.
   }
 }
 
-bool Compiler::isLiteral(string s) const // Test me! - Jeff
-{										 //10. LIT → INTEGER | BOOLEAN | 'not' BOOLEAN | '+' INTEGER | '-' INTEGER
+bool Compiler::isLiteral(string s) const //10. LIT → INTEGER | BOOLEAN | 'not' BOOLEAN | '+' INTEGER | '-' INTEGER
+{
   if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-')
   {
     return true;
@@ -490,7 +497,7 @@ bool Compiler::isLiteral(string s) const // Test me! - Jeff
   return false;
 }
 
-bool Compiler::isNonKeyId(string s) const // Test me! - Jeff
+bool Compiler::isNonKeyId(string s) const
 {
   if (!isInteger(s) && !isKeyword(s) && !isSpecialSymbol(s[ 0 ]))
   {
@@ -538,24 +545,10 @@ void Compiler::insert(
         if (isupper(name[ 0 ]))
         {
           symbolTable.insert({name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
-          cout << name.substr(0, 15) << "(\n"
-            << name << ",\n"
-            << inType << ",\n"
-            << inMode << ",\n"
-            << inValue << ",\n"
-            << inAlloc << ",\n"
-            << inUnits << "\n)\n";
         }
         else
         {
           symbolTable.insert({name.substr(0.15), SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
-          cout << name.substr(0, 15) << "(\n"
-            << genInternalName(inType) << ",\n"
-            << inType << ",\n"
-            << inMode << ",\n"
-            << inValue << ",\n"
-            << inAlloc << ",\n"
-            << inUnits << "\n)\n";
         }
       }
     }
@@ -573,10 +566,9 @@ void Compiler::insert(
 }
 
 
-// Needs testing! - Jeff
 storeTypes Compiler::whichType(string name) //tells which data type a name has
-{											//9. TYPE → 'integer'
-  storeTypes type;							//		  → 'boolean'
+{											                      //9. TYPE → 'integer'
+  storeTypes type;							            //		  → 'boolean'
 
 
   if (isLiteral(name))
@@ -604,7 +596,7 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
   return type;
 }
 
-// needs work and testing! - Jeff
+
 string Compiler::whichValue(string name) //tells which value a name has
 {
   string value;
@@ -856,9 +848,6 @@ char Compiler::nextChar() //returns the next character or end of file marker
   // current character. When we reach a new line again,
   // it will be reset to '\n'
   prevChar = ch;
-
-  // print output to stdout so we can make sure.
-  cout << ch;
 
   // done
   return ch;
