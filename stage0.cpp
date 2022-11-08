@@ -414,14 +414,11 @@ bool Compiler::isKeyword(string s) const
 
   // instead of using a crazy, long string of conditional operators (||),
   // just make an array and loop through that
-  string keywords[ 23 ] = {
+  string keywords[ 10 ] = {
     "program", "const", "var",
     "integer", "boolean", "begin",
     "end", "true", "false",
-    "not", "mod", "div", "and",
-    "or", "read", "write", "if",
-    "then", "else", "while",
-    "do", "repeat", "until"
+    "not"
   };
 
   int len = *(&keywords + 1) - keywords; // length of keywords
