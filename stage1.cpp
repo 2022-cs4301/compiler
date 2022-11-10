@@ -762,7 +762,6 @@ string Compiler::nextToken() //returns the next token or end of file marker
           token += ch;
           nextChar();
         }
-
         else if (token == "<" && (ch == '>' || ch == '='))
         {
           token += ch;

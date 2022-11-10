@@ -1,16 +1,17 @@
-#ifndef STAGE0_H
-#define STAGE0_H
+#ifndef STAGE1_H
+#define STAGE1_H
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <map>
+#include <stack>
 
 using namespace std;
 
 const char END_OF_FILE = '$';      // arbitrary choice
 
-enum storeTypes {INTEGER, BOOLEAN, PROG_NAME};
+enum storeTypes {INTEGER, BOOLEAN, PROG_NAME, UNKNOWN};
 enum modes {VARIABLE, CONSTANT};
 enum allocation {YES, NO};
 
@@ -117,6 +118,19 @@ public:
   void varStmts();       // stage 0, production 7
   string ids();          // stage 0, production 8
 
+  void execStmts();      // stage 1, production 2
+  void execStmt();       // stage 1, production 3
+  void assignStmt();     // stage 1, production 4
+  void readStmt();       // stage 1, production 5
+  void writeStmt();      // stage 1, production 7
+  void express();        // stage 1, production 9
+  void expresses();      // stage 1, production 10
+  void term();           // stage 1, production 11
+  void terms();          // stage 1, production 12
+  void factor();         // stage 1, production 13
+  void factors();        // stage 1, production 14
+  void part();           // stage 1, production 15
+
   // Helper functions for the Pascallite lexicon
   bool isKeyword(string s) const;  // determines if s is a keyword
   bool isSpecialSymbol(char c) const; // determines if c is a special symbol
@@ -131,6 +145,10 @@ public:
   storeTypes whichType(string name); // tells which data type a name has
   string whichValue(string name); // tells which value a name has
   void code(string op, string operand1 = "", string operand2 = "");
+  void pushOperator(string op);
+  string popOperator();
+  void pushOperand(string operand);
+  string popOperand();
 
   // Emit Functions
   void emit(string label = "", string instruction = "", string operands = "",
@@ -138,6 +156,24 @@ public:
   void emitPrologue(string progName, string = "");
   void emitEpilogue(string = "", string = "");
   void emitStorage();
+  void emitReadCode(string operand, string = "");
+  void emitWriteCode(string operand, string = "");
+  void emitAssignCode(string operand1, string operand2);         // op2 = op1
+  void emitAdditionCode(string operand1, string operand2);       // op2 +  op1
+  void emitSubtractionCode(string operand1, string operand2);    // op2 -  op1
+  void emitMultiplicationCode(string operand1, string operand2); // op2 *  op1
+  void emitDivisionCode(string operand1, string operand2);       // op2 /  op1
+  void emitModuloCode(string operand1, string operand2);         // op2 %  op1
+  void emitNegationCode(string operand1, string = "");           // -op1
+  void emitNotCode(string operand1, string = "");                // !op1
+  void emitAndCode(string operand1, string operand2);            // op2 && op1
+  void emitOrCode(string operand1, string operand2);             // op2 || op1
+  void emitEqualityCode(string operand1, string operand2);       // op2 == op1
+  void emitInequalityCode(string operand1, string operand2);     // op2 != op1
+  void emitLessThanCode(string operand1, string operand2);       // op2 <  op1
+  void emitLessThanOrEqualToCode(string operand1, string operand2); // op2 <= op1
+  void emitGreaterThanCode(string operand1, string operand2);    // op2 >  op1
+  void emitGreaterThanOrEqualToCode(string operand1, string operand2); // op2 >= op1
 
   // Lexical routines
   char nextChar(); // returns the next character or END_OF_FILE marker
@@ -146,16 +182,26 @@ public:
   // Other routines
   string genInternalName(storeTypes stype) const;
   void processError(string err);
+  void freeTemp();
+  string getTemp();
+  string getLabel();
+  bool isTemporary(string s) const; // determines if s represents a temporary
 
 private:
   map<string, SymbolTableEntry> symbolTable;
   ifstream sourceFile;
   ofstream listingFile;
   ofstream objectFile;
-  string token;          // the next token
-  char ch;               // the next character of the source file
-  uint errorCount = 0;   // total number of errors encountered
-  uint lineNo = 0;       // line numbers for the listing
+  string token;               // the next token
+  char ch;                    // the next character of the source file
+  uint errorCount = 0;        // total number of errors encountered
+  uint lineNo = 0;            // line numbers for the listing
+
+  stack<string> operatorStk;  // operator stack
+  stack<string> operandStk;   // operand stack
+  int currentTempNo = -1;     // current temp number
+  int maxTempNo = -1;         // max temp number
+  string contentsOfAReg;      // symbolic contents of A register
 };
 
 #endif
