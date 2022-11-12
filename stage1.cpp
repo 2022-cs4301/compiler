@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <fstream>
-#include <stage0.h>
+#include <stage1.h>
 #include <ctime>
 #include <cstring>
 #include <string>
@@ -112,7 +112,7 @@ string Compiler::genInternalName(storeTypes stype) const
 
 
 
-/** PRODUCTIONS **/
+/** STAGE 0 PRODUCTIONS **/
 
 void Compiler::prog()           // stage 0, production 1
 {								                // 1. PROG → PROG_STMT CONSTS VARS BEGIN_END_STMT
@@ -146,9 +146,9 @@ void Compiler::prog()           // stage 0, production 1
   }
 }
 
-void Compiler::progStmt()       //2. PROG_STMT → 'program' NON_KEY_IDx ';'
-{								                //   code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
-  string x;						          //   → 'program' NON_KEY_IDx ';'
+void Compiler::progStmt()       // 2. PROG_STMT → 'program' NON_KEY_IDx ';'
+{								                //    code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
+  string x;						          //    → 'program' NON_KEY_IDx ';'
 
   if (token != "program")
   {
@@ -201,7 +201,6 @@ void Compiler::vars() //4. VARS → 'var' VAR_STMTS
 
 void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘end’, ‘.’)
 {
-
   if (token != "begin")
   {
     processError("keyword \"begin\" expected");
@@ -209,7 +208,20 @@ void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘
 
   if (nextToken() != "end")
   {
-    processError("keyword \"end\" expected");
+    // check for exec statements
+    if (!isNonKeyId(token) && token != "read" && token != "write")
+    {
+      // if no exec statement keywords, we need an "end" token
+      if (token != "end") // end statement
+      {
+        processError("keyword \"end\" expected");
+      }
+    }
+    else
+    {
+      // produce exec statements
+      execStmts();
+    }
   }
 
   if (nextToken() != ".")
@@ -222,11 +234,11 @@ void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘
   {
     processError("no tokens may appear after \"end.\"");
   }
+
   else
   {
     code("end", ".");
   }
-
 
 }
 
@@ -370,8 +382,6 @@ void Compiler::varStmts() //token should be NON_KEY_ID
     insert(x, BOOLEAN, VARIABLE, "1", YES, 1);
   }
 
-
-
   if (nextToken() != "begin" && !(isNonKeyId(token)))
   {
     processError("non-keyword identifier or \"begin\" expected");
@@ -407,6 +417,123 @@ string Compiler::ids() //8. IDS → NON_KEY_ID ( ',' IDS | ε )
   return tempString;
 }
 
+/** STAGE 1 PRODUCTIONS **/
+void Compiler::execStmts()  // -> EXEC_STMT | EXEC_STMTS
+{                           // -> ε
+  if (isNonKeyId(token) || token == "read" || token == "write")
+  {
+    execStmt();
+  }
+}
+
+void Compiler::execStmt()
+{
+  if (isNonKeyId(token)) // assignment statement
+  {
+    cout << "assignment token: " << token << "\n";
+    assignStmt();
+  }
+
+  else if (token == "read") // read statement
+  {
+    readStmt();
+  }
+
+  else if (token == "write") // write statement
+  {
+    cout << "write token: " << token << "\n";
+    writeStmt();
+  }
+}
+
+void Compiler::assignStmt()
+{
+
+}
+
+void Compiler::readStmt()
+{
+  string x, y;
+
+  // double check for "read" token
+  if (token != "read")
+  {
+    processError("keyword \"read\" expected");
+  }
+
+  // We have a read token. Advance to next token.
+  x = nextToken();
+
+  // Make sure it's a "("
+  if (x != "(")
+  {
+    processError("\"(\" expected");
+  }
+
+  // We have a left paren. Advance.
+  x = nextToken();
+
+  // collect non token ids
+  y = ids();
+
+  // look for a right paren
+  if (token == ")")
+  {
+    // end of read list, advance
+    x = nextToken();
+  }
+
+  // check for semicolon
+  if (x != ";")
+  {
+    processError("\";\" expected");
+  }
+
+  // we are at the end of readStmt, emit the readCode
+  emitReadCode(y);
+}
+
+void Compiler::writeStmt()
+{
+
+}
+
+void Compiler::express()
+{
+
+}
+
+void Compiler::expresses()
+{
+
+}
+
+void Compiler::term()
+{
+
+}
+
+void Compiler::terms()
+{
+
+}
+
+void Compiler::factor()
+{
+
+}
+
+void Compiler::factors()
+{
+
+}
+
+void Compiler::part()
+{
+
+}
+
+/** END PRODUCTIONS **/
 
 /** TYPE CHECKING FUNCTIONS **/
 bool Compiler::isKeyword(string s) const
@@ -414,11 +541,12 @@ bool Compiler::isKeyword(string s) const
 
   // instead of using a crazy, long string of conditional operators (||),
   // just make an array and loop through that
-  string keywords[ 10 ] = {
+  string keywords[ 16 ] = {
     "program", "const", "var",
     "integer", "boolean", "begin",
     "end", "true", "false",
-    "not"
+    "not", "mov", "div"
+    "and", "or", "read", "write"
   };
 
   int len = *(&keywords + 1) - keywords; // length of keywords
@@ -436,7 +564,11 @@ bool Compiler::isKeyword(string s) const
 
 bool Compiler::isSpecialSymbol(char c) const
 {
-  char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.'};
+  char symbols[ 12 ] = {
+    ':', ',', ';', '=',
+    '+', '-', '.', '*',
+    '(', ')', '>', '<',
+  };
 
   int len = *(&symbols + 1) - symbols;
 
@@ -630,23 +762,25 @@ string Compiler::whichValue(string name) //tells which value a name has
   return value;
 }
 
+/** EMIT FUNCTIONS **/
+
 void Compiler::code(string op, string operand1, string operand2)
 {
   if (op == "program")
   {
     emitPrologue(operand1);
   }
+
   else if (op == "end")
   {
     emitEpilogue();
   }
+
   else
   {
     processError("compiler error: function code called with illegal arguments " + op);
   }
 }
-
-/** EMIT FUNCTIONS **/
 
 void Compiler::emit(string label, string instruction, string operands, string comment)
 {
@@ -687,7 +821,7 @@ void Compiler::emitEpilogue(string operand1, string operand2)
 
 void Compiler::emitStorage()
 {
-  map<string, SymbolTableEntry>::iterator i = symbolTable.begin();
+  map<string, SymbolTableEntry>::iterator i;
   // emit("SECTION", ".data")
   //   for those entries in the symbolTable that have
   //     an allocation of YES and a storage mode of CONSTANT
@@ -717,8 +851,51 @@ void Compiler::emitStorage()
       emit(i->second.getInternalName(), "resd", i->second.getValue(), "; " + i->first);
     }
   }
-
 }
+
+void Compiler::emitReadCode(string operand, string operand2)
+{
+  string name;
+  uint i = 0;
+  // map<string, SymbolTableEntry>::iterator it;
+
+  while (i < operand.length())
+  {
+    name = "";
+
+    while (i < operand.length() && operand[ i ] != ',')
+    {
+      name = name + operand[ i ];
+      i++;
+    }
+
+    if (!name.empty())
+    {
+      SymbolTableEntry entry = symbolTable.find(name);
+
+      if (entry == symbolTable.end())
+      {
+        processError("symbol " + name + " is undefined");
+      }
+
+      if (symbolTable.find(name)->second.getDataType() != INTEGER)
+      {
+        processError("Can't read variables of this type");
+      }
+
+      if (symbolTable.find(name)->second.getMode() != VARIABLE)
+      {
+        processError("Attempting to read to a read-only location");
+      }
+
+      // emit here
+      // emit("ReadInt");
+      // emit()
+    }
+  }
+}
+
+/** LEXER FUNCTIONS **/
 
 string Compiler::nextToken() //returns the next token or end of file marker
 {
@@ -730,6 +907,7 @@ string Compiler::nextToken() //returns the next token or end of file marker
       {
         while (nextChar() && ch != END_OF_FILE && ch != '}')
         {
+          // this is a comment
         }	// empty body, skip
 
         if (ch == END_OF_FILE)
@@ -762,11 +940,13 @@ string Compiler::nextToken() //returns the next token or end of file marker
           token += ch;
           nextChar();
         }
+
         else if (token == "<" && (ch == '>' || ch == '='))
         {
           token += ch;
           nextChar();
         }
+
         else if (token == ">" && ch == '=')
         {
           token += ch;
@@ -813,6 +993,8 @@ string Compiler::nextToken() //returns the next token or end of file marker
     }
   }
   token = token.substr(0, 15);
+
+  // cout << "Token: " << token << "\n";
 
   return token;
 }
