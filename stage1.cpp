@@ -490,7 +490,7 @@ void Compiler::readStmt()
   }
 
   // we are at the end of readStmt, emit the readCode
-  emitReadCode(y);
+  code("read", y);
 }
 
 void Compiler::writeStmt()
@@ -776,6 +776,11 @@ void Compiler::code(string op, string operand1, string operand2)
     emitEpilogue();
   }
 
+  else if (op == "read")
+  {
+    emitReadCode(operand1, operand2);
+  }
+
   else
   {
     processError("compiler error: function code called with illegal arguments " + op);
@@ -886,9 +891,8 @@ void Compiler::emitReadCode(string operand, string operand2)
         processError("Attempting to read to a read-only location");
       }
 
-      // emit here
-      // emit("ReadInt");
-      // emit()
+      emit("", "call", "ReadInt", "; read int; value placed in eax");
+      emit("", "mov", "[" + symbolTable.at(name).getInternalName() + "],eax", "; store eax at " + operand);
     }
   }
 }
