@@ -201,44 +201,45 @@ void Compiler::vars() //4. VARS → 'var' VAR_STMTS
 
 void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘end’, ‘.’)
 {
+  string x;
+
   if (token != "begin")
   {
     processError("keyword \"begin\" expected");
   }
 
-  if (nextToken() != "end")
+  // advance
+  nextToken();
+
+  if (token != "end")
   {
     // check for exec statements
-    if (!isNonKeyId(token) && token != "read" && token != "write")
+    if (isNonKeyId(token) || token == "read" || token == "write")
     {
-      // if no exec statement keywords, we need an "end" token
-      if (token != "end") // end statement
-      {
-        processError("keyword \"end\" expected");
-      }
+      execStmts();
     }
     else
     {
-      // produce exec statements
-      execStmts();
+      processError("keyword \"end\" expected");
+    }
+
+    if (nextToken() != ".")
+    {
+      processError("period expected");
+    }
+
+    // check for tokens after .end
+    if (nextToken() != "$")
+    {
+      processError("no tokens may appear after \"end.\"");
+    }
+
+    else
+    {
+      code("end", ".");
     }
   }
 
-  if (nextToken() != ".")
-  {
-    processError("period expected");
-  }
-
-  // check for tokens after .end
-  if (nextToken() != "$")
-  {
-    processError("no tokens may appear after \"end.\"");
-  }
-
-  else
-  {
-    code("end", ".");
-  }
 
 }
 
@@ -446,9 +447,10 @@ void Compiler::execStmt()
   }
 }
 
+
 void Compiler::assignStmt()
 {
-
+  return;
 }
 
 void Compiler::readStmt()
@@ -491,11 +493,22 @@ void Compiler::readStmt()
 
   // we are at the end of readStmt, emit the readCode
   code("read", y);
+  x = nextToken();
+
+  if (token != "end" && token != "read" && token != "write" && !(isNonKeyId(token)))
+  {
+    processError("non-keyword identifier or \"begin\" expected");
+  }
+
+  if (token == "read")
+  {
+    readStmt();
+  }
 }
 
 void Compiler::writeStmt()
 {
-
+  return;
 }
 
 void Compiler::express()
@@ -771,14 +784,14 @@ void Compiler::code(string op, string operand1, string operand2)
     emitPrologue(operand1);
   }
 
-  else if (op == "end")
-  {
-    emitEpilogue();
-  }
-
   else if (op == "read")
   {
     emitReadCode(operand1, operand2);
+  }
+
+  else if (op == "end")
+  {
+    emitEpilogue();
   }
 
   else
@@ -862,7 +875,6 @@ void Compiler::emitReadCode(string operand, string operand2)
 {
   string name;
   uint i = 0;
-  // map<string, SymbolTableEntry>::iterator it;
 
   while (i < operand.length())
   {
@@ -892,7 +904,7 @@ void Compiler::emitReadCode(string operand, string operand2)
       }
 
       emit("", "call", "ReadInt", "; read int; value placed in eax");
-      emit("", "mov", "[" + symbolTable.at(name).getInternalName() + "],eax", "; store eax at " + operand);
+      emit("", "mov", "[" + symbolTable.at(name).getInternalName() + "],eax", "; store eax at " + name);
     }
   }
 }
