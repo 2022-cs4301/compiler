@@ -423,7 +423,14 @@ void Compiler::execStmts()  // -> EXEC_STMT | EXEC_STMTS
 {                           // -> ε
   if (isNonKeyId(token) || token == "read" || token == "write")
   {
-    execStmt();
+    cout << "execStmts token: " << token << '\n';
+    execStmt();  // token will be at end of last exec statement
+    nextToken(); // advance token
+    execStmts(); // recurse
+  }
+  else if (token == "end")
+  {
+    processError("non - keyword identifier, \"read\", \"write\", or \"begin\" expected");
   }
 }
 
@@ -431,20 +438,25 @@ void Compiler::execStmt()
 {
   if (isNonKeyId(token)) // assignment statement
   {
-    cout << "assignment token: " << token << "\n";
+    // cout << "assignment token: " << token << "\n";
     assignStmt();
   }
 
   else if (token == "read") // read statement
   {
-    cout << "read token: " << token << "\n";
+    // cout << "read token: " << token << "\n";
     readStmt();
   }
 
   else if (token == "write") // write statement
   {
-    cout << "write token: " << token << "\n";
+    // cout << "write token: " << token << "\n";
     writeStmt();
+  }
+
+  else
+  { // error
+    processError("non-keyword id, \"read\", or \"write\" expected");
   }
 }
 
@@ -456,7 +468,9 @@ void Compiler::assignStmt()
 
 void Compiler::readStmt()
 {
-  string x, y;
+  string list; // read list
+  string listItem = "";    // list item
+  uint i;      // list counter
 
   // double check for "read" token
   if (token != "read")
@@ -465,45 +479,58 @@ void Compiler::readStmt()
   }
 
   // We have a read token. Advance to next token.
-  x = nextToken();
+  nextToken();
 
   // Make sure it's a "("
-  if (x != "(")
+  if (token != "(")
   {
     processError("\"(\" expected");
   }
 
-  // We have a left paren. Advance.
-  x = nextToken();
-
-  // collect non token ids
-  y = ids();
-
-  // look for a right paren
-  if (token == ")")
+  else
   {
-    // end of read list, advance
-    x = nextToken();
-  }
+    // We have a left paren. Advance token.
+    nextToken();
 
-  // check for semicolon
-  if (x != ";")
-  {
-    processError("\";\" expected");
-  }
+    // collect non token ids, will advance token
+    list = ids();
 
-  // we are at the end of readStmt, emit the readCode
-  code("read", y);
-  x = nextToken();
+    // loop through the characters of the list
+    for (i = 0; i < list.length(); i++)
+    {
+      if (list[ i ] == ',')
+      {
+        // if we have a ',', code current list item
+        code("read", listItem);
 
-  if (token != "end" && token != "read" && token != "write" && !(isNonKeyId(token)))
-  {
-    processError("non-keyword identifier or \"begin\" expected");
-  }
+        // reset list item for next characters
+        listItem = "";
+      }
+      else
+      {
+        // if we don't have a ',', add characters to the list item
+        listItem += list[ i ];
+      }
+    }
 
-  if (token == "read")
-  {
-    readStmt();
+    // code current list item
+    code("read", listItem);
+
+    // look for a right paren
+    // call to ids() advanced token, so no need to advance now
+    if (token != ")")
+    {
+      processError("',' or ')' expected after non-keyword identifier");
+    }
+
+    // advance token
+    nextToken();
+
+    // check for semicolon
+    if (token != ";")
+    {
+      processError("';' expected");
+    }
   }
 }
 
