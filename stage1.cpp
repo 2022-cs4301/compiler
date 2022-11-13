@@ -437,6 +437,7 @@ void Compiler::execStmt()
 
   else if (token == "read") // read statement
   {
+    cout << "read token: " << token << "\n";
     readStmt();
   }
 

@@ -1,9 +1,8 @@
 .vscode
-stage0
-stage0.o
+stage1
+stage1.o
+stage1main.o
 alldifs.txt
 allouts.txt
-stage0.o
-stage0main.o
 *.lst
-*.o
+*.asm
