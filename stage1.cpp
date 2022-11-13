@@ -1009,7 +1009,7 @@ void Compiler::emitWriteCode(string operand, string operand2)
 {
   string name;
   uint i = 0;
-  static bool definedStorage = false; // how should we use this?
+  static bool definedStorage = false;
 
   while (i < operand.length())
   {
@@ -1020,12 +1020,11 @@ void Compiler::emitWriteCode(string operand, string operand2)
       name = name + operand[ i ];
       i++;
     }
-
     
 
     if (!name.empty())
     {
-      if (symbolTable.find(name) == symbolTable.end())
+      if (symbolTable.find(name) == symbolTable.end() && definedStorage == false)
       { 
         processError("symbol " + name + " is undefined");
       }
@@ -1036,13 +1035,14 @@ void Compiler::emitWriteCode(string operand, string operand2)
         definedStorage = true;
       }
 
-      if (symbolTable.at(name).getDataType() == (INTEGER || BOOLEAN))
+      emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "] ", "; load " + name + " in eax ");
+      
+      if (symbolTable.at(name).getDataType() == INTEGER || symbolTable.at(name).getDataType() == BOOLEAN)
       {
-        emit("", "call", "WriteInt", "; write int; value placed in eax");
+        emit("", "call", "WriteInt", "; write int in eax to standard out");
       }
       
-      emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "]", "; store eax at " + name);
-      emit("", "call", "CrLf", "");
+      emit("", "call", "Crlf", "; write \\r\\n to standard out");
     }
   }
 }
