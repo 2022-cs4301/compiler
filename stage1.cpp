@@ -536,7 +536,70 @@ void Compiler::readStmt()
 
 void Compiler::writeStmt()
 {
-  return;
+  string list; // read list
+  string listItem = "";    // list item
+  uint i;      // list counter
+
+  // double check for "read" token
+  if (token != "write")
+  {
+    processError("keyword \"write\" expected");
+  }
+
+  // We have a read token. Advance to next token.
+  nextToken();
+
+  // Make sure it's a "("
+  if (token != "(")
+  {
+    processError("\"(\" expected");
+  }
+
+  else
+  {
+    // We have a left paren. Advance token.
+    nextToken();
+
+    // collect non token ids, will advance token
+    list = ids();
+
+    // loop through the characters of the list
+    for (i = 0; i < list.length(); i++)
+    {
+      if (list[ i ] == ',')
+      {
+        // if we have a ',', code current list item
+        code("write", listItem);
+
+        // reset list item for next characters
+        listItem = "";
+      }
+      else
+      {
+        // if we don't have a ',', add characters to the list item
+        listItem += list[ i ];
+      }
+    }
+
+    // code current list item
+    code("write", listItem);
+
+    // look for a right paren
+    // call to ids() advanced token, so no need to advance now
+    if (token != ")")
+    {
+      processError("',' or ')' expected after non-keyword identifier");
+    }
+
+    // advance token
+    nextToken();
+
+    // check for semicolon
+    if (token != ";")
+    {
+      processError("';' expected");
+    }
+  }
 }
 
 void Compiler::express()
@@ -817,6 +880,11 @@ void Compiler::code(string op, string operand1, string operand2)
     emitReadCode(operand1, operand2);
   }
 
+  else if (op == "write")
+  {
+    emitWriteCode(operand1, operand2);
+  }
+
   else if (op == "end")
   {
     emitEpilogue();
@@ -936,6 +1004,49 @@ void Compiler::emitReadCode(string operand, string operand2)
     }
   }
 }
+
+void Compiler::emitWriteCode(string operand, string operand2)
+{
+  string name;
+  uint i = 0;
+  static bool definedStorage = false; // how should we use this?
+
+  while (i < operand.length())
+  {
+    name = "";
+
+    while (i < operand.length() && operand[ i ] != ',')
+    {
+      name = name + operand[ i ];
+      i++;
+    }
+
+    
+
+    if (!name.empty())
+    {
+      if (symbolTable.find(name) == symbolTable.end())
+      { 
+        processError("symbol " + name + " is undefined");
+      }
+      
+      if (symbolTable.at(name).getInternalName() != name)
+      {
+        contentsOfAReg = name;
+        definedStorage = true;
+      }
+
+      if (symbolTable.at(name).getDataType() == (INTEGER || BOOLEAN))
+      {
+        emit("", "call", "WriteInt", "; write int; value placed in eax");
+      }
+      
+      emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "]", "; store eax at " + name);
+      emit("", "call", "CrLf", "");
+    }
+  }
+}
+
 
 /** LEXER FUNCTIONS **/
 
