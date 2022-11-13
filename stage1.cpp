@@ -871,19 +871,17 @@ void Compiler::emitReadCode(string operand, string operand2)
 
     if (!name.empty())
     {
-      SymbolTableEntry entry = symbolTable.find(name);
-
-      if (entry == symbolTable.end())
+      if (symbolTable.find(name) == symbolTable.end())
       {
         processError("symbol " + name + " is undefined");
       }
 
-      if (symbolTable.find(name)->second.getDataType() != INTEGER)
+      if (symbolTable.at(name).getDataType() != INTEGER)
       {
         processError("Can't read variables of this type");
       }
 
-      if (symbolTable.find(name)->second.getMode() != VARIABLE)
+      if (symbolTable.at(name).getMode() != VARIABLE)
       {
         processError("Attempting to read to a read-only location");
       }
