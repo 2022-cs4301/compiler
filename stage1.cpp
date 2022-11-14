@@ -1,10 +1,10 @@
-#include <iostream>
-#include <iomanip>
 #include <cstdlib>
-#include <fstream>
-#include <stage1.h>
-#include <ctime>
 #include <cstring>
+#include <ctime>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <stage1.h>
 #include <string>
 
 // Kangmin Kim and Jeff Caldwell
@@ -13,8 +13,9 @@
 
 Compiler::Compiler(char **argv) // constructor
 {
-  sourceFile.open(argv[ 1 ]); // open sourceFile using argv[1] (input from argv[1])
-  listingFile.open(argv[ 2 ]);// open listingFile using argv[2] (generate a listing to argv[2])
+  sourceFile.open(argv[ 1 ]);  // open sourceFile using argv[1] (input from argv[1])
+  listingFile.open(argv[ 2 ]); // open listingFile using argv[2] (generate a
+  // listing to argv[2])
   objectFile.open(argv[ 3 ]); // open objectFile using argv[3] (write object code to argv[3])
 }
 
@@ -31,40 +32,45 @@ void Compiler::createListingHeader() // destructor
   // print "LINE NO:", "SOURCE STATEMENT"
   time_t now = time(0);
 
-  //line numbers and source statements should be aligned under the headings
-  listingFile << "STAGE0:  " << "Jeff Caldwell, Kangmin Kim       " << ctime(&now) << "\n";
-  listingFile << "LINE NO." << "               SOURCE STATEMENT\n\n";
+  // line numbers and source statements should be aligned under the headings
+  listingFile << "STAGE0:  "
+    << "Jeff Caldwell, Kangmin Kim       " << ctime(&now) << "\n";
+  listingFile << "LINE NO."
+    << "               SOURCE STATEMENT\n\n";
 }
 // private: uint lineNo = 0; // line numbers for the listing
 
 void Compiler::parser()
 {
-  nextChar(); //returns the next character or end of file marker
+  nextChar(); // returns the next character or end of file marker
 
-  //ch must be initialized to the first character of the source file
-  if (nextToken() != "program") // string nextToken() returns the next token or END_OF_FILE marker
+  // ch must be initialized to the first character of the source file
+  if (nextToken() != "program") // string nextToken() returns the next token or
+    // END_OF_FILE marker
   {
     processError("keyword \"program\" expected"); // Output err to listingFile
     // Call exit() to terminate program
   }
   // a call to nextToken() has two effects
   // (1) the variable, token, is assigned the value of the next token
-  // (2) the next token is read from the source file in order to make   
+  // (2) the next token is read from the source file in order to make
   // the assignment. The value returned by nextToken() is also
   // the next token.
   prog();
-  //parser implements the grammar rules, calling first rule
+  // parser implements the grammar rules, calling first rule
 }
 
 void Compiler::createListingTrailer()
 {
-  listingFile << "\nCOMPILATION TERMINATED" << setw(6) << "" << right << errorCount << (errorCount != 1 ? " ERRORS " : " ERROR ") << "ENCOUNTERED\n";
+  listingFile << "\nCOMPILATION TERMINATED" << setw(6) << "" << right << errorCount
+    << (errorCount != 1 ? " ERRORS " : " ERROR ") << "ENCOUNTERED\n";
 }
 // private: uint errorCount = 0; // total number of errors encountered
 
 void Compiler::processError(string error)
 {
-  listingFile << "\n" << "Error: Line " << lineNo << ": " << error << "\n";
+  listingFile << "\n"
+    << "Error: Line " << lineNo << ": " << error << "\n";
   errorCount++;
   createListingTrailer();
   // close files to ensure output will be written
@@ -75,17 +81,19 @@ void Compiler::processError(string error)
   exit(EXIT_FAILURE);
 }
 /*
-  Note that insert() calls genInternalName(), a function that has one argument, the type of the name being
-  inserted. genInternalName() returns a unique internal name each time it is called, a name that is known to
-  be a valid symbolic name. As a visual aid, we use different forms of internal names for each data-type of interest.
-  The general form is:
-  dn
-  where d denotes the data-type of the name ("I" for integer, "B" for boolean) and n is a non-negative integer
-  starting at 0. The generated source code for 001.dat clearly shows the effects of calling
-  genInternalName(). The compiler itself will also need to generate names to appear in the object code, but
-  since the compiler is defining these itself, there is no need to convert these names into any other form. The
-  external and internal forms will be the same. The code for insert() treats any external name beginning with
-  an uppercase character as defined by the compiler.
+  Note that insert() calls genInternalName(), a function that has one argument,
+  the type of the name being inserted. genInternalName() returns a unique
+  internal name each time it is called, a name that is known to be a valid
+  symbolic name. As a visual aid, we use different forms of internal names for
+  each data-type of interest. The general form is: dn where d denotes the
+  data-type of the name ("I" for integer, "B" for boolean) and n is a
+  non-negative integer starting at 0. The generated source code for 001.dat
+  clearly shows the effects of calling genInternalName(). The compiler itself
+  will also need to generate names to appear in the object code, but since the
+  compiler is defining these itself, there is no need to convert these names
+  into any other form. The external and internal forms will be the same. The
+  code for insert() treats any external name beginning with an uppercase
+  character as defined by the compiler.
 */
 string Compiler::genInternalName(storeTypes stype) const
 {
@@ -110,12 +118,10 @@ string Compiler::genInternalName(storeTypes stype) const
   return iName;
 }
 
-
-
 /** STAGE 0 PRODUCTIONS **/
 
-void Compiler::prog()           // stage 0, production 1
-{								                // 1. PROG → PROG_STMT CONSTS VARS BEGIN_END_STMT
+void Compiler::prog() // stage 0, production 1
+{                     // 1. PROG → PROG_STMT CONSTS VARS BEGIN_END_STMT
   if (token != "program")
   {
     processError("keyword \"program\" expected");
@@ -146,9 +152,9 @@ void Compiler::prog()           // stage 0, production 1
   }
 }
 
-void Compiler::progStmt()       // 2. PROG_STMT → 'program' NON_KEY_IDx ';'
-{								                //    code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
-  string x;						          //    → 'program' NON_KEY_IDx ';'
+void Compiler::progStmt() // 2. PROG_STMT → 'program' NON_KEY_IDx ';'
+{                         //    code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
+  string x;             //    → 'program' NON_KEY_IDx ';'
 
   if (token != "program")
   {
@@ -172,8 +178,8 @@ void Compiler::progStmt()       // 2. PROG_STMT → 'program' NON_KEY_IDx ';'
   insert(x, PROG_NAME, CONSTANT, x, NO, 0);
 }
 
-void Compiler::consts() //3. CONSTS → 'const' CONST_STMTS
-{						            //   → ε
+void Compiler::consts() // 3. CONSTS → 'const' CONST_STMTS
+{                       //   → ε
   if (token != "const")
   {
     processError("keyword \"const\" expected");
@@ -185,8 +191,8 @@ void Compiler::consts() //3. CONSTS → 'const' CONST_STMTS
   constStmts();
 }
 
-void Compiler::vars() //4. VARS → 'var' VAR_STMTS
-{					            //   → ε
+void Compiler::vars() // 4. VARS → 'var' VAR_STMTS
+{                     //   → ε
   if (token != "var")
   {
     processError("keyword \"var\" expected");
@@ -199,7 +205,8 @@ void Compiler::vars() //4. VARS → 'var' VAR_STMTS
   varStmts();
 }
 
-void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘end’, ‘.’)
+void Compiler::beginEndStmt() // 5. BEGIN_END_STMT → 'begin' 'end' '.'
+// code(‘end’, ‘.’)
 {
   string x;
 
@@ -239,13 +246,12 @@ void Compiler::beginEndStmt() //5. BEGIN_END_STMT → 'begin' 'end' '.' code(‘
       code("end", ".");
     }
   }
-
-
 }
 
-void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 'not' NON_KEY_IDy | LITy ) ';' 
-{							              //   insert(x,whichType(y),CONSTANT,whichValue(y),YES,1)
-  string x, y;				      //   ( CONST_STMTS | ε )
+void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
+// 'not' NON_KEY_IDy | LITy ) ';'
+{                           //   insert(x,whichType(y),CONSTANT,whichValue(y),YES,1)
+  string x, y;            //   ( CONST_STMTS | ε )
 
   if (!isNonKeyId(token))
   {
@@ -258,7 +264,7 @@ void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 
     processError("illegal character '_'");
   }
 
-  //check for '__' in middle of var/const
+  // check for '__' in middle of var/const
   if (token.find("__") != string::npos)
   {
     processError("illegal character '_'");
@@ -317,7 +323,8 @@ void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 
 
   if (currentType != INTEGER && currentType != BOOLEAN)
   {
-    processError("data type of token on the right - hand side must be INTEGER or BOOLEAN");
+    processError("data type of token on the right - hand side must be INTEGER "
+                 "or BOOLEAN");
   }
 
   insert(x, whichType(y), CONSTANT, whichValue(y), YES, 1);
@@ -335,7 +342,7 @@ void Compiler::constStmts() //6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy | 
   }
 }
 
-void Compiler::varStmts() //token should be NON_KEY_ID
+void Compiler::varStmts() // token should be NON_KEY_ID
 {
   string x, y;
   if (!isNonKeyId(token))
@@ -349,7 +356,7 @@ void Compiler::varStmts() //token should be NON_KEY_ID
     processError("illegal character '_'");
   }
 
-  //check for '__' in middle of var/const
+  // check for '__' in middle of var/const
   if (token.find("__") != string::npos)
   {
     processError("illegal character '_'");
@@ -394,7 +401,7 @@ void Compiler::varStmts() //token should be NON_KEY_ID
   }
 }
 
-string Compiler::ids() //8. IDS → NON_KEY_ID ( ',' IDS | ε )
+string Compiler::ids() // 8. IDS → NON_KEY_ID ( ',' IDS | ε )
 {
   string temp, tempString;
 
@@ -419,8 +426,8 @@ string Compiler::ids() //8. IDS → NON_KEY_ID ( ',' IDS | ε )
 }
 
 /** STAGE 1 PRODUCTIONS **/
-void Compiler::execStmts()  // -> EXEC_STMT | EXEC_STMTS
-{                           // -> ε
+void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
+{                          // -> ε
   if (isNonKeyId(token) || token == "read" || token == "write")
   {
     cout << "execStmts token: " << token << '\n';
@@ -460,7 +467,6 @@ void Compiler::execStmt()
   }
 }
 
-
 void Compiler::assignStmt()
 {
   return;
@@ -468,9 +474,9 @@ void Compiler::assignStmt()
 
 void Compiler::readStmt()
 {
-  string list; // read list
-  string listItem = "";    // list item
-  uint i;      // list counter
+  string list;          // read list
+  string listItem = ""; // list item
+  uint i;               // list counter
 
   // double check for "read" token
   if (token != "read")
@@ -536,17 +542,17 @@ void Compiler::readStmt()
 
 void Compiler::writeStmt()
 {
-  string list; // read list
-  string listItem = "";    // list item
-  uint i;      // list counter
+  string list;          // read list
+  string listItem = ""; // list item
+  uint i;               // list counter
 
-  // double check for "read" token
+  // double check for "write" token
   if (token != "write")
   {
     processError("keyword \"write\" expected");
   }
 
-  // We have a read token. Advance to next token.
+  // We have a write token. Advance to next token.
   nextToken();
 
   // Make sure it's a "("
@@ -603,39 +609,25 @@ void Compiler::writeStmt()
 }
 
 void Compiler::express()
-{
-
-}
+{}
 
 void Compiler::expresses()
-{
-
-}
+{}
 
 void Compiler::term()
-{
-
-}
+{}
 
 void Compiler::terms()
-{
-
-}
+{}
 
 void Compiler::factor()
-{
-
-}
+{}
 
 void Compiler::factors()
-{
-
-}
+{}
 
 void Compiler::part()
-{
-
-}
+{}
 
 /** END PRODUCTIONS **/
 
@@ -645,13 +637,22 @@ bool Compiler::isKeyword(string s) const
 
   // instead of using a crazy, long string of conditional operators (||),
   // just make an array and loop through that
-  string keywords[ 16 ] = {
-    "program", "const", "var",
-    "integer", "boolean", "begin",
-    "end", "true", "false",
-    "not", "mov", "div"
-    "and", "or", "read", "write"
-  };
+  string keywords[ 16 ] = {"program",
+    "const",
+    "var",
+    "integer",
+    "boolean",
+    "begin",
+    "end",
+    "true",
+    "false",
+    "not",
+    "mov",
+    "div"
+    "and",
+    "or",
+    "read",
+    "write"};
 
   int len = *(&keywords + 1) - keywords; // length of keywords
 
@@ -669,9 +670,7 @@ bool Compiler::isKeyword(string s) const
 bool Compiler::isSpecialSymbol(char c) const
 {
   char symbols[ 12 ] = {
-    ':', ',', ';', '=',
-    '+', '-', '.', '*',
-    '(', ')', '>', '<',
+    ':', ',', ';', '=', '+', '-', '.', '*', '(', ')', '>', '<',
   };
 
   int len = *(&symbols + 1) - symbols;
@@ -706,7 +705,6 @@ bool Compiler::isInteger(string s) const
     {
       return false;
     }
-
   }
 
   // if we made it this far we have an integer
@@ -725,7 +723,8 @@ bool Compiler::isBoolean(string s) const
   }
 }
 
-bool Compiler::isLiteral(string s) const //10. LIT → INTEGER | BOOLEAN | 'not' BOOLEAN | '+' INTEGER | '-' INTEGER
+bool Compiler::isLiteral(string s) const // 10. LIT → INTEGER | BOOLEAN | 'not'
+// BOOLEAN | '+' INTEGER | '-' INTEGER
 {
   if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-')
   {
@@ -747,13 +746,10 @@ bool Compiler::isNonKeyId(string s) const
 
 /** ACTION ROUTINES **/
 
-void Compiler::insert(
-  string externalName,
-  storeTypes inType,
-  modes inMode,
-  string inValue,
-  allocation inAlloc,  //create symbol table entry for each identifier in list of external names
-  int inUnits)         //Multiple inserted names are illegal
+void Compiler::insert(string externalName, storeTypes inType, modes inMode, string inValue,
+                      allocation inAlloc, // create symbol table entry for each identifier in list
+                                          // of external names
+                      int inUnits)        // Multiple inserted names are illegal
 {
   string name;
   uint i = 0;
@@ -782,11 +778,13 @@ void Compiler::insert(
       {
         if (isupper(name[ 0 ]))
         {
-          symbolTable.insert({name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
+          symbolTable.insert(
+              {name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
         }
         else
         {
-          symbolTable.insert({name.substr(0.15), SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
+          symbolTable.insert({name.substr(0.15), SymbolTableEntry(genInternalName(inType), inType, inMode,
+            inValue, inAlloc, inUnits)});
         }
       }
     }
@@ -803,11 +801,9 @@ void Compiler::insert(
   }
 }
 
-
-storeTypes Compiler::whichType(string name) //tells which data type a name has
-{											                      //9. TYPE → 'integer'
-  storeTypes type;							            //		  → 'boolean'
-
+storeTypes Compiler::whichType(string name) // tells which data type a name has
+{                                           // 9. TYPE → 'integer'
+  storeTypes type;                        //		  → 'boolean'
 
   if (isLiteral(name))
   {
@@ -820,7 +816,7 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
       type = BOOLEAN;
     }
   }
-  else //name is an identifier and hopefully a constant
+  else // name is an identifier and hopefully a constant
   {
     if (symbolTable.find(name) != symbolTable.end())
     {
@@ -834,8 +830,7 @@ storeTypes Compiler::whichType(string name) //tells which data type a name has
   return type;
 }
 
-
-string Compiler::whichValue(string name) //tells which value a name has
+string Compiler::whichValue(string name) // tells which value a name has
 {
   string value;
 
@@ -852,7 +847,7 @@ string Compiler::whichValue(string name) //tells which value a name has
     else
       value = name;
   }
-  else //name is an identifier and hopefully a constant
+  else // name is an identifier and hopefully a constant
   {
     if (symbolTable.find(name) != symbolTable.end())
     {
@@ -919,12 +914,12 @@ void Compiler::emitPrologue(string progName, string operand2)
 
   time_t now = time(0);
   objectFile << "; Kangmin Kim, Jeff Caldwell       " << setw(8) << right << ctime(&now);
-  objectFile << "%INCLUDE \"Along32.inc\"\n" << "%INCLUDE \"Macros_Along.inc\"\n\n";
+  objectFile << "%INCLUDE \"Along32.inc\"\n"
+    << "%INCLUDE \"Macros_Along.inc\"\n\n";
 
   emit("SECTION", ".text");
   emit("global", "_start", "", "; program " + progName + "\n");
   emit("_start:");
-
 }
 
 void Compiler::emitEpilogue(string operand1, string operand2)
@@ -960,7 +955,7 @@ void Compiler::emitStorage()
 
   for (i = symbolTable.begin(); i != symbolTable.end(); i++)
   {
-    if (i->second.getAlloc() == YES && i-> second.getMode() == VARIABLE)
+    if (i->second.getAlloc() == YES && i->second.getMode() == VARIABLE)
     {
       emit(i->second.getInternalName(), "resd", i->second.getValue(), "; " + i->first);
     }
@@ -1020,15 +1015,14 @@ void Compiler::emitWriteCode(string operand, string operand2)
       name = name + operand[ i ];
       i++;
     }
-    
 
     if (!name.empty())
     {
       if (symbolTable.find(name) == symbolTable.end() && definedStorage == false)
-      { 
+      {
         processError("symbol " + name + " is undefined");
       }
-      
+
       if (symbolTable.at(name).getInternalName() != name)
       {
         contentsOfAReg = name;
@@ -1036,21 +1030,20 @@ void Compiler::emitWriteCode(string operand, string operand2)
       }
 
       emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "] ", "; load " + name + " in eax ");
-      
+
       if (symbolTable.at(name).getDataType() == INTEGER || symbolTable.at(name).getDataType() == BOOLEAN)
       {
         emit("", "call", "WriteInt", "; write int in eax to standard out");
       }
-      
+
       emit("", "call", "Crlf", "; write \\r\\n to standard out");
     }
   }
 }
 
-
 /** LEXER FUNCTIONS **/
 
-string Compiler::nextToken() //returns the next token or end of file marker
+string Compiler::nextToken() // returns the next token or end of file marker
 {
   token = "";
   while (token == "")
@@ -1061,7 +1054,7 @@ string Compiler::nextToken() //returns the next token or end of file marker
         while (nextChar() && ch != END_OF_FILE && ch != '}')
         {
           // this is a comment
-        }	// empty body, skip
+        } // empty body, skip
 
         if (ch == END_OF_FILE)
         {
@@ -1111,8 +1104,7 @@ string Compiler::nextToken() //returns the next token or end of file marker
       {
         token += ch;
 
-        while (nextChar() && ((islower(ch) || isdigit(ch) || ch == '_')
-          && ch != END_OF_FILE))
+        while (nextChar() && ((islower(ch) || isdigit(ch) || ch == '_') && ch != END_OF_FILE))
           token += ch;
 
         if (ch == END_OF_FILE)
@@ -1152,7 +1144,7 @@ string Compiler::nextToken() //returns the next token or end of file marker
   return token;
 }
 
-char Compiler::nextChar() //returns the next character or end of file marker
+char Compiler::nextChar() // returns the next character or end of file marker
 {
   // get the next character
   sourceFile.get(ch);
@@ -1162,8 +1154,8 @@ char Compiler::nextChar() //returns the next character or end of file marker
   // called from outside repeatedly.
   static char prevChar = '\n';
 
-  if (!sourceFile)    // works like if(sourcefile.eof())
-  {                   // see Dr Motl's lecture from 11/01
+  if (!sourceFile) // works like if(sourcefile.eof())
+  {                // see Dr Motl's lecture from 11/01
     ch = END_OF_FILE;
     return ch;
   }
