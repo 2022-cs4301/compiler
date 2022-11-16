@@ -674,7 +674,7 @@ bool Compiler::isKeyword(string s) const
 bool Compiler::isSpecialSymbol(char c) const
 {
   char symbols[ 12 ] = {
-    ':', ',', ';', '=', '+', '-', '.', '*', '(', ')', '>', '<',
+    ':', ',', ';', '=', '+', '-', '.', '*', '(', ')', '>', '<'
   };
 
   int len = *(&symbols + 1) - symbols;
