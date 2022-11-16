@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <stage1.h>
+#include "stage1.h"
 #include <string>
 
 // Kangmin Kim and Jeff Caldwell
@@ -508,6 +508,7 @@ void Compiler::readStmt()
       {
         // if we have a ',', code current list item
         code("read", listItem);
+        contentsOfAReg = listItem;
 
         // reset list item for next characters
         listItem = "";
@@ -521,6 +522,7 @@ void Compiler::readStmt()
 
     // code current list item
     code("read", listItem);
+    contentsOfAReg = listItem;
 
     // look for a right paren
     // call to ids() advanced token, so no need to advance now
@@ -576,6 +578,7 @@ void Compiler::writeStmt()
       {
         // if we have a ',', code current list item
         code("write", listItem);
+        contentsOfAReg = listItem;
 
         // reset list item for next characters
         listItem = "";
@@ -589,6 +592,7 @@ void Compiler::writeStmt()
 
     // code current list item
     code("write", listItem);
+    contentsOfAReg = listItem;
 
     // look for a right paren
     // call to ids() advanced token, so no need to advance now
