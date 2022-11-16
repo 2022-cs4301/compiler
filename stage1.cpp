@@ -508,7 +508,6 @@ void Compiler::readStmt()
       {
         // if we have a ',', code current list item
         code("read", listItem);
-        contentsOfAReg = listItem;
 
         // reset list item for next characters
         listItem = "";
@@ -522,7 +521,6 @@ void Compiler::readStmt()
 
     // code current list item
     code("read", listItem);
-    contentsOfAReg = listItem;
 
     // look for a right paren
     // call to ids() advanced token, so no need to advance now
@@ -999,6 +997,7 @@ void Compiler::emitReadCode(string operand, string operand2)
       }
 
       emit("", "call", "ReadInt", "; read int; value placed in eax");
+      contentsOfAReg = name;
       emit("", "mov", "[" + symbolTable.at(name).getInternalName() + "],eax", "; store eax at " + name);
     }
   }
@@ -1034,6 +1033,8 @@ void Compiler::emitWriteCode(string operand, string operand2)
       }
 
       emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "] ", "; load " + name + " in eax ");
+      
+      contentsOfAReg = name;
 
       if (symbolTable.at(name).getDataType() == INTEGER || symbolTable.at(name).getDataType() == BOOLEAN)
       {
