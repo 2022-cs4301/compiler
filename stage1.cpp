@@ -652,7 +652,7 @@ bool Compiler::isKeyword(string s) const
     "false",
     "not",
     "mov",
-    "div"
+    "div",
     "and",
     "or",
     "read",
