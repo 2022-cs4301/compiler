@@ -1026,15 +1026,10 @@ void Compiler::emitWriteCode(string operand, string operand2)
         processError("symbol " + name + " is undefined");
       }
 
-      if (symbolTable.at(name).getInternalName() != name)
-      {
+      if(contentsOfAReg != name) {
+        emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "] ", "; load " + name + " in eax ");
         contentsOfAReg = name;
-        definedStorage = true;
       }
-
-      emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "] ", "; load " + name + " in eax ");
-      
-      contentsOfAReg = name;
 
       if (symbolTable.at(name).getDataType() == INTEGER || symbolTable.at(name).getDataType() == BOOLEAN)
       {
