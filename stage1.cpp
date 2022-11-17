@@ -1,10 +1,10 @@
+#include "stage1.h"
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include "stage1.h"
 #include <string>
 
 // Kangmin Kim and Jeff Caldwell
@@ -13,10 +13,10 @@
 
 Compiler::Compiler(char **argv) // constructor
 {
-  sourceFile.open(argv[ 1 ]);  // open sourceFile using argv[1] (input from argv[1])
-  listingFile.open(argv[ 2 ]); // open listingFile using argv[2] (generate a
+  sourceFile.open(argv[1]);  // open sourceFile using argv[1] (input from argv[1])
+  listingFile.open(argv[2]); // open listingFile using argv[2] (generate a
   // listing to argv[2])
-  objectFile.open(argv[ 3 ]); // open objectFile using argv[3] (write object code to argv[3])
+  objectFile.open(argv[3]); // open objectFile using argv[3] (write object code to argv[3])
 }
 
 Compiler::~Compiler() //  close all open files
@@ -34,9 +34,9 @@ void Compiler::createListingHeader() // destructor
 
   // line numbers and source statements should be aligned under the headings
   listingFile << "STAGE0:  "
-    << "Jeff Caldwell, Kangmin Kim       " << ctime(&now) << "\n";
+              << "Jeff Caldwell, Kangmin Kim       " << ctime(&now) << "\n";
   listingFile << "LINE NO."
-    << "               SOURCE STATEMENT\n\n";
+              << "               SOURCE STATEMENT\n\n";
 }
 // private: uint lineNo = 0; // line numbers for the listing
 
@@ -46,7 +46,7 @@ void Compiler::parser()
 
   // ch must be initialized to the first character of the source file
   if (nextToken() != "program") // string nextToken() returns the next token or
-    // END_OF_FILE marker
+                                // END_OF_FILE marker
   {
     processError("keyword \"program\" expected"); // Output err to listingFile
     // Call exit() to terminate program
@@ -63,14 +63,14 @@ void Compiler::parser()
 void Compiler::createListingTrailer()
 {
   listingFile << "\nCOMPILATION TERMINATED" << setw(6) << "" << right << errorCount
-    << (errorCount != 1 ? " ERRORS " : " ERROR ") << "ENCOUNTERED\n";
+              << (errorCount != 1 ? " ERRORS " : " ERROR ") << "ENCOUNTERED\n";
 }
 // private: uint errorCount = 0; // total number of errors encountered
 
 void Compiler::processError(string error)
 {
   listingFile << "\n"
-    << "Error: Line " << lineNo << ": " << error << "\n";
+              << "Error: Line " << lineNo << ": " << error << "\n";
   errorCount++;
   createListingTrailer();
   // close files to ensure output will be written
@@ -146,7 +146,7 @@ void Compiler::prog() // stage 0, production 1
 
   beginEndStmt();
 
-  if (token[ 0 ] != END_OF_FILE)
+  if (token[0] != END_OF_FILE)
   {
     processError("no text may follow \"end\"");
   }
@@ -154,7 +154,7 @@ void Compiler::prog() // stage 0, production 1
 
 void Compiler::progStmt() // 2. PROG_STMT → 'program' NON_KEY_IDx ';'
 {                         //    code(’program’, x); insert(x,PROG_NAME,CONSTANT,x,NO,0)
-  string x;             //    → 'program' NON_KEY_IDx ';'
+  string x;               //    → 'program' NON_KEY_IDx ';'
 
   if (token != "program")
   {
@@ -250,8 +250,8 @@ void Compiler::beginEndStmt() // 5. BEGIN_END_STMT → 'begin' 'end' '.'
 
 void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
 // 'not' NON_KEY_IDy | LITy ) ';'
-{                           //   insert(x,whichType(y),CONSTANT,whichValue(y),YES,1)
-  string x, y;            //   ( CONST_STMTS | ε )
+{              //   insert(x,whichType(y),CONSTANT,whichValue(y),YES,1)
+  string x, y; //   ( CONST_STMTS | ε )
 
   if (!isNonKeyId(token))
   {
@@ -504,7 +504,7 @@ void Compiler::readStmt()
     // loop through the characters of the list
     for (i = 0; i < list.length(); i++)
     {
-      if (list[ i ] == ',')
+      if (list[i] == ',')
       {
         // if we have a ',', code current list item
         code("read", listItem);
@@ -515,7 +515,7 @@ void Compiler::readStmt()
       else
       {
         // if we don't have a ',', add characters to the list item
-        listItem += list[ i ];
+        listItem += list[i];
       }
     }
 
@@ -572,7 +572,7 @@ void Compiler::writeStmt()
     // loop through the characters of the list
     for (i = 0; i < list.length(); i++)
     {
-      if (list[ i ] == ',')
+      if (list[i] == ',')
       {
         // if we have a ',', code current list item
         code("write", listItem);
@@ -584,7 +584,7 @@ void Compiler::writeStmt()
       else
       {
         // if we don't have a ',', add characters to the list item
-        listItem += list[ i ];
+        listItem += list[i];
       }
     }
 
@@ -611,71 +611,79 @@ void Compiler::writeStmt()
 }
 
 void Compiler::express()
-{}
+{
+}
 
 void Compiler::expresses()
-{}
+{
+}
 
 void Compiler::term()
-{}
+{
+}
 
 void Compiler::terms()
-{}
+{
+}
 
 void Compiler::factor()
-{}
+{
+}
 
 void Compiler::factors()
-{}
+{
+}
 
 void Compiler::part()
-{}
+{
+}
 
 /** END PRODUCTIONS **/
 
 /** STACK FUNCTIONS **/
 
-  void Compiler::pushOperator(string op)
+void Compiler::pushOperator(string op)
+{
+  operatorStk.push(op);
+}
+
+string Compiler::popOperator()
+{
+  string op;
+
+  if (!operatorStk.empty())
   {
-    operatorStk.push(op);
+    op = operatorStk.top();
+    operatorStk.pop();
+  }
+  else
+  {
+    processError("Compiler error: operator stack underflow");
+  }
+  return op;
+}
+
+void Compiler::pushOperand(string operand)
+{
+  operandStk.push(operand);
+}
+
+string Compiler::popOperand()
+{
+  string op;
+  if (!operandStk.empty())
+  {
+    op = operandStk.top();
+    operandStk.pop();
   }
 
-  string Compiler::popOperator() 
+  else
   {
-    string op;
-
-    if(!operatorStk.empty()) 
-    {
-      op = operatorStk.top();
-      operatorStk.pop();
-    }
-    else {
-      processError("Compiler error: operator stack underflow");
-    }
-    return op;
+    processError("Compiler error: operand stack underflow");
   }
 
-  void Compiler::pushOperand(string operand)
-  {
-    operandStk.push(operand);
-  }
-
-  string Compiler::popOperand()
-  {
-    string op;
-    if(!operandStk.empty())
-    {
-      op = operandStk.top();
-      operandStk.pop();
-    }
-    
-    else
-    {
-      processError("Compiler error: operand stack underflow");
-    }
-
-    return op;
-  }
+  return op;
+}
 
 /** TYPE CHECKING FUNCTIONS **/
 bool Compiler::isKeyword(string s) const
@@ -683,28 +691,14 @@ bool Compiler::isKeyword(string s) const
 
   // instead of using a crazy, long string of conditional operators (||),
   // just make an array and loop through that
-  string keywords[ 16 ] = {"program",
-    "const",
-    "var",
-    "integer",
-    "boolean",
-    "begin",
-    "end",
-    "true",
-    "false",
-    "not",
-    "mov",
-    "div",
-    "and",
-    "or",
-    "read",
-    "write"};
+  string keywords[16] = {"program", "const", "var", "integer", "boolean", "begin", "end",  "true",
+                         "false",   "not",   "mov", "div",     "and",     "or",    "read", "write"};
 
   int len = *(&keywords + 1) - keywords; // length of keywords
 
   for (int i = 0; i < len; i++)
   {
-    if (keywords[ i ] == s)
+    if (keywords[i] == s)
     {
       return true;
     }
@@ -715,15 +709,13 @@ bool Compiler::isKeyword(string s) const
 
 bool Compiler::isSpecialSymbol(char c) const
 {
-  char symbols[ 12 ] = {
-    ':', ',', ';', '=', '+', '-', '.', '*', '(', ')', '>', '<'
-  };
+  char symbols[12] = {':', ',', ';', '=', '+', '-', '.', '*', '(', ')', '>', '<'};
 
   int len = *(&symbols + 1) - symbols;
 
   for (int i = 0; i < len; i++)
   {
-    if (symbols[ i ] == c)
+    if (symbols[i] == c)
     {
       return true;
     }
@@ -747,7 +739,7 @@ bool Compiler::isInteger(string s) const
   {
     // if the first character is not a '+' or a '-'
     // of if any character is not a digit, it is not an integer
-    if (!(isdigit(s[ i ]) || s[ 0 ] == '+' || s[ 0 ] == '-'))
+    if (!(isdigit(s[i]) || s[0] == '+' || s[0] == '-'))
     {
       return false;
     }
@@ -782,7 +774,7 @@ bool Compiler::isLiteral(string s) const // 10. LIT → INTEGER | BOOLEAN | 'not
 
 bool Compiler::isNonKeyId(string s) const
 {
-  if (!isInteger(s) && !isKeyword(s) && !isSpecialSymbol(s[ 0 ]))
+  if (!isInteger(s) && !isKeyword(s) && !isSpecialSymbol(s[0]))
   {
     return true;
   }
@@ -804,9 +796,9 @@ void Compiler::insert(string externalName, storeTypes inType, modes inMode, stri
   {
     name = "";
 
-    while (i < externalName.length() && externalName[ i ] != ',')
+    while (i < externalName.length() && externalName[i] != ',')
     {
-      name = name + externalName[ i ];
+      name = name + externalName[i];
       i++;
     }
 
@@ -822,15 +814,14 @@ void Compiler::insert(string externalName, storeTypes inType, modes inMode, stri
       }
       else
       {
-        if (isupper(name[ 0 ]))
+        if (isupper(name[0]))
         {
-          symbolTable.insert(
-              {name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
+          symbolTable.insert({name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
         }
         else
         {
-          symbolTable.insert({name.substr(0.15), SymbolTableEntry(genInternalName(inType), inType, inMode,
-            inValue, inAlloc, inUnits)});
+          symbolTable.insert({name.substr(0.15),
+                              SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
         }
       }
     }
@@ -849,7 +840,7 @@ void Compiler::insert(string externalName, storeTypes inType, modes inMode, stri
 
 storeTypes Compiler::whichType(string name) // tells which data type a name has
 {                                           // 9. TYPE → 'integer'
-  storeTypes type;                        //		  → 'boolean'
+  storeTypes type;                          //		  → 'boolean'
 
   if (isLiteral(name))
   {
@@ -961,7 +952,7 @@ void Compiler::emitPrologue(string progName, string operand2)
   time_t now = time(0);
   objectFile << "; Kangmin Kim, Jeff Caldwell       " << setw(8) << right << ctime(&now);
   objectFile << "%INCLUDE \"Along32.inc\"\n"
-    << "%INCLUDE \"Macros_Along.inc\"\n\n";
+             << "%INCLUDE \"Macros_Along.inc\"\n\n";
 
   emit("SECTION", ".text");
   emit("global", "_start", "", "; program " + progName + "\n");
@@ -1017,9 +1008,9 @@ void Compiler::emitReadCode(string operand, string operand2)
   {
     name = "";
 
-    while (i < operand.length() && operand[ i ] != ',')
+    while (i < operand.length() && operand[i] != ',')
     {
-      name = name + operand[ i ];
+      name = name + operand[i];
       i++;
     }
 
@@ -1057,9 +1048,9 @@ void Compiler::emitWriteCode(string operand, string operand2)
   {
     name = "";
 
-    while (i < operand.length() && operand[ i ] != ',')
+    while (i < operand.length() && operand[i] != ',')
     {
-      name = name + operand[ i ];
+      name = name + operand[i];
       i++;
     }
 
@@ -1070,7 +1061,8 @@ void Compiler::emitWriteCode(string operand, string operand2)
         processError("symbol " + name + " is undefined");
       }
 
-      if(contentsOfAReg != name) {
+      if (contentsOfAReg != name)
+      {
         emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "] ", "; load " + name + " in eax ");
         contentsOfAReg = name;
       }
