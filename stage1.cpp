@@ -810,10 +810,10 @@ bool Compiler::isNonKeyId(string s) const
 
 /** ACTION ROUTINES **/
 
-void Compiler::insert(string externalName, storeTypes inType, modes inMode, string inValue,
-                      allocation inAlloc, // create symbol table entry for each identifier in list
-                                          // of external names
-                      int inUnits)        // Multiple inserted names are illegal
+void Compiler::insert(string externalName, // create symbol table entry for each identifier in list
+                      storeTypes inType,   // of external names
+                      modes inMode,        // Multiple inserted names are illegal
+                      string inValue, allocation inAlloc, int inUnits)
 {
   string name;
   uint i = 0;
