@@ -820,7 +820,7 @@ void Compiler::insert(string externalName, storeTypes inType, modes inMode, stri
         }
         else
         {
-          symbolTable.insert({name.substr(0.15),
+          symbolTable.insert({name.substr(0, 15),
                               SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
         }
       }
