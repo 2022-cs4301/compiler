@@ -633,6 +633,50 @@ void Compiler::part()
 
 /** END PRODUCTIONS **/
 
+/** STACK FUNCTIONS **/
+
+  void Compiler::pushOperator(string op)
+  {
+    operatorStk.push(op);
+  }
+
+  string Compiler::popOperator() 
+  {
+    string op;
+
+    if(!operatorStk.empty()) 
+    {
+      op = operatorStk.top();
+      operatorStk.pop();
+    }
+    else {
+      processError("Compiler error: operator stack underflow");
+    }
+    return op;
+  }
+
+  void Compiler::pushOperand(string operand)
+  {
+    operandStk.push(operand);
+  }
+
+  string Compiler::popOperand()
+  {
+    string op;
+    if(!operandStk.empty())
+    {
+      op = operandStk.top();
+      operandStk.pop();
+    }
+    
+    else
+    {
+      processError("Compiler error: operand stack underflow");
+    }
+
+    return op;
+  }
+
 /** TYPE CHECKING FUNCTIONS **/
 bool Compiler::isKeyword(string s) const
 {
