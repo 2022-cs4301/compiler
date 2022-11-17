@@ -430,7 +430,6 @@ void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
 {                          // -> ε
   if (isNonKeyId(token) || token == "read" || token == "write")
   {
-    cout << "execStmts token: " << token << '\n';
     execStmt();  // token will be at end of last exec statement
     nextToken(); // advance token
     execStmts(); // recurse
@@ -469,7 +468,31 @@ void Compiler::execStmt()
 
 void Compiler::assignStmt()
 {
-  return;
+  // Redundant check for non-key id.
+  // We could probably just remove this, honestly.
+  if (!isNonKeyId(token))
+  {
+    processError("non-keyword id expected");
+  }
+  else
+  {
+    pushOperator(token);
+  }
+
+  nextToken();
+
+  if (token != ":=")
+  {
+    processError("\":=\" expected");
+  }
+  else
+  {
+    pushOperand(token);
+    // advance now, so we're on the necessary
+    // token when express() is called
+    nextToken();
+    express();
+  }
 }
 
 void Compiler::readStmt()
@@ -612,6 +635,9 @@ void Compiler::writeStmt()
 
 void Compiler::express()
 {
+  cout << "express token: " << token << "\n";
+  // current token should either be a term or
+  // another express
 }
 
 void Compiler::expresses()
