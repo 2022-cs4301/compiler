@@ -633,35 +633,297 @@ void Compiler::writeStmt()
   }
 }
 
-void Compiler::express()
+void Compiler::express() //stage 1 production 9
 {
-  cout << "express token: " << token << "\n";
+ if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
+	{
+		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", non - keyword identifier or integer expected" + token);
+	}
+  
+  term();
+
+  if (token == "<>" || token == "=" || token == "<=" || token == ">=" || token == "<" || token == ">")
+	{
+		expresses();
+	}
   // current token should either be a term or
   // another express
 }
 
 void Compiler::expresses()
 {
+	if (token != "=" && token != "<>" && token != "<=" && token != ">=" && token != "<" && token != ">")
+	{
+		processError("\"=\", \"<>\", \"<=\", \">=\", \"<\", or \">\" expected");  
+	}
+
+	pushOperator(token);
+	nextToken();
+
+	if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
+	{
+		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
+	}
+
+	term();
+
+	code(popOperator(), popOperand(), popOperand());
+
+	if (token == "=" || token == "<>" || token == "<=" || token == ">=" || token == "<" || token == ">")
+	{
+		expresses();
+	}
 }
 
 void Compiler::term()
 {
+  	if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
+	{
+		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
+	}
+
+	factor();
+
+	if (token == "-" || token == "+" || token == "or")
+	{
+	
+		terms();
+	}
 }
 
 void Compiler::terms()
 {
+  string first, second;
+
+	if (token != "+" && token != "-" && token != "or")
+	{
+		processError("\"+\", \"-\", or \"or\" expected");
+	}
+
+	pushOperator(token);
+	nextToken();
+
+	//error checks here
+	if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
+	{
+		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
+	}
+
+	factor();
+	second = popOperand();
+	first = popOperand();
+
+	code(popOperator(), second, first);
+
+	//error checks here
+	if (token == "+" || token == "-" || token == "or")
+	{
+		terms();
+	}
 }
 
 void Compiler::factor()
 {
+  	// {'not','true','false','(','+','-',INTEGER,NON_KEY_ID}
+	if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
+	{
+		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", INTEGER, or NON_KEY_ID expected");
+	}
+	
+	// PART 
+	part();
+
+  // FACTORS
+	if (token == "*" || token == "div" || token == "mod" || token == "and")
+	{
+		factors();
+	}
+
+	//{'<>','=','<=','>=','<','>',')',';','-','+','or'}
+	else if (isNonKeyId(token) || token == "<>" || token == "=" || token == "<=" || token == ">=" || token == "<" || token == ">" || token == ")" || token == ";" || token == "-" || token == "+" || token == "or" || token == "begin" || token == "do" || token == "then")
+	{
+  
+	}
+	
+	else 
+	{
+		processError("'(', integer, or non_key_id" + token + "expected");
+	}
 }
 
 void Compiler::factors()
 {
+
+	if (token != "*" && token != "div" && token != "mod" && token != "and")
+	{
+	  processError("\"*\", \"div\", \"mod\", or \"and\" expected");
+	}
+
+	pushOperator(token);
+	nextToken();
+	
+	if (token != "not" && token != "(" && !isInteger(token) && !isNonKeyId(token) && token != "+" && token != "-" && token != "true" && token != "false")
+	{
+		processError("expected '(', integer, or non-keyword id " + token);
+	}
+
+	part();
+	
+	code(popOperator(), popOperand(), popOperand());
+
+	if (token == "*" || token == "div" || token == "mod" || token == "and")
+	{
+		factors();
+	}
 }
 
 void Compiler::part()
 {
+	if (token == "not") // {'not'}
+	{
+		nextToken();
+		
+		if (token == "(") // (
+		{
+			nextToken();
+			
+			if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token)) 
+			{
+				processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
+			}
+			
+			express(); // EXPRESS
+			
+			if (token != ")") // )
+			{
+				processError(") expected");
+			}
+			
+			nextToken();
+			code("not", popOperand());
+		}
+
+		else if (isBoolean(token)) 
+		{
+			if (token == "true") 
+			{
+				pushOperand("false");
+			}
+			else 
+			{
+				pushOperand("true");
+			}
+      	nextToken();
+		}
+
+		else if (isNonKeyId(token)) 
+		{
+			code("not", token);
+			nextToken();
+		}
+	}
+
+	else if (token == "+")
+	{
+		nextToken();
+		if (token == "(") 
+		{
+			nextToken();
+			
+			if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
+			{
+				processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
+			}
+			
+			express();
+			
+			if (token != ")")
+			{
+				processError("expected ')'");
+			}
+			
+			nextToken();
+		}
+		
+		else if (isInteger(token) || isNonKeyId(token)) 
+		{
+			pushOperand(token);
+			nextToken();
+		}
+
+		else 
+		{
+			processError("expected '(', integer, or non-keyword id; found " + token);
+		}
+	}
+
+	else if (token == "-")
+	{
+		nextToken();
+		
+		if (token == "(") 
+		{
+			nextToken();
+			
+			if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
+			{
+				processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
+			}
+			
+			express();
+			
+			if (token != ")")
+			{
+				processError("expected ')'; found " + token);
+			}
+			
+			nextToken();
+			code("neg", popOperand());
+		}
+		
+		else if (isInteger(token)) 
+		{
+			pushOperand("-" + token);
+			nextToken();
+		}
+		
+		else if (isNonKeyId(token)) 
+		{
+			code("neg", token);
+			nextToken();
+		}
+	}
+
+	else if (token == "(") 
+	{
+		nextToken();
+		
+		if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
+		{
+			processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
+		}
+		
+		express();
+		
+		if (token != ")") 
+		{
+			processError(") expected; found " + token);
+		}
+		
+		nextToken();
+	}
+
+	else if (isInteger(token) || isBoolean(token) || isNonKeyId(token)) 
+	{
+		pushOperand(token);
+		nextToken();
+	}
+
+	else 
+	{
+		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, boolean, or non - keyword identifier expected");
+	}
+
 }
 
 /** END PRODUCTIONS **/
@@ -673,7 +935,7 @@ void Compiler::pushOperator(string op)
   operatorStk.push(op);
 }
 
-string Compiler::popOperator()
+string Compiler::popOperator() //pop name from operatorStk
 {
   string op;
 
@@ -689,12 +951,19 @@ string Compiler::popOperator()
   return op;
 }
 
-void Compiler::pushOperand(string operand)
+void Compiler::pushOperand(string operand) //push name onto operatorStk
 {
+  if (operand.length() == 0)																					
+	{
+		if (isInteger(operand) || operand == "true" || operand == "false")
+		{
+ 		  insert(operand, whichType(operand), CONSTANT, whichValue(operand), YES, 1);																																
+		}
+	}
   operandStk.push(operand);
 }
 
-string Compiler::popOperand()
+string Compiler::popOperand() //pop name from operandStk
 {
   string op;
   if (!operandStk.empty())
@@ -702,7 +971,6 @@ string Compiler::popOperand()
     op = operandStk.top();
     operandStk.pop();
   }
-
   else
   {
     processError("Compiler error: operand stack underflow");
@@ -710,6 +978,51 @@ string Compiler::popOperand()
 
   return op;
 }
+
+void Compiler::freeTemp()
+{
+	currentTempNo--;
+	if (currentTempNo < -1)
+	{
+		processError("compiler error: currentTempNo should be greater or equal than –1");
+	}
+}
+
+string Compiler::getTemp()
+{ 
+	string iName; // Temporary
+	currentTempNo++;
+  
+  static int T = currentTempNo; 
+
+  iName = "T" + to_string(T);
+
+	if (currentTempNo > maxTempNo)
+	{
+		insert(temp, UNKNOWN, VARIABLE, "1", NO, 1);
+		symbolTable.at(temp).setInternalName(temp);
+		maxTempNo++;
+	}
+	
+	return iName;
+}
+
+  string Compiler::getLabel()
+  {
+    string iName; // Label
+    static int L = 0;
+
+    iName = "L" + to_string(L);
+
+    L++;
+
+    return iName;
+
+  }
+  bool Compiler::isTemporary(string s) const // determines if s represents a temporary
+  {
+    return (s[0] == 'T');
+  }
 
 /** TYPE CHECKING FUNCTIONS **/
 bool Compiler::isKeyword(string s) const
@@ -761,7 +1074,7 @@ bool Compiler::isInteger(string s) const
     }
   }
 
-  for (uint i = 0; i < s.length(); ++i)
+  for (uint i = 0; i < s.length(); i++)
   {
     // if the first character is not a '+' or a '-'
     // of if any character is not a digit, it is not an integer
@@ -942,6 +1255,11 @@ void Compiler::code(string op, string operand1, string operand2)
   {
     emitWriteCode(operand1, operand2);
   }
+  
+  else if(op == "+")
+  {
+    emitAdditionCode(operand1, operand2);
+  }
 
   else if (op == "end")
   {
@@ -1102,6 +1420,139 @@ void Compiler::emitWriteCode(string operand, string operand2)
     }
   }
 }
+
+void Compiler::emitAssignCode(string operand, string operand2) // op2 = op1
+{	
+	if (operand.length() > 0)
+	{
+		processError("reference to undefined symbol " + operand);
+	}
+	
+	else if (operand2.length() > 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+
+	if (symbolTable.at(operand).getDataType() !=symbolTable.at(operand2).getDataType())
+	{
+		processError("incompatible types for operator ':='");
+	}
+
+	if (symbolTable.at(operand2).getMode() != VARIABLE)
+	{
+		processError("symbol on left-hand side of assignment must have a storage mode of VARIABLE");
+	}
+
+	if (operand == operand2)
+	{
+		return;
+	}
+
+	if (contentsOfAReg != symbolTable.at(operand).getInternalName())
+	{
+		emit("","mov","eax,[" + symbolTable.at(operand).getInternalName() + "]", "; AReg = " + operand);
+	}
+	emit("","mov","[" + symbolTable.at(operand2).getInternalName() + "],eax", "; " + operand2 + " = AReg");
+
+	contentsOfAReg = symbolTable.at(operand2).getInternalName();
+
+	if (isTemporary(operand))
+	{
+		freeTemp();
+	}
+
+}
+
+void emitAdditionCode(string operand1, string operand2) // op2 +  op1
+{
+  if (operand1.length() == 0)
+  {
+    processError("reference to undefined symbol on lhs");
+  }
+
+  else if(operand2.length() == 0)
+  {
+    processError("reference to undefined symbol on rhs")
+  }
+
+  if (symbolTable.at(operand1).getDataType() != INTEGER || symbolTable.at(operand2).getDataType() != INTEGER) // check both DataType is integer
+  {
+    processError("illegal type: binary '+' requires integer operands");
+  }
+
+  if (symbolTable.at(operand1).getInternalName() != contentsOfAReg && symbolTable.at(operand2).getInternalName() != contentsOfAReg && isTemporary(contentsOfAReg))
+	{ //if the A Register holds a temp not operand1 nor operand2 then 
+		emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+		
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+}
+
+void Compiler::emitDivisionCode(string operand1, string operand2) // op2 / op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol on lhs" + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol on rhs" + operand2);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != INTEGER || symbolTable.at(operand2).getDataType() != INTEGER)
+	{
+		processError("illegal type: binary 'div' requires integer operands");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	}
+
+	if (symbolTable.at(operand2).getInternalName() != contentsOfAReg)
+	{
+		emit("","mov","eax,[" + symbolTable.at(operand2).getInternalName() + "]","; AReg = " + operand2);
+
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+	
+
+	emit("", "cdq", "", "; sign extend dividend from eax to edx:eax");
+
+
+	emit("", "idiv", "dword [" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand2 + " div " + operand1);
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+  
+	symbolTable.at(contentsOfAReg).setDataType(INTEGER);
+
+	pushOperand(contentsOfAReg);
+}
+
 
 /** LEXER FUNCTIONS **/
 
