@@ -999,8 +999,8 @@ string Compiler::getTemp()
 
 	if (currentTempNo > maxTempNo)
 	{
-		insert(temp, UNKNOWN, VARIABLE, "1", NO, 1);
-		symbolTable.at(temp).setInternalName(temp);
+		insert(iName, UNKNOWN, VARIABLE, "1", NO, 1);
+		symbolTable.at(iName).setInternalName(iName);
 		maxTempNo++;
 	}
 	
@@ -1021,7 +1021,10 @@ string Compiler::getTemp()
   }
   bool Compiler::isTemporary(string s) const // determines if s represents a temporary
   {
-    return (s[0] == 'T');
+    if(s[0] == 'T')
+    return true;
+    else
+    return false;
   }
 
 /** TYPE CHECKING FUNCTIONS **/
@@ -1421,20 +1424,20 @@ void Compiler::emitWriteCode(string operand, string operand2)
   }
 }
 
-void Compiler::emitAssignCode(string operand, string operand2) // op2 = op1
+void Compiler::emitAssignCode(string operand1, string operand2) // op2 = op1
 {	
-	if (operand.length() > 0)
+	if (operand1.empty())
 	{
-		processError("reference to undefined symbol " + operand);
+		processError("reference to undefined symbol " + operand1);
 	}
 	
-	else if (operand2.length() > 0)
+	else if (operand2.empty())
 	{
 		processError("reference to undefined symbol " + operand2);
 	}
 
 
-	if (symbolTable.at(operand).getDataType() !=symbolTable.at(operand2).getDataType())
+	if (symbolTable.at(operand1).getDataType() !=symbolTable.at(operand2).getDataType())
 	{
 		processError("incompatible types for operator ':='");
 	}
@@ -1444,37 +1447,37 @@ void Compiler::emitAssignCode(string operand, string operand2) // op2 = op1
 		processError("symbol on left-hand side of assignment must have a storage mode of VARIABLE");
 	}
 
-	if (operand == operand2)
+	if (operand1 == operand2)
 	{
 		return;
 	}
 
-	if (contentsOfAReg != symbolTable.at(operand).getInternalName())
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
 	{
-		emit("","mov","eax,[" + symbolTable.at(operand).getInternalName() + "]", "; AReg = " + operand);
+		emit("","mov","eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
 	}
 	emit("","mov","[" + symbolTable.at(operand2).getInternalName() + "],eax", "; " + operand2 + " = AReg");
 
 	contentsOfAReg = symbolTable.at(operand2).getInternalName();
 
-	if (isTemporary(operand))
+	if (isTemporary(operand1))
 	{
 		freeTemp();
 	}
 
 }
 
-void emitAdditionCode(string operand1, string operand2) // op2 +  op1
+void Compiler::emitAdditionCode(string operand1, string operand2) // op2 +  op1
 {
-  if (operand1.length() == 0)
-  {
-    processError("reference to undefined symbol on lhs");
-  }
-
-  else if(operand2.length() == 0)
-  {
-    processError("reference to undefined symbol on rhs")
-  }
+  if (operand1.empty())
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (operand2.empty())
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
 
   if (symbolTable.at(operand1).getDataType() != INTEGER || symbolTable.at(operand2).getDataType() != INTEGER) // check both DataType is integer
   {
