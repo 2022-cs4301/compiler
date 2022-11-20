@@ -472,7 +472,7 @@ void Compiler::assignStmt()
   // We could probably just remove this, honestly.
   if (!isNonKeyId(token))
   {
-    processError("non-keyword id expected");
+    processError("non-keyword id expected"); 
   }
   else
   {
@@ -485,15 +485,17 @@ void Compiler::assignStmt()
   {
     processError("\":=\" expected");
   }
-  else
-  {
-    pushOperator(token);
-    // advance now, so we're on the necessary
-    // token when express() is called
-    nextToken();
-    express();
-  }
-  code(popOperator(), popOperand(),popOperand());
+  pushOperator(":=");	//push the operator ":=" onto the stack
+	nextToken();
+  
+	if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token) && token != ";")
+	{
+		processError("expected non_key_id, integer, \"not\", \"true\", \"false\", '(', '+', or '-'");
+	}
+  
+  express(); // EXPRESS
+
+  code(popOperator(), popOperand(), popOperand());
 }
 
 void Compiler::readStmt()
@@ -641,14 +643,13 @@ void Compiler::express() //stage 1 production 9
 		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", non - keyword identifier or integer expected" + token);
 	}
   
-  term();
+  term(); // TERM
 
   if (token == "<>" || token == "=" || token == "<=" || token == ">=" || token == "<" || token == ">")
 	{
-		expresses();
+		expresses(); // EXPRESSES
 	}
-  // current token should either be a term or
-  // another express
+
 }
 
 void Compiler::expresses()
@@ -658,7 +659,7 @@ void Compiler::expresses()
 		processError("\"=\", \"<>\", \"<=\", \">=\", \"<\", or \">\" expected");  
 	}
 
-	pushOperator(token);
+	pushOperator(token); // pushOperator(x)
 	nextToken();
 
 	if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
@@ -666,13 +667,13 @@ void Compiler::expresses()
 		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
 	}
 
-	term();
+	term(); // TERM
 
-	code(popOperator(), popOperand(), popOperand());
+	code(popOperator(), popOperand(), popOperand()); // code
 
 	if (token == "=" || token == "<>" || token == "<=" || token == ">=" || token == "<" || token == ">")
 	{
-		expresses();
+		expresses(); // EXPRESSES
 	}
 }
 
@@ -683,67 +684,59 @@ void Compiler::term()
 		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
 	}
 
-	factor();
+	factor(); // FACTOR
 
 	if (token == "-" || token == "+" || token == "or")
 	{
 	
-		terms();
+		terms(); // TERMS
 	}
 }
 
 void Compiler::terms()
 {
-  string first, second;
 
 	if (token != "+" && token != "-" && token != "or")
 	{
 		processError("\"+\", \"-\", or \"or\" expected");
 	}
 
-	pushOperator(token);
+	pushOperator(token); // ADD_LEVEL_OPx
 	nextToken();
 
-	//error checks here
 	if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
 	{
 		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
 	}
 
-	factor();
-	second = popOperand();
-	first = popOperand();
+	factor(); // FACTOR
 
-	code(popOperator(), second, first);
+	code(popOperator(), popOperand(), popOperand());
 
-	//error checks here
 	if (token == "+" || token == "-" || token == "or")
 	{
-		terms();
+		terms(); // TREMS
 	}
 }
 
 void Compiler::factor()
 {
-  	// {'not','true','false','(','+','-',INTEGER,NON_KEY_ID}
 	if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
 	{
 		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", INTEGER, or NON_KEY_ID expected");
 	}
 	
-	// PART 
-	part();
+	part(); // PART
 
-  // FACTORS
 	if (token == "*" || token == "div" || token == "mod" || token == "and")
 	{
-		factors();
+		factors(); // FACTORS 
 	}
 
 	//{'<>','=','<=','>=','<','>',')',';','-','+','or'}
 	else if (isNonKeyId(token) || token == "<>" || token == "=" || token == "<=" || token == ">=" || token == "<" || token == ">" || token == ")" || token == ";" || token == "-" || token == "+" || token == "or" || token == "begin" || token == "do" || token == "then")
 	{
-  
+    return;
 	}
 	
 	else 
@@ -760,7 +753,7 @@ void Compiler::factors()
 	  processError("\"*\", \"div\", \"mod\", or \"and\" expected");
 	}
 
-	pushOperator(token);
+	pushOperator(token); // pushOperator(x)
 	nextToken();
 	
 	if (token != "not" && token != "(" && !isInteger(token) && !isNonKeyId(token) && token != "+" && token != "-" && token != "true" && token != "false")
@@ -768,19 +761,19 @@ void Compiler::factors()
 		processError("expected '(', integer, or non-keyword id " + token);
 	}
 
-	part();
+	part(); // PART
 	
-	code(popOperator(), popOperand(), popOperand());
+	code(popOperator(), popOperand(), popOperand()); // code
 
 	if (token == "*" || token == "div" || token == "mod" || token == "and")
 	{
-		factors();
+		factors(); // FACTORS
 	}
 }
 
 void Compiler::part()
 {
-	if (token == "not") // {'not'}
+	if (token == "not") // 'not'
 	{
 		nextToken();
 		
@@ -801,33 +794,34 @@ void Compiler::part()
 			}
 			
 			nextToken();
-			code("not", popOperand());
+			code("not", popOperand()); // code
 		}
 
-		else if (isBoolean(token)) 
+		else if (isBoolean(token)) // BOOLEAN
 		{
 			if (token == "true") 
 			{
-				pushOperand("false");
+				pushOperand("false"); // if x = true, then x = false
+        nextToken();
 			}
-			else 
+			else  if (token == "false")
 			{
 				pushOperand("true");
+        nextToken();
 			}
-      	nextToken();
 		}
 
-		else if (isNonKeyId(token)) 
+		else if (isNonKeyId(token)) // NON_KEY_IDx
 		{
-			code("not", token);
+			code("not", token); // code
 			nextToken();
 		}
 	}
 
-	else if (token == "+")
+	else if (token == "+") // +
 	{
 		nextToken();
-		if (token == "(") 
+		if (token == "(")  // (
 		{
 			nextToken();
 			
@@ -836,9 +830,9 @@ void Compiler::part()
 				processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
 			}
 			
-			express();
+			express(); // EXPRESS
 			
-			if (token != ")")
+			if (token != ")") // )
 			{
 				processError("expected ')'");
 			}
@@ -846,7 +840,7 @@ void Compiler::part()
 			nextToken();
 		}
 		
-		else if (isInteger(token) || isNonKeyId(token)) 
+		else if (isInteger(token) || isNonKeyId(token))  
 		{
 			pushOperand(token);
 			nextToken();
@@ -854,7 +848,7 @@ void Compiler::part()
 
 		else 
 		{
-			processError("expected '(', integer, or non-keyword id; found " + token);
+			processError("expected '(', integer, or non-keyword id");
 		}
 	}
 
@@ -875,7 +869,7 @@ void Compiler::part()
 			
 			if (token != ")")
 			{
-				processError("expected ')'; found " + token);
+				processError("expected ')'");
 			}
 			
 			nextToken();
@@ -908,7 +902,7 @@ void Compiler::part()
 		
 		if (token != ")") 
 		{
-			processError(") expected; found " + token);
+			processError(") expected");
 		}
 		
 		nextToken();
@@ -1260,10 +1254,83 @@ void Compiler::code(string op, string operand1, string operand2)
     emitWriteCode(operand1, operand2);
   }
   
-  else if(op == "+")
+  else if (op == "+")
   {
     emitAdditionCode(operand1, operand2);
   }
+  
+  else if (op == "-")
+  {
+    emitSubtractionCode(operand1, operand2);
+  }
+  else if (op == "neg")
+  {
+    emitNegationCode(operand1, operand2);
+  }
+
+  else if (op == ":=")
+  {
+    emitAssignCode(operand1,operand2);
+  }
+
+  else if (op == "not")
+  {
+    emitNotCode(operand1, operand2);
+  }
+
+  else if (op == "*")
+  {
+    emitMultiplicationCode(operand1, operand2);
+  }
+  	else if (op == "div")
+	{
+		emitDivisionCode(operand1, operand2);
+	}
+
+  else if (op == "mod")
+	{
+		emitModuloCode(operand1, operand2);
+	}
+
+	else if (op == "and")
+	{
+		emitAndCode(operand1, operand2);
+	}
+	
+	else if (op == "or")
+	{
+		emitOrCode(operand1, operand2);
+	}
+
+	else if (op == "<")
+	{
+		emitLessThanCode(operand1, operand2);
+	}
+	
+	else if (op == "<=")
+	{
+		emitLessThanOrEqualToCode(operand1, operand2);
+	}
+
+	else if (op == ">")
+	{
+		emitGreaterThanCode(operand1, operand2);
+	}
+
+	else if (op == ">=")
+	{
+		emitGreaterThanOrEqualToCode(operand1, operand2);
+	}
+
+	else if (op == "<>")
+	{
+		emitInequalityCode(operand1, operand2);
+	}
+	
+	else if (op == "=")
+	{
+		emitEqualityCode(operand1, operand2);
+	}
 
   else if (op == "end")
   {
@@ -1437,7 +1504,6 @@ void Compiler::emitAssignCode(string operand1, string operand2) // op2 = op1
 		processError("reference to undefined symbol " + operand2);
 	}
 
-
 	if (symbolTable.at(operand1).getDataType() !=symbolTable.at(operand2).getDataType())
 	{
 		processError("incompatible types for operator ':='");
@@ -1463,12 +1529,12 @@ void Compiler::emitAssignCode(string operand1, string operand2) // op2 = op1
 
 	if (isTemporary(operand1))
 	{
-		freeTemp();
+		freeTemp(); 
 	}
 
 }
 
-void Compiler::emitAdditionCode(string operand1, string operand2) // op1 + op2
+void Compiler::emitAdditionCode(string operand1, string operand2) // op2 + op1
 {
   if (symbolTable.count(operand1) == 0)
 	{
@@ -1523,6 +1589,1060 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // op1 + op2
 
 }
 
+void Compiler::emitSubtractionCode(string operand1, string operand2) // op2 - op1
+{
+if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+
+	if (symbolTable.at(operand1).getDataType() != INTEGER || symbolTable.at(operand2).getDataType() != INTEGER)
+	{
+		processError("illegal type: binary '-' requires integer operands");
+	}
+
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	}
+
+
+	if (contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("", "sub", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand2 + " - " + operand1);
+	}
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();		
+	}
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+	symbolTable.at(contentsOfAReg).setDataType(INTEGER);
+
+	pushOperand(contentsOfAReg);
+}
+
+void Compiler::emitNegationCode(string operand1, string operand2)
+{
+  if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != INTEGER)
+	{
+		processError("illegal type; must be integer");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName())
+	{
+
+		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+		
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName())
+	{
+		contentsOfAReg = "";
+	} 
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
+	{
+		emit("","mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
+    
+		contentsOfAReg = symbolTable.at(operand1).getInternalName();
+	}
+
+	emit("","neg", "eax", "; AReg = -AReg");
+	
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+	symbolTable.at(contentsOfAReg).setDataType(INTEGER);
+
+	pushOperand(contentsOfAReg);
+}
+
+void Compiler::emitNotCode(string operand1, string operand2) // !op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != BOOLEAN)
+	{
+		processError("illegal type");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName())
+	{
+
+		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName())
+	{
+		contentsOfAReg = "";
+	} 
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
+	{
+		emit("","mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
+
+		contentsOfAReg = symbolTable.at(operand1).getInternalName();
+	}
+
+	emit("","not", "eax", "; AReg = !AReg");
+	
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+	pushOperand(contentsOfAReg);
+}
+
+void Compiler::emitMultiplicationCode(string operand1, string operand2) // op2 * op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+	 if (symbolTable.at(operand1).getDataType() != INTEGER || symbolTable.at(operand2).getDataType() != INTEGER)
+	 {
+		 processError("Illegal type");
+	 }
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov","[" + contentsOfAReg + "],eax","; deassign AReg");
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+		contentsOfAReg = "";
+	}
+
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	}
+	
+	if (symbolTable.at(operand1).getInternalName() != contentsOfAReg && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov","eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+	
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("", "imul", "dword [" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand2 + " * " + operand1);
+	}
+	
+	else 
+	{
+		emit("", "imul", "dword [" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand1 + " * " + operand2);	
+	}
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+	symbolTable.at(contentsOfAReg).setDataType(INTEGER);
+	pushOperand(contentsOfAReg);
+}
+
+void Compiler::emitDivisionCode(string operand1, string operand2) // op2 / op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != INTEGER || symbolTable.at(operand2).getDataType() != INTEGER)
+	{
+		processError("binary 'div' requires integer operands");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+
+		contentsOfAReg = "";
+	}
+
+	if (symbolTable.at(operand2).getInternalName() != contentsOfAReg)
+	{
+		emit("","mov","eax,[" + symbolTable.at(operand2).getInternalName() + "]","; AReg = " + operand2);
+
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+	
+	//emit code to extend sign of dividend from the A register to edx:eax
+	emit("", "cdq", "", "; sign extend dividend from eax to edx:eax");
+
+	emit("", "idiv", "dword [" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand2 + " div " + operand1);	//not sure if this is right. we will need to add a comment here as well
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+
+	symbolTable.at(contentsOfAReg).setDataType(INTEGER);
+
+	pushOperand(contentsOfAReg);
+}
+
+void Compiler::emitModuloCode(string operand1, string operand2) // op2 % op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != INTEGER || symbolTable.at(operand2).getDataType() != INTEGER)
+	{
+		processError("binary 'mod' requires integer operands");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+
+		emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	}
+
+	if (symbolTable.at(operand2).getInternalName() != contentsOfAReg)
+	{
+		emit("","mov","eax,[" + symbolTable.at(operand2).getInternalName() + "]","; AReg = " + operand2);
+
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+		
+
+	emit("", "cdq", "", "; sign extend dividend from eax to edx:eax");
+
+	emit("", "idiv", "dword [" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand2 + " div "  + operand1);
+	
+  emit("", "xchg", "eax,edx", "; exchange quotient and remainder");
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+
+	symbolTable.at(contentsOfAReg).setDataType(INTEGER);
+
+	pushOperand(contentsOfAReg);
+}
+
+void Compiler::emitAndCode(string operand1, string operand2) // op2 && op1
+ {
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != BOOLEAN || symbolTable.at(operand2).getDataType() != BOOLEAN)
+	{
+		processError("binary 'and' requires boolean operands");
+	}
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	} 
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","and", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand2 + " and " + operand1);
+	}
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","and", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand1 + " and " + operand2);
+	}
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+
+	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+	pushOperand(contentsOfAReg);
+}
+
+void Compiler::emitOrCode(string operand1, string operand2) // op2 || op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != BOOLEAN || symbolTable.at(operand2).getDataType() != BOOLEAN)
+	{
+		processError("illegal type");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+	
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	} 
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","or", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand2 + " or " + operand1);
+	}
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","or", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand1 + " or " + operand2);
+	}
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+	pushOperand(contentsOfAReg);
+}
+
+
+void Compiler::emitEqualityCode(string operand1, string operand2) // op2 == op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
+	{
+		processError("incompatible types");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	}
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
+	}
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","cmp", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; compare " + operand1 + " and " + operand2);
+	}
+
+	string newLabel = getLabel();
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","je", "." + newLabel, "; if " + operand2 + " = " + operand1 + " then jump to set eax to TRUE");
+	}
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","je", "." + newLabel, "; if " + operand2 + " = " + operand1 + " then jump to set eax to TRUE");
+	}
+
+	emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
+
+	if (symbolTable.count("false") == 0)
+	{
+		insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
+		symbolTable.at("false").setInternalName("FALSE");
+	}
+
+	string secondLabel = getLabel();
+
+	emit("","jmp","." + secondLabel, "; unconditionally jump");
+	
+	emit("." + newLabel + ":");
+
+	emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
+
+	if (symbolTable.count("true") == 0)
+	{
+		insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
+
+		symbolTable.at("true").setInternalName("TRUE");
+	}
+
+	emit("." + secondLabel + ":");
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+
+	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+	pushOperand(contentsOfAReg);
+}
+
+void Compiler::emitInequalityCode(string operand1, string operand2) // op2 != op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+	    processError("reference to undefined symbol " + operand1);
+	}
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+	
+	if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
+	{
+		processError("incompatible types for operator '<>'");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName()) 
+	{
+
+		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	}
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName()) 
+	{
+		emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("", "cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
+	}
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("", "cmp", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; compare " + operand1 + " and " + operand2);
+	}
+
+	string label_1 = getLabel(), label_2 = getLabel();
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("", "jne", "." + label_1, "; if " + operand2 + " <> " + operand1 + " then jump to set eax to TRUE");
+	}
+	else
+	{
+		emit("", "jne", "." + label_1, "; if " + operand2 + " <> " + operand1 + " then jump to set eax to TRUE");
+	}
+
+	emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
+
+	if (symbolTable.count("false") == 0) 
+	{
+		insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
+
+		symbolTable.at("false").setInternalName("FALSE");
+	}
+	
+	emit("", "jmp", "." + label_2, "; unconditionally jump");
+
+	emit("." + label_1 + ":");
+
+	emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
+
+	if (symbolTable.count("true") == 0) 
+	{
+		insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
+
+		symbolTable.at("true").setInternalName("TRUE");
+	}
+
+	emit("." + label_2 + ":");
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+
+	contentsOfAReg = getTemp();
+
+	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+	pushOperand(contentsOfAReg);
+ }
+
+void Compiler::emitLessThanCode(string operand1, string operand2) // op2 < op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
+	{
+		processError("incompatible types");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	}
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
+	}
+	
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+
+		emit("","cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
+	}
+
+	string newLabel = getLabel();
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","jl", "." + newLabel, "; if " + operand2 + " < " + operand1 + " then jump to set eax to TRUE");
+	}
+	
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","jl", "." + newLabel, "; if " + operand2 + " < " + operand1 + " then jump to set eax to TRUE");
+	}
+
+	emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
+
+	if (symbolTable.count("false") == 0)
+	{
+		insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
+	}
+
+	string secondLabel = getLabel();
+
+	emit("","jmp","." + secondLabel, "; unconditionally jump");
+	
+	emit("." + newLabel + ":");
+	
+	emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
+
+	if (symbolTable.count("true") == 0)
+	{
+		insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
+	}
+
+	emit("." + secondLabel + ":");
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+	pushOperand(contentsOfAReg);
+}
+
+void Compiler::emitLessThanOrEqualToCode(string operand1, string operand2) // op2 <= op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
+	{
+		processError("incompatible types");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	}
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
+	}
+	
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","cmp", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; compare " + operand1 + " and " + operand2);
+	}
+
+	string newLabel = getLabel();
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","jle", "." + newLabel, "; if " + operand2 + " <= " + operand1 + " then jump to set eax to TRUE");
+	}
+	
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","jle", "." + newLabel, "; if " + operand2 + " <= " + operand1 + " then jump to set eax to TRUE");
+	}
+
+	emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
+
+	if (symbolTable.count("false") == 0)
+	{
+		insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
+	}
+
+	string secondLabel = getLabel();
+
+	emit("","jmp","." + secondLabel, "; unconditionally jump");
+	
+	emit("." + newLabel + ":");
+
+	emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
+
+	if (symbolTable.count("true") == 0)
+	{
+		insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
+	}
+
+	emit("." + secondLabel + ":");
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+	pushOperand(contentsOfAReg);
+ }
+
+void Compiler::emitGreaterThanCode(string operand1, string operand2) // op2 > op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
+	{
+		processError("incompatible types");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	}
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
+	}
+	
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","cmp", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; compare " + operand1 + " and " + operand2);
+	}
+
+	string newLabel = getLabel();
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","jg", "." + newLabel, "; if " + operand2 + " > " + operand1 + " then jump to set eax to TRUE");
+	}
+	
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","jg", "." + newLabel, "; if " + operand1 + " > " + operand2 + " then jump to set eax to TRUE");
+	}
+
+	emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
+
+	if (symbolTable.count("false") == 0)
+	{
+		insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
+	}
+
+	string secondLabel = getLabel();
+
+	emit("","jmp","." + secondLabel, "; unconditionally jump");
+	
+	emit("." + newLabel + ":");
+
+	emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
+
+	if (symbolTable.count("true") == 0)
+	{
+		insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
+	}
+
+	emit("." + secondLabel + ":");
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+	pushOperand(contentsOfAReg);
+}
+
+void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2) // op2 >= op1
+{
+	if (symbolTable.count(operand1) == 0)
+	{
+		processError("reference to undefined symbol " + operand1);
+	}
+	
+	else if (symbolTable.count(operand2) == 0)
+	{
+		processError("reference to undefined symbol " + operand2);
+	}
+
+	if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
+	{
+		processError("incompatible types");
+	}
+
+	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+
+		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+	
+		symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+		contentsOfAReg = "";
+	}
+
+	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		contentsOfAReg = "";
+	}
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+	{
+		emit("","mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+		contentsOfAReg = symbolTable.at(operand2).getInternalName();
+	}
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
+	}
+	
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","cmp", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; compare " + operand1 + " and " + operand2);
+	}
+
+
+	string newLabel = getLabel();
+
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+	{
+		emit("","jge", "." + newLabel, "; if " + operand2 + " >= " + operand1 + " then jump to set eax to TRUE");
+	}
+	
+	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+	{
+		emit("","jge", "." + newLabel, "; if " + operand2 + " >= " + operand1 + " then jump to set eax to TRUE");
+	}
+
+	emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
+
+
+	if (symbolTable.count("false") == 0)
+	{
+		insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
+		symbolTable.at("false").setInternalName("FALSE");
+	}
+
+	string secondLabel = getLabel();
+
+	emit("","jmp","." + secondLabel, "; unconditionally jump");
+	
+	emit("." + newLabel + ":");
+
+	emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
+
+	if (symbolTable.count("true") == 0)
+	{
+		insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
+		symbolTable.at("true").setInternalName("TRUE");
+	}
+
+	emit("." + secondLabel + ":");
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+	
+	if (isTemporary(operand2))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = getTemp();
+	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+	pushOperand(contentsOfAReg);
+}
 
 
 /** LEXER FUNCTIONS **/
