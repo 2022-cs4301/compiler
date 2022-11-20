@@ -476,7 +476,7 @@ void Compiler::assignStmt()
   }
   else
   {
-    pushOperator(token);
+    pushOperand(token);
   }
 
   nextToken();
@@ -487,12 +487,13 @@ void Compiler::assignStmt()
   }
   else
   {
-    pushOperand(token);
+    pushOperator(token);
     // advance now, so we're on the necessary
     // token when express() is called
     nextToken();
     express();
   }
+  code(popOperator(), popOperand(),popOperand());
 }
 
 void Compiler::readStmt()
@@ -1426,12 +1427,12 @@ void Compiler::emitWriteCode(string operand, string operand2)
 
 void Compiler::emitAssignCode(string operand1, string operand2) // op2 = op1
 {	
-	if (operand1.empty())
+	if (symbolTable.count(operand1) == 0)
 	{
 		processError("reference to undefined symbol " + operand1);
 	}
 	
-	else if (operand2.empty())
+	else if (symbolTable.count(operand2) == 0)
 	{
 		processError("reference to undefined symbol " + operand2);
 	}
@@ -1467,14 +1468,14 @@ void Compiler::emitAssignCode(string operand1, string operand2) // op2 = op1
 
 }
 
-void Compiler::emitAdditionCode(string operand1, string operand2) // op2 +  op1
+void Compiler::emitAdditionCode(string operand1, string operand2) // op1 + op2
 {
-  if (operand1.empty())
+  if (symbolTable.count(operand1) == 0)
 	{
 		processError("reference to undefined symbol " + operand1);
 	}
 	
-	else if (operand2.empty())
+	else if (symbolTable.count(operand2) == 0)
 	{
 		processError("reference to undefined symbol " + operand2);
 	}
@@ -1485,7 +1486,7 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // op2 +  op1
   }
 
   if (symbolTable.at(operand1).getInternalName() != contentsOfAReg && symbolTable.at(operand2).getInternalName() != contentsOfAReg && isTemporary(contentsOfAReg))
-	{ //if the A Register holds a temp not operand1 nor operand2 then 
+	{ 
 		emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
 		
 		symbolTable.at(contentsOfAReg).setAlloc(YES);
@@ -1493,68 +1494,35 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // op2 +  op1
 		contentsOfAReg = "";
 	}
 
-}
-
-void Compiler::emitDivisionCode(string operand1, string operand2) // op2 / op1
-{
-	if (symbolTable.count(operand1) == 0)
-	{
-		processError("reference to undefined symbol on lhs" + operand1);
-	}
-	
-	else if (symbolTable.count(operand2) == 0)
-	{
-		processError("reference to undefined symbol on rhs" + operand2);
-	}
-
-	if (symbolTable.at(operand1).getDataType() != INTEGER || symbolTable.at(operand2).getDataType() != INTEGER)
-	{
-		processError("illegal type: binary 'div' requires integer operands");
-	}
-
-	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-	{
-		emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-
-		symbolTable.at(contentsOfAReg).setAlloc(YES);
-
-		contentsOfAReg = "";
-	}
-
-
-	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
+  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
 	{
 		contentsOfAReg = "";
 	}
 
-	if (symbolTable.at(operand2).getInternalName() != contentsOfAReg)
+	if (contentsOfAReg != symbolTable.at(operand2).getInternalName())
 	{
-		emit("","mov","eax,[" + symbolTable.at(operand2).getInternalName() + "]","; AReg = " + operand2);
+		emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
 
 		contentsOfAReg = symbolTable.at(operand2).getInternalName();
 	}
-	
 
-	emit("", "cdq", "", "; sign extend dividend from eax to edx:eax");
-
-
-	emit("", "idiv", "dword [" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand2 + " div " + operand1);
-
-	if (isTemporary(operand1))
+	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
 	{
-		freeTemp();
+		emit("", "sub", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand2 + " - " + operand1);
 	}
-	if (isTemporary(operand2))
+
+	if (isTemporary(operand1) || isTemporary(operand2))
 	{
-		freeTemp();
+		freeTemp();		
 	}
 
 	contentsOfAReg = getTemp();
-  
 	symbolTable.at(contentsOfAReg).setDataType(INTEGER);
 
 	pushOperand(contentsOfAReg);
+
 }
+
 
 
 /** LEXER FUNCTIONS **/
