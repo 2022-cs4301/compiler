@@ -1462,7 +1462,7 @@ void Compiler::emitReadCode(string operand, string operand2)
       }
 
       emit("", "call", "ReadInt", "; read int; value placed in eax");
-      contentsOfAReg = symbolTable.at(name).getInternalName();
+      contentsOfAReg = name;
       emit("", "mov", "[" + symbolTable.at(name).getInternalName() + "],eax", "; store eax at " + name);
     }
   }
@@ -1491,10 +1491,10 @@ void Compiler::emitWriteCode(string operand, string operand2)
         processError("symbol " + name + " is undefined");
       }
 
-      if (contentsOfAReg != symbolTable.at(name).getInternalName())
+      if (contentsOfAReg != name)
       {
         emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "] ", "; load " + name + " in eax ");
-        contentsOfAReg = symbolTable.at(name).getInternalName();
+        contentsOfAReg = name;
       }
 
       if (symbolTable.at(name).getDataType() == INTEGER || symbolTable.at(name).getDataType() == BOOLEAN)
