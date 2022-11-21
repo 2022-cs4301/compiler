@@ -687,7 +687,6 @@ void Compiler::term()
   {
     processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
   }
-
   factor(); // FACTOR
 
   if (token == "-" || token == "+" || token == "or")
@@ -796,7 +795,6 @@ void Compiler::part()
         processError(
             "\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
       }
-
       express(); // EXPRESS
 
       if (token != ")") // )
@@ -831,6 +829,7 @@ void Compiler::part()
 
   else if (token == "+") // +
   {
+
     nextToken();
     if (token == "(") // (
     {
@@ -926,6 +925,8 @@ void Compiler::part()
 
   else if (isInteger(token) || isBoolean(token) || isNonKeyId(token))
   {
+    // we reach this point with int & nonkeyid
+    // what heppens in pushOperand?
     pushOperand(token);
     nextToken();
   }
@@ -964,10 +965,11 @@ string Compiler::popOperator() // pop name from operatorStk
 
 void Compiler::pushOperand(string operand) // push name onto operatorStk
 {
-  if (operand.length() == 0)
+  if (operand.length() != 0)
   {
     if (isInteger(operand) || operand == "true" || operand == "false")
     {
+      cout << operand << '\n';
       insert(operand, whichType(operand), CONSTANT, whichValue(operand), YES, 1);
     }
   }
