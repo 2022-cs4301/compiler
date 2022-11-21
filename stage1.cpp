@@ -969,7 +969,6 @@ void Compiler::pushOperand(string operand) // push name onto operatorStk
   {
     if (isInteger(operand) || operand == "true" || operand == "false")
     {
-      cout << operand << '\n';
       insert(operand, whichType(operand), CONSTANT, whichValue(operand), YES, 1);
     }
   }
