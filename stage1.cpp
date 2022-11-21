@@ -660,7 +660,6 @@ void Compiler::expresses()
   {
     processError("\"=\", \"<>\", \"<=\", \">=\", \"<\", or \">\" expected");
   }
-
   pushOperator(token); // pushOperator(x)
   nextToken();
 
@@ -669,7 +668,6 @@ void Compiler::expresses()
   {
     processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
   }
-
   term(); // TERM
 
   code(popOperator(), popOperand(), popOperand()); // code
