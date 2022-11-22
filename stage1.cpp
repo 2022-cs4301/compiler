@@ -115,6 +115,7 @@ string Compiler::genInternalName(storeTypes stype) const
     iName = "B" + to_string(B);
     B++;
   }
+  
   return iName;
 }
 
@@ -478,10 +479,12 @@ void Compiler::assignStmt()
   {
     processError("non-keyword id expected");
   }
-  else
+  else if (symbolTable.count(token) == 0)
   {
-    pushOperand(token);
+    processError("reference to undefined variable");
   }
+
+  pushOperand(token);
 
   nextToken();
 
@@ -940,7 +943,8 @@ void Compiler::part()
   else if (isInteger(token) || isBoolean(token) || isNonKeyId(token))
   {
     // we reach this point with int & nonkeyid
-    // what heppens in pushOperand?
+    // what happens in pushOperand?
+    
     pushOperand(token);
     nextToken();
   }
@@ -979,11 +983,19 @@ string Compiler::popOperator() // pop name from operatorStk
 
 void Compiler::pushOperand(string operand) // push name onto operatorStk
 {
-  if (operand.length() != 0)
+  if (symbolTable.count(operand) == 0)
   {
-    if (isInteger(operand) || operand == "true" || operand == "false")
+    if(isInteger(operand))
     {
-      insert(operand, whichType(operand), CONSTANT, whichValue(operand), YES, 1);
+      insert(operand, INTEGER, CONSTANT, whichValue(operand), YES, 1);
+    }
+    else if(operand == "true")
+    {
+      insert(operand, BOOLEAN, CONSTANT, whichValue(operand), YES, 1);
+    }
+    else if(operand == "false")
+    {
+      insert(operand, BOOLEAN, CONSTANT, whichValue(operand), YES, 1);
     }
   }
   operandStk.push(operand);
@@ -1016,9 +1028,10 @@ void Compiler::freeTemp()
 
 string Compiler::getTemp()
 {
+  currentTempNo++;
 	string temp;
 
-	temp = "T" + to_string(++currentTempNo);
+	temp = "T" + to_string(currentTempNo);
 
 	if (currentTempNo > maxTempNo)
 	{
@@ -1455,7 +1468,7 @@ void Compiler::emitReadCode(string operand, string operand2)
       name = name + operand[i];
       i++;
     }
-
+    
     if (!name.empty())
     {
       if (symbolTable.find(name) == symbolTable.end())
@@ -1474,7 +1487,9 @@ void Compiler::emitReadCode(string operand, string operand2)
       }
 
       emit("", "call", "ReadInt", "; read int; value placed in eax");
-      contentsOfAReg = name;
+
+      contentsOfAReg = symbolTable.at(name).getInternalName();
+      
       emit("", "mov", "[" + symbolTable.at(name).getInternalName() + "],eax", "; store eax at " + name);
     }
   }
@@ -1508,9 +1523,13 @@ void Compiler::emitWriteCode(string operand, string operand2)
         contentsOfAReg = name;
       }
 
-      if (symbolTable.at(name).getDataType() == INTEGER || symbolTable.at(name).getDataType() == BOOLEAN)
+      if (symbolTable.at(name).getDataType() == INTEGER)
       {
         emit("", "call", "WriteInt", "; write int in eax to standard out");
+      }
+      else
+      {
+        
       }
 
       emit("", "call", "Crlf", "; write \\r\\n to standard out");
@@ -1605,7 +1624,11 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // op2 + op1
          "; AReg = " + operand2 + " + " + operand1);
   }
 
-  if (isTemporary(operand1) || isTemporary(operand2))
+  if (isTemporary(operand1))
+  {
+    freeTemp();
+  }
+  if (isTemporary(operand2))
   {
     freeTemp();
   }
