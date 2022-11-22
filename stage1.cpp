@@ -429,7 +429,7 @@ string Compiler::ids() // 8. IDS → NON_KEY_ID ( ',' IDS | ε )
 /** STAGE 1 PRODUCTIONS **/
 void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
 {                          // -> ε
-  if (isNonKeyId(token) || token == "read" || token == "write")
+  if (isNonKeyId(token) || token == "read" || token == "write" || token == ";")
   {
     execStmt();  // token will be at end of last exec statement
     nextToken();  // advance token
@@ -479,7 +479,7 @@ void Compiler::assignStmt()
   {
     processError("non-keyword id expected");
   }
-  else if (symbolTable.count(token) == 0)
+  if (symbolTable.count(token) == 0)
   {
     processError("reference to undefined variable");
   }
@@ -1194,6 +1194,14 @@ void Compiler::insert(string externalName, // create symbol table entry for each
         if (isupper(name[0]))
         {
           symbolTable.insert({name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
+        }
+        else if (name == "true")
+        {
+          symbolTable.insert({name.substr(0, 15), SymbolTableEntry("TRUE", inType, inMode, inValue, inAlloc, inUnits)});
+        }
+        else if (name == "false")
+        {
+          symbolTable.insert({name.substr(0, 15), SymbolTableEntry("FALSE", inType, inMode, inValue, inAlloc, inUnits)});
         }
         else
         {
@@ -2388,7 +2396,6 @@ void Compiler::emitLessThanCode(string operand1, string operand2) // op2 < op1
   if (symbolTable.count("false") == 0)
   {
     insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
-    symbolTable.at("false").setInternalName("FALSE");
   }
 
   string secondLabel = getLabel();
@@ -2402,7 +2409,6 @@ void Compiler::emitLessThanCode(string operand1, string operand2) // op2 < op1
   if (symbolTable.count("true") == 0)
   {
     insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
-    symbolTable.at("true").setInternalName("TRUE");
   }
 
   emit("." + secondLabel + ":");
@@ -2593,12 +2599,11 @@ void Compiler::emitGreaterThanCode(string operand1, string operand2) // op2 > op
 	if (symbolTable.count("false") == 0)
 	{
 		insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
-    symbolTable.at("false").setInternalName("FALSE");
 	}
 
 	string secondLabel = getLabel();
 
-	emit("","jmp","." + secondLabel, "; unconditionally jump");
+	emit("", "jmp", "." + secondLabel, "; unconditionally jump");
 	
 	emit("." + newLabel + ":");
 
@@ -2607,7 +2612,6 @@ void Compiler::emitGreaterThanCode(string operand1, string operand2) // op2 > op
 	if (symbolTable.count("true") == 0)
 	{
 		insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
-    symbolTable.at("true").setInternalName("TRUE");
 	}
 
 	emit("." + secondLabel + ":");
