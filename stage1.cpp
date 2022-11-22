@@ -991,11 +991,11 @@ void Compiler::pushOperand(string operand) // push name onto operatorStk
     }
     else if(operand == "true")
     {
-      insert(operand, BOOLEAN, CONSTANT, whichValue(operand), YES, 1);
+      insert("true", BOOLEAN, CONSTANT, whichValue(operand), YES, 1);
     }
     else if(operand == "false")
     {
-      insert(operand, BOOLEAN, CONSTANT, whichValue(operand), YES, 1);
+      insert("false", BOOLEAN, CONSTANT, whichValue(operand), YES, 1);
     }
   }
   operandStk.push(operand);
@@ -2194,7 +2194,6 @@ void Compiler::emitEqualityCode(string operand1, string operand2) // op2 == op1
   if (symbolTable.count("true") == 0)
   {
     insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
-
     symbolTable.at("true").setInternalName("TRUE");
   }
 
@@ -2284,7 +2283,6 @@ void Compiler::emitInequalityCode(string operand1, string operand2) // op2 != op
   if (symbolTable.count("false") == 0)
   {
     insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
-
     symbolTable.at("false").setInternalName("FALSE");
   }
 
@@ -2297,7 +2295,6 @@ void Compiler::emitInequalityCode(string operand1, string operand2) // op2 != op
   if (symbolTable.count("true") == 0)
   {
     insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
-
     symbolTable.at("true").setInternalName("TRUE");
   }
 
@@ -2391,6 +2388,7 @@ void Compiler::emitLessThanCode(string operand1, string operand2) // op2 < op1
   if (symbolTable.count("false") == 0)
   {
     insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
+    symbolTable.at("false").setInternalName("FALSE");
   }
 
   string secondLabel = getLabel();
@@ -2404,6 +2402,7 @@ void Compiler::emitLessThanCode(string operand1, string operand2) // op2 < op1
   if (symbolTable.count("true") == 0)
   {
     insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
+    symbolTable.at("true").setInternalName("TRUE");
   }
 
   emit("." + secondLabel + ":");
@@ -2493,6 +2492,7 @@ void Compiler::emitLessThanOrEqualToCode(string operand1, string operand2) // op
   if (symbolTable.count("false") == 0)
   {
     insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
+    symbolTable.at("false").setInternalName("FALSE");
   }
 
   string secondLabel = getLabel();
@@ -2506,6 +2506,7 @@ void Compiler::emitLessThanOrEqualToCode(string operand1, string operand2) // op
   if (symbolTable.count("true") == 0)
   {
     insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
+    symbolTable.at("true").setInternalName("TRUE");
   }
 
   emit("." + secondLabel + ":");
@@ -2592,6 +2593,7 @@ void Compiler::emitGreaterThanCode(string operand1, string operand2) // op2 > op
 	if (symbolTable.count("false") == 0)
 	{
 		insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
+    symbolTable.at("false").setInternalName("FALSE");
 	}
 
 	string secondLabel = getLabel();
@@ -2605,6 +2607,7 @@ void Compiler::emitGreaterThanCode(string operand1, string operand2) // op2 > op
 	if (symbolTable.count("true") == 0)
 	{
 		insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
+    symbolTable.at("true").setInternalName("TRUE");
 	}
 
 	emit("." + secondLabel + ":");
