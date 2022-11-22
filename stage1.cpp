@@ -712,8 +712,9 @@ void Compiler::terms()
   }
 
   factor(); // FACTOR
-
-  code(popOperator(), popOperand(), popOperand());
+  string tmp1 = popOperand();
+  string tmp2 = popOperand();
+  code(popOperator(), tmp1,tmp2);
 
   if (token == "+" || token == "-" || token == "or")
   {
@@ -1589,8 +1590,8 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // op2 + op1
 
   if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
   {
-    emit("", "sub", "eax,[" + symbolTable.at(operand1).getInternalName() + "]",
-         "; AReg = " + operand2 + " - " + operand1);
+    emit("", "add", "eax,[" + symbolTable.at(operand1).getInternalName() + "]",
+         "; AReg = " + operand2 + " + " + operand1);
   }
 
   if (isTemporary(operand1) || isTemporary(operand2))
