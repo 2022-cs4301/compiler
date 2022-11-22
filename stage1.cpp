@@ -428,15 +428,19 @@ string Compiler::ids() // 8. IDS → NON_KEY_ID ( ',' IDS | ε )
 /** STAGE 1 PRODUCTIONS **/
 void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
 {                          // -> ε
-  if (isNonKeyId(token) || token == "read" || token == "write")
+  if (isNonKeyId(token) || token == "read" || token == "write" || token == ";")
   {
     execStmt();  // token will be at end of last exec statement
-    nextToken(); // advance token
+    nextToken();  // advance token
     execStmts(); // recurse
   }
   else if (token == "end")
   {
-    processError("non - keyword identifier, \"read\", \"write\", or \"begin\" expected");
+    return;
+  }
+  else
+  {
+    processError("\";\", \"begin\", \"read\",\"write\", \"end\" expected");
   }
 }
 
