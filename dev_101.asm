@@ -1,4 +1,4 @@
-; Kangmin Kim, Jeff Caldwell       Mon Nov 21 20:31:37 2022
+; Kangmin Kim, Jeff Caldwell       Mon Nov 21 17:17:52 2022
 %INCLUDE "Along32.inc"
 %INCLUDE "Macros_Along.inc"
 
@@ -18,11 +18,11 @@ _start:
         mov     eax,[I3]                ; load b in eax 
         call    WriteInt                ; write int in eax to standard out
         call    Crlf                    ; write \r\n to standard out
-        mov     eax,[I5]                ; AReg = 3
-        add     eax,[I6]                ; AReg = 3 + 34
+        mov     eax,[I6]                ; AReg = 34
+        sub     eax,[I5]                ; AReg = 34 - 3
         imul    dword [I1]              ; AReg = T0 * five
         mov     eax,[I2]                ; AReg = a
         mov     [T0],eax                ; T0 = AReg
         mov     [T0],eax                ; deassign AReg
         mov     eax,[I2]                ; AReg = a
-        add     eax,[I2]                ; AReg = a + a
+        sub     eax,[I2]                ; AReg = a - a

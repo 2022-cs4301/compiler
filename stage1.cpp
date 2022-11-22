@@ -1272,8 +1272,7 @@ void Compiler::code(string op, string operand1, string operand2)
 
   else if (op == "+")
   {
-    cout << "operand1: " << operand1 << ", operand2: " << operand2 << '\n';
-    emitAdditionCode(operand2, operand1);
+    emitAdditionCode(operand1, operand2);
   }
 
   else if (op == "-")
@@ -1591,8 +1590,8 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // op2 + op1
 
   if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
   {
-    emit("", "add", "eax,[" + symbolTable.at(operand1).getInternalName() + "]",
-         "; AReg = " + operand2 + " + " + operand1);
+    emit("", "sub", "eax,[" + symbolTable.at(operand1).getInternalName() + "]",
+         "; AReg = " + operand2 + " - " + operand1);
   }
 
   if (isTemporary(operand1) || isTemporary(operand2))
