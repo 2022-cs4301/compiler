@@ -496,7 +496,10 @@ void Compiler::assignStmt()
 
   express(); // EXPRESS
 
-  code(popOperator(), popOperand(), popOperand());
+  string tmp1 = popOperand();
+  string tmp2 = popOperand();
+  
+  code(popOperator(), tmp1, tmp2);
 }
 
 void Compiler::readStmt()
@@ -670,7 +673,10 @@ void Compiler::expresses()
   }
   term(); // TERM
 
-  code(popOperator(), popOperand(), popOperand()); // code
+  string tmp1 = popOperand();
+  string tmp2 = popOperand();
+
+  code(popOperator(), tmp1, tmp2); // code
 
   if (token == "=" || token == "<>" || token == "<=" || token == ">=" || token == "<" || token == ">")
   {
@@ -712,9 +718,11 @@ void Compiler::terms()
   }
 
   factor(); // FACTOR
+
   string tmp1 = popOperand();
   string tmp2 = popOperand();
-  code(popOperator(), tmp1,tmp2);
+
+  code(popOperator(), tmp1, tmp2);
 
   if (token == "+" || token == "-" || token == "or")
   {
@@ -770,7 +778,10 @@ void Compiler::factors()
 
   part(); // PART
 
-  code(popOperator(), popOperand(), popOperand()); // code
+  string tmp1 = popOperand();
+  string tmp2 = popOperand();
+
+  code(popOperator(), tmp1, tmp2); // code
 
   if (token == "*" || token == "div" || token == "mod" || token == "and")
   {
