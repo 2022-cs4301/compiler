@@ -696,6 +696,7 @@ void Compiler::term()
 
 void Compiler::terms()
 {
+	string tmp1, tmp2;
 
   if (token != "+" && token != "-" && token != "or")
   {
@@ -712,8 +713,10 @@ void Compiler::terms()
   }
 
   factor(); // FACTOR
+	tmp1 = popOperand();
+	tmp2 = popOperand();
 
-  code(popOperator(), popOperand(), popOperand());
+  code(popOperator(), tmp1, tmp2);
 
   if (token == "+" || token == "-" || token == "or")
   {
@@ -790,8 +793,7 @@ void Compiler::part()
       if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" &&
           !isInteger(token) && !isNonKeyId(token))
       {
-        processError(
-            "\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
+        processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", integer, or non - keyword identifier expected");
       }
       express(); // EXPRESS
 
@@ -946,7 +948,7 @@ void Compiler::pushOperator(string op)
 }
 
 string Compiler::popOperator() // pop name from operatorStk
-{
+{ 
   string op;
 
   if (!operatorStk.empty())
@@ -1471,7 +1473,6 @@ void Compiler::emitWriteCode(string operand, string operand2)
 {
   string name;
   uint i = 0;
-  static bool definedStorage = false;
 
   while (i < operand.length())
   {
@@ -1485,7 +1486,7 @@ void Compiler::emitWriteCode(string operand, string operand2)
 
     if (!name.empty())
     {
-      if (symbolTable.find(name) == symbolTable.end() && definedStorage == false)
+      if (symbolTable.find(name) == symbolTable.end())
       {
         processError("symbol " + name + " is undefined");
       }
