@@ -1038,7 +1038,6 @@ string Compiler::getTemp()
   if (currentTempNo > maxTempNo)
   {
     insert(temp, UNKNOWN, VARIABLE, "1", NO, 1);
-    symbolTable.at(temp).setInternalName(temp);
     maxTempNo++;
   }
 
@@ -1623,7 +1622,7 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // op2 + op1
   if (symbolTable.at(operand1).getDataType() != INTEGER ||
       symbolTable.at(operand2).getDataType() != INTEGER) // check both DataType is integer
   {
-    processError("illegal type: binary '+' requires integer operands");
+    processError("binary '+' requires integer operands");
   }
 
   if (symbolTable.at(operand1).getInternalName() != contentsOfAReg &&
