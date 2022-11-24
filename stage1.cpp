@@ -1540,6 +1540,26 @@ void Compiler::emitWriteCode(string operand, string operand2)
       }
       else
       {
+				emit("", "cmp", "eax,0", "; compare to 0");
+
+				string labelTmp1 = getLabel();
+
+				emit("", "je", "." + labelTmp1 + "; jump if equal to print FALSE");
+
+				emit("", "mov", "edx,TRUELIT", "; load address of TRUE literal in edx");
+
+				string labelTmp2 = getLabel();
+
+				emit("", "jmp", "." + labelTmp2 + "; unconditionally jump to ." + labelTmp2);
+
+				emit("." + labelTmp1 + ":");
+
+				emit("", "mov", "edx,FALSLIT", "; load address of FALSE literal in edx");
+
+				emit("." + labelTmp2 + ":");
+
+				emit("", "call", "WriteString", "; write string to standard out");
+
       }
 
       emit("", "call", "Crlf", "; write \\r\\n to standard out");
