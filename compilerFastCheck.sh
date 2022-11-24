@@ -71,8 +71,8 @@
 #
 #Set COMPILERNAME to the name of your compiler program executable.
 #
-COMPILERNAME=./stage0
-#COMPILERNAME=./stage1
+# COMPILERNAME=./stage0
+COMPILERNAME=./stage1
 #COMPILERNAME=./stage2
 #
 #Set the ASM_NAME_STRING to contain the same string as your list of
@@ -173,19 +173,19 @@ FANCY_OUTPUT=true;
 #Directory containing the provided Pascallite .dat files.
 #Default:
 #PROVIDED_DATS=./input/
-PROVIDED_DATS=./input/stage0
+PROVIDED_DATS=./input/stage1
 #
 #Directory containing any provided Pascallite compiler .lst files. 
 #These are the files your output will be checked against.
 #DEFAULT:
 #PROVIDED_LSTS=./input/
-PROVIDED_LSTS=./input/stage0
+PROVIDED_LSTS=./input/stage1
 #
 #Directory containing any provided Assembly language .asm files.
 #These are the files your output will be checked against.
 #DEFAULT:
 #PROVIDED_ASMS=./input/
-PROVIDED_ASMS=./input/stage0
+PROVIDED_ASMS=./input/stage1
 #
 #Directory for the storage and generation of .lst files from your compiler.
 #DEFAULT:
