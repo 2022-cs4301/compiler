@@ -492,6 +492,7 @@ void Compiler::assignStmt()
   {
     processError("\":=\" expected");
   }
+
   pushOperator(token); // push the operator ":=" onto the stack
   nextToken();
 
