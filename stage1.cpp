@@ -13,10 +13,10 @@
 
 Compiler::Compiler(char **argv) // constructor
 {
-  sourceFile.open(argv[1]);  // open sourceFile using argv[1] (input from argv[1])
-  listingFile.open(argv[2]); // open listingFile using argv[2] (generate a
+  sourceFile.open(argv[ 1 ]);  // open sourceFile using argv[1] (input from argv[1])
+  listingFile.open(argv[ 2 ]); // open listingFile using argv[2] (generate a
   // listing to argv[2])
-  objectFile.open(argv[3]); // open objectFile using argv[3] (write object code to argv[3])
+  objectFile.open(argv[ 3 ]); // open objectFile using argv[3] (write object code to argv[3])
 }
 
 Compiler::~Compiler() //  close all open files
@@ -34,9 +34,9 @@ void Compiler::createListingHeader() // destructor
 
   // line numbers and source statements should be aligned under the headings
   listingFile << "STAGE0:  "
-              << "Jeff Caldwell, Kangmin Kim       " << ctime(&now) << "\n";
+    << "Jeff Caldwell, Kangmin Kim       " << ctime(&now) << "\n";
   listingFile << "LINE NO."
-              << "               SOURCE STATEMENT\n\n";
+    << "               SOURCE STATEMENT\n\n";
 }
 // private: uint lineNo = 0; // line numbers for the listing
 
@@ -46,7 +46,7 @@ void Compiler::parser()
 
   // ch must be initialized to the first character of the source file
   if (nextToken() != "program") // string nextToken() returns the next token or
-                                // END_OF_FILE marker
+    // END_OF_FILE marker
   {
     processError("keyword \"program\" expected"); // Output err to listingFile
     // Call exit() to terminate program
@@ -63,14 +63,14 @@ void Compiler::parser()
 void Compiler::createListingTrailer()
 {
   listingFile << "\nCOMPILATION TERMINATED" << setw(6) << "" << right << errorCount
-              << (errorCount != 1 ? " ERRORS " : " ERROR ") << "ENCOUNTERED\n";
+    << (errorCount != 1 ? " ERRORS " : " ERROR ") << "ENCOUNTERED\n";
 }
 // private: uint errorCount = 0; // total number of errors encountered
 
 void Compiler::processError(string error)
 {
   listingFile << "\n"
-              << "Error: Line " << lineNo << ": " << error << "\n";
+    << "Error: Line " << lineNo << ": " << error << "\n";
   errorCount++;
   createListingTrailer();
   // close files to ensure output will be written
@@ -115,7 +115,7 @@ string Compiler::genInternalName(storeTypes stype) const
     iName = "B" + to_string(B);
     B++;
   }
-  
+
   return iName;
 }
 
@@ -147,7 +147,7 @@ void Compiler::prog() // stage 0, production 1
 
   beginEndStmt();
 
-  if (token[0] != END_OF_FILE)
+  if (token[ 0 ] != END_OF_FILE)
   {
     processError("no text may follow \"end\"");
   }
@@ -432,7 +432,7 @@ void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
   if (isNonKeyId(token) || token == "read" || token == "write" || token == ";")
   {
     execStmt();  // token will be at end of last exec statement
-    nextToken();  // advance token
+    nextToken(); // advance token
     execStmts(); // recurse
   }
   else if (token == "end")
@@ -492,7 +492,7 @@ void Compiler::assignStmt()
   {
     processError("\":=\" expected");
   }
-  pushOperator(":="); // push the operator ":=" onto the stack
+  pushOperator(token); // push the operator ":=" onto the stack
   nextToken();
 
   if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" &&
@@ -505,7 +505,7 @@ void Compiler::assignStmt()
 
   string tmp1 = popOperand();
   string tmp2 = popOperand();
-  
+
   code(popOperator(), tmp1, tmp2);
 }
 
@@ -541,7 +541,7 @@ void Compiler::readStmt()
     // loop through the characters of the list
     for (i = 0; i < list.length(); i++)
     {
-      if (list[i] == ',')
+      if (list[ i ] == ',')
       {
         // if we have a ',', code current list item
         code("read", listItem);
@@ -552,7 +552,7 @@ void Compiler::readStmt()
       else
       {
         // if we don't have a ',', add characters to the list item
-        listItem += list[i];
+        listItem += list[ i ];
       }
     }
 
@@ -609,7 +609,7 @@ void Compiler::writeStmt()
     // loop through the characters of the list
     for (i = 0; i < list.length(); i++)
     {
-      if (list[i] == ',')
+      if (list[ i ] == ',')
       {
         // if we have a ',', code current list item
         code("write", listItem);
@@ -621,7 +621,7 @@ void Compiler::writeStmt()
       else
       {
         // if we don't have a ',', add characters to the list item
-        listItem += list[i];
+        listItem += list[ i ];
       }
     }
 
@@ -781,6 +781,7 @@ void Compiler::factors()
       token != "true" && token != "false")
   {
     processError("expected '(', integer, or non-keyword id " + token);
+    ;
   }
 
   part(); // PART
@@ -944,7 +945,7 @@ void Compiler::part()
   {
     // we reach this point with int & nonkeyid
     // what happens in pushOperand?
-    
+
     pushOperand(token);
     nextToken();
   }
@@ -985,15 +986,15 @@ void Compiler::pushOperand(string operand) // push name onto operatorStk
 {
   if (symbolTable.count(operand) == 0)
   {
-    if(isInteger(operand))
+    if (isInteger(operand))
     {
       insert(operand, INTEGER, CONSTANT, whichValue(operand), YES, 1);
     }
-    else if(operand == "true")
+    else if (operand == "true")
     {
       insert("true", BOOLEAN, CONSTANT, whichValue(operand), YES, 1);
     }
-    else if(operand == "false")
+    else if (operand == "false")
     {
       insert("false", BOOLEAN, CONSTANT, whichValue(operand), YES, 1);
     }
@@ -1029,18 +1030,18 @@ void Compiler::freeTemp()
 string Compiler::getTemp()
 {
   currentTempNo++;
-	string temp;
+  string temp;
 
-	temp = "T" + to_string(currentTempNo);
+  temp = "T" + to_string(currentTempNo);
 
-	if (currentTempNo > maxTempNo)
-	{
-		insert(temp, UNKNOWN, VARIABLE, "1", NO, 1);
-		symbolTable.at(temp).setInternalName(temp);
-		maxTempNo++;
-	}
-	
-	return temp;
+  if (currentTempNo > maxTempNo)
+  {
+    insert(temp, UNKNOWN, VARIABLE, "1", NO, 1);
+    symbolTable.at(temp).setInternalName(temp);
+    maxTempNo++;
+  }
+
+  return temp;
 }
 
 string Compiler::getLabel()
@@ -1056,7 +1057,7 @@ string Compiler::getLabel()
 }
 bool Compiler::isTemporary(string s) const // determines if s represents a temporary
 {
-  if (s[0] == 'T')
+  if (s[ 0 ] == 'T')
     return true;
   else
     return false;
@@ -1068,14 +1069,14 @@ bool Compiler::isKeyword(string s) const
 
   // instead of using a crazy, long string of conditional operators (||),
   // just make an array and loop through that
-  string keywords[16] = {"program", "const", "var", "integer", "boolean", "begin", "end",  "true",
-                         "false",   "not",   "mov", "div",     "and",     "or",    "read", "write"};
+  string keywords[ 16 ] = {"program", "const", "var", "integer", "boolean", "begin", "end", "true",
+    "false", "not", "mov", "div", "and", "or", "read", "write"};
 
   int len = *(&keywords + 1) - keywords; // length of keywords
 
   for (int i = 0; i < len; i++)
   {
-    if (keywords[i] == s)
+    if (keywords[ i ] == s)
     {
       return true;
     }
@@ -1086,13 +1087,13 @@ bool Compiler::isKeyword(string s) const
 
 bool Compiler::isSpecialSymbol(char c) const
 {
-  char symbols[12] = {':', ',', ';', '=', '+', '-', '.', '*', '(', ')', '>', '<'};
+  char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.', '*', '(', ')', '>', '<'};
 
   int len = *(&symbols + 1) - symbols;
 
   for (int i = 0; i < len; i++)
   {
-    if (symbols[i] == c)
+    if (symbols[ i ] == c)
     {
       return true;
     }
@@ -1116,7 +1117,7 @@ bool Compiler::isInteger(string s) const
   {
     // if the first character is not a '+' or a '-'
     // of if any character is not a digit, it is not an integer
-    if (!(isdigit(s[i]) || s[0] == '+' || s[0] == '-'))
+    if (!(isdigit(s[ i ]) || s[ 0 ] == '+' || s[ 0 ] == '-'))
     {
       return false;
     }
@@ -1151,7 +1152,7 @@ bool Compiler::isLiteral(string s) const // 10. LIT → INTEGER | BOOLEAN | 'not
 
 bool Compiler::isNonKeyId(string s) const
 {
-  if (!isInteger(s) && !isKeyword(s) && !isSpecialSymbol(s[0]))
+  if (!isInteger(s) && !isKeyword(s) && !isSpecialSymbol(s[ 0 ]))
   {
     return true;
   }
@@ -1173,9 +1174,9 @@ void Compiler::insert(string externalName, // create symbol table entry for each
   {
     name = "";
 
-    while (i < externalName.length() && externalName[i] != ',')
+    while (i < externalName.length() && externalName[ i ] != ',')
     {
-      name = name + externalName[i];
+      name = name + externalName[ i ];
       i++;
     }
 
@@ -1191,7 +1192,7 @@ void Compiler::insert(string externalName, // create symbol table entry for each
       }
       else
       {
-        if (isupper(name[0]))
+        if (isupper(name[ 0 ]))
         {
           symbolTable.insert({name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
         }
@@ -1201,7 +1202,8 @@ void Compiler::insert(string externalName, // create symbol table entry for each
         }
         else if (name == "false")
         {
-          symbolTable.insert({name.substr(0, 15), SymbolTableEntry("FALSE", inType, inMode, inValue, inAlloc, inUnits)});
+          symbolTable.insert(
+              {name.substr(0, 15), SymbolTableEntry("FALSE", inType, inMode, inValue, inAlloc, inUnits)});
         }
         else
         {
@@ -1415,7 +1417,7 @@ void Compiler::emitPrologue(string progName, string operand2)
   time_t now = time(0);
   objectFile << "; Kangmin Kim, Jeff Caldwell       " << setw(8) << right << ctime(&now);
   objectFile << "%INCLUDE \"Along32.inc\"\n"
-             << "%INCLUDE \"Macros_Along.inc\"\n\n";
+    << "%INCLUDE \"Macros_Along.inc\"\n\n";
 
   emit("SECTION", ".text");
   emit("global", "_start", "", "; program " + progName + "\n");
@@ -1471,12 +1473,12 @@ void Compiler::emitReadCode(string operand, string operand2)
   {
     name = "";
 
-    while (i < operand.length() && operand[i] != ',')
+    while (i < operand.length() && operand[ i ] != ',')
     {
-      name = name + operand[i];
+      name = name + operand[ i ];
       i++;
     }
-    
+
     if (!name.empty())
     {
       if (symbolTable.find(name) == symbolTable.end())
@@ -1497,7 +1499,7 @@ void Compiler::emitReadCode(string operand, string operand2)
       emit("", "call", "ReadInt", "; read int; value placed in eax");
 
       contentsOfAReg = symbolTable.at(name).getInternalName();
-      
+
       emit("", "mov", "[" + symbolTable.at(name).getInternalName() + "],eax", "; store eax at " + name);
     }
   }
@@ -1512,9 +1514,9 @@ void Compiler::emitWriteCode(string operand, string operand2)
   {
     name = "";
 
-    while (i < operand.length() && operand[i] != ',')
+    while (i < operand.length() && operand[ i ] != ',')
     {
-      name = name + operand[i];
+      name = name + operand[ i ];
       i++;
     }
 
@@ -1537,7 +1539,6 @@ void Compiler::emitWriteCode(string operand, string operand2)
       }
       else
       {
-        
       }
 
       emit("", "call", "Crlf", "; write \\r\\n to standard out");
@@ -2535,101 +2536,105 @@ void Compiler::emitLessThanOrEqualToCode(string operand1, string operand2) // op
 
 void Compiler::emitGreaterThanCode(string operand1, string operand2) // op2 > op1
 {
-	if (symbolTable.count(operand1) == 0)
-	{
-		processError("reference to undefined symbol " + operand1);
-	}
-	
-	else if (symbolTable.count(operand2) == 0)
-	{
-		processError("reference to undefined symbol " + operand2);
-	}
+  if (symbolTable.count(operand1) == 0)
+  {
+    processError("reference to undefined symbol " + operand1);
+  }
 
-	if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
-	{
-		processError("incompatible types");
-	}
+  else if (symbolTable.count(operand2) == 0)
+  {
+    processError("reference to undefined symbol " + operand2);
+  }
 
+  if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
+  {
+    processError("incompatible types");
+  }
 
-	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-	{
+  if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+      contentsOfAReg != symbolTable.at(operand2).getInternalName())
+  {
 
-		emit("","mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
 
-		symbolTable.at(contentsOfAReg).setAlloc(YES);
+    symbolTable.at(contentsOfAReg).setAlloc(YES);
 
-		contentsOfAReg = "";
-	}
+    contentsOfAReg = "";
+  }
 
-	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-	{
-		contentsOfAReg = "";
-	}
+  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+      contentsOfAReg != symbolTable.at(operand2).getInternalName())
+  {
+    contentsOfAReg = "";
+  }
 
-	if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-	{
-		emit("","mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-		contentsOfAReg = symbolTable.at(operand2).getInternalName();
-	}
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+      contentsOfAReg != symbolTable.at(operand2).getInternalName())
+  {
+    emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+    contentsOfAReg = symbolTable.at(operand2).getInternalName();
+  }
 
-	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
-	{
-		emit("","cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
-	}
-	
-	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
-	{
-		emit("","cmp", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; compare " + operand1 + " and " + operand2);
-	}
+  if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+  {
+    emit("", "cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]",
+         "; compare " + operand2 + " and " + operand1);
+  }
 
-	string newLabel = getLabel();
+  else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+  {
+    emit("", "cmp", "eax,[" + symbolTable.at(operand2).getInternalName() + "]",
+         "; compare " + operand1 + " and " + operand2);
+  }
 
-	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
-	{
-		emit("","jg", "." + newLabel, "; if " + operand2 + " > " + operand1 + " then jump to set eax to TRUE");
-	}
-	
-	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
-	{
-		emit("","jg", "." + newLabel, "; if " + operand1 + " > " + operand2 + " then jump to set eax to TRUE");
-	}
+  string newLabel = getLabel();
 
-	emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
+  if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+  {
+    emit("", "jg", "." + newLabel, "; if " + operand2 + " > " + operand1 + " then jump to set eax to TRUE");
+  }
 
-	if (symbolTable.count("false") == 0)
-	{
-		insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
-	}
+  else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+  {
+    emit("", "jg", "." + newLabel, "; if " + operand1 + " > " + operand2 + " then jump to set eax to TRUE");
+  }
 
-	string secondLabel = getLabel();
+  emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
 
-	emit("", "jmp", "." + secondLabel, "; unconditionally jump");
-	
-	emit("." + newLabel + ":");
+  if (symbolTable.count("false") == 0)
+  {
+    insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
+  }
 
-	emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
+  string secondLabel = getLabel();
 
-	if (symbolTable.count("true") == 0)
-	{
-		insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
-	}
+  emit("", "jmp", "." + secondLabel, "; unconditionally jump");
 
-	emit("." + secondLabel + ":");
+  emit("." + newLabel + ":");
 
-	if (isTemporary(operand1))
-	{
-		freeTemp();
-	}
-	
-	if (isTemporary(operand2))
-	{
-		freeTemp();
-	}
+  emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
 
-	contentsOfAReg = getTemp();
-	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+  if (symbolTable.count("true") == 0)
+  {
+    insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
+  }
 
-	pushOperand(contentsOfAReg);
+  emit("." + secondLabel + ":");
+
+  if (isTemporary(operand1))
+  {
+    freeTemp();
+  }
+
+  if (isTemporary(operand2))
+  {
+    freeTemp();
+  }
+
+  contentsOfAReg = getTemp();
+  symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+  pushOperand(contentsOfAReg);
 }
 
 void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2) // op2 >= op1
