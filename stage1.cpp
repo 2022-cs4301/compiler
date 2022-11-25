@@ -1581,12 +1581,11 @@ void Compiler::emitAssignCode(string operand1, string operand2) // op2 = op1
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
   }
-  else if(contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
+  
   emit("", "mov", "[" + symbolTable.at(operand2).getInternalName() + "],eax", "; " + operand2 + " = AReg");
 
   contentsOfAReg = symbolTable.at(operand2).getInternalName();
-  }
+
   if (isTemporary(operand1))
   {
     freeTemp();
