@@ -99,6 +99,7 @@ string Compiler::genInternalName(storeTypes stype) const
 {
   static int I = 0; // integer
   static int B = 0; // boolean
+  static int U = 0; // unknown
   string iName;
   if (stype == PROG_NAME)
   {
@@ -114,6 +115,11 @@ string Compiler::genInternalName(storeTypes stype) const
   {
     iName = "B" + to_string(B);
     B++;
+  }
+  else if (stype == UNKNOWN)
+  {
+    iName = "U" + to_string(U);
+    U++;
   }
   
   return iName;
@@ -1575,10 +1581,12 @@ void Compiler::emitAssignCode(string operand1, string operand2) // op2 = op1
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
   }
+  else if(contentsOfAReg != symbolTable.at(operand2).getInternalName())
+  {
   emit("", "mov", "[" + symbolTable.at(operand2).getInternalName() + "],eax", "; " + operand2 + " = AReg");
 
   contentsOfAReg = symbolTable.at(operand2).getInternalName();
-
+  }
   if (isTemporary(operand1))
   {
     freeTemp();
@@ -1618,7 +1626,7 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // op2 + op1
     contentsOfAReg = "";
   }
 
-  if (contentsOfAReg != symbolTable.at(operand2).getInternalName() && currentTempNo == -1)
+  if (contentsOfAReg != symbolTable.at(operand2).getInternalName() && isTemporary(contentsOfAReg))
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
 
@@ -1630,7 +1638,6 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // op2 + op1
     emit("", "add", "eax,[" + symbolTable.at(operand1).getInternalName() + "]",
          "; AReg = " + operand2 + " + " + operand1);
   }
-
   if (isTemporary(operand1))
   {
     freeTemp();
@@ -1672,12 +1679,7 @@ void Compiler::emitSubtractionCode(string operand1, string operand2) // op2 - op
 
     contentsOfAReg = "";
   }
-
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
-    contentsOfAReg = "";
-  }
-
+  
   if (contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
@@ -1728,10 +1730,6 @@ void Compiler::emitNegationCode(string operand1, string operand2)
 
     contentsOfAReg = "";
   }
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName())
-  {
-    contentsOfAReg = "";
-  }
 
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
   {
@@ -1773,11 +1771,6 @@ void Compiler::emitNotCode(string operand1, string operand2) // !op1
 
     symbolTable.at(contentsOfAReg).setAlloc(YES);
 
-    contentsOfAReg = "";
-  }
-
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName())
-  {
     contentsOfAReg = "";
   }
 
@@ -1827,17 +1820,10 @@ void Compiler::emitMultiplicationCode(string operand1, string operand2) // op2 *
     contentsOfAReg = "";
   }
 
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
-    contentsOfAReg = "";
-  }
-
   if (symbolTable.at(operand1).getInternalName() != contentsOfAReg &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
+      contentsOfAReg != symbolTable.at(operand2).getInternalName() )
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-
     contentsOfAReg = symbolTable.at(operand2).getInternalName();
   }
 
@@ -1891,12 +1877,6 @@ void Compiler::emitDivisionCode(string operand1, string operand2) // op2 / op1
     emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
 
     symbolTable.at(contentsOfAReg).setAlloc(YES);
-
-    contentsOfAReg = "";
-  }
-
-  if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
 
     contentsOfAReg = "";
   }
@@ -1958,11 +1938,6 @@ void Compiler::emitModuloCode(string operand1, string operand2) // op2 % op1
     contentsOfAReg = "";
   }
 
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
-    contentsOfAReg = "";
-  }
-
   if (symbolTable.at(operand2).getInternalName() != contentsOfAReg)
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
@@ -2016,11 +1991,6 @@ void Compiler::emitAndCode(string operand1, string operand2) // op2 && op1
 
     symbolTable.at(contentsOfAReg).setAlloc(YES);
 
-    contentsOfAReg = "";
-  }
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
     contentsOfAReg = "";
   }
 
@@ -2085,11 +2055,6 @@ void Compiler::emitOrCode(string operand1, string operand2) // op2 || op1
 
     contentsOfAReg = "";
   }
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
-    contentsOfAReg = "";
-  }
 
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
@@ -2150,12 +2115,6 @@ void Compiler::emitEqualityCode(string operand1, string operand2) // op2 == op1
 
     symbolTable.at(contentsOfAReg).setAlloc(YES);
 
-    contentsOfAReg = "";
-  }
-
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
     contentsOfAReg = "";
   }
 
@@ -2256,12 +2215,6 @@ void Compiler::emitInequalityCode(string operand1, string operand2) // op2 != op
     contentsOfAReg = "";
   }
 
-  if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
-    contentsOfAReg = "";
-  }
-
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
@@ -2354,12 +2307,6 @@ void Compiler::emitLessThanCode(string operand1, string operand2) // op2 < op1
 
     symbolTable.at(contentsOfAReg).setAlloc(YES);
 
-    contentsOfAReg = "";
-  }
-
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
     contentsOfAReg = "";
   }
 
@@ -2463,12 +2410,6 @@ void Compiler::emitLessThanOrEqualToCode(string operand1, string operand2) // op
     contentsOfAReg = "";
   }
 
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
-    contentsOfAReg = "";
-  }
-
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
@@ -2569,11 +2510,6 @@ void Compiler::emitGreaterThanCode(string operand1, string operand2) // op2 > op
 		contentsOfAReg = "";
 	}
 
-	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-	{
-		contentsOfAReg = "";
-	}
-
 	if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
 	{
 		emit("","mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
@@ -2666,12 +2602,6 @@ void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2) //
 
     symbolTable.at(contentsOfAReg).setAlloc(YES);
 
-    contentsOfAReg = "";
-  }
-
-  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
     contentsOfAReg = "";
   }
 
