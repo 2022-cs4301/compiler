@@ -498,7 +498,7 @@ void Compiler::assignStmt()
   {
     processError("\":=\" expected");
   }
-  pushOperator(":="); // push the operator ":=" onto the stack
+  pushOperator(token); // push the operator ":=" onto the stack
   nextToken();
 
   if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" &&
@@ -751,6 +751,7 @@ void Compiler::factor()
     processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", INTEGER, or NON_KEY_ID expected");
   }
 
+  // part() advances the token
   part(); // PART
 
   if (token == "*" || token == "div" || token == "mod" || token == "and")
