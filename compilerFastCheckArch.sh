@@ -173,19 +173,19 @@ FANCY_OUTPUT=true;
 #Directory containing the provided Pascallite .dat files.
 #Default:
 #PROVIDED_DATS=./input/
-PROVIDED_DATS=./input/
+PROVIDED_DATS=./input/dat/
 #
 #Directory containing any provided Pascallite compiler .lst files. 
 #These are the files your output will be checked against.
 #DEFAULT:
 #PROVIDED_LSTS=./input/
-PROVIDED_LSTS=./input/
+PROVIDED_LSTS=./input/lst/
 #
 #Directory containing any provided Assembly language .asm files.
 #These are the files your output will be checked against.
 #DEFAULT:
 #PROVIDED_ASMS=./input/
-PROVIDED_ASMS=./input/
+PROVIDED_ASMS=./input/asm/
 #
 #Directory for the storage and generation of .lst files from your compiler.
 #DEFAULT:
