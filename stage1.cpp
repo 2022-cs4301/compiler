@@ -1469,587 +1469,572 @@ void Compiler::emitReadCode(string operand, string operand2)
   }
 }
 
+
 void Compiler::emitWriteCode(string operand, string operand2)
 {
   string name;
-  static bool defStor = false;
 
   for (uint i = 0; i < operand.size(); ++i)
   {
 
-    if (operand[ i ] != ',' && i < operand.size())
+    if (operand[ i ] != ',' && i < operand.size()) // get operand string and assign it to name
     {
       name += operand[ i ];
       continue;
     }
-
-    if (name != "")
+ 
+    if (name != "") // if name is not empty
     {
-      if (symbolTable.count(name) == 0)
+      if (symbolTable.count(name) == 0) // if name is not defined in symbolTable
       {
-        processError("reference to undefined symbol " + name);
+        processError("reference to undefined symbol " + name); // processError
       }
-      if (symbolTable.at(name).getInternalName() != contentsOfAReg)
+      if (symbolTable.at(name).getInternalName() != contentsOfAReg) // if name != AReg;
       {
-        emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "]", "; load " + name + " in eax");
-        contentsOfAReg = symbolTable.at(name).getInternalName();
+        emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "]", "; load " + name + " in eax"); // emit "mov eax, [name]; load name in eax"
+        contentsOfAReg = symbolTable.at(name).getInternalName(); // AReg = name
       }
-      if (symbolTable.at(name).getDataType() == INTEGER || symbolTable.at(name).getDataType() == BOOLEAN)
+      if (symbolTable.at(name).getDataType() == INTEGER || BOOLEAN) // if datatype of name is INTEGER or BOOLEAN
       {
-        emit("", "call", "WriteInt", "; write int in eax to standard out");
+        emit("", "call", "WriteInt", "; write int in eax to standard out"); // emit "call WriteInt; write int in eax to standard out"
       }
 
-      emit("", "call", "Crlf", "; write \\r\\n to standard out");
+      emit("", "call", "Crlf", "; write \\r\\n to standard out"); // emit "call Crlf; write \r\n to standard out"
     }
-    name = "";
+    name = ""; // deassign name
   }
 
-  if (symbolTable.count(name) == 0)
+  if (symbolTable.count(name) == 0) // if name is not defined in symbolTable
   {
     processError("reference to undefined symbol " + name);
   }
-  if (symbolTable.at(name).getInternalName() != contentsOfAReg)
+  if (symbolTable.at(name).getInternalName() != contentsOfAReg) // if name != AReg
   {
-    emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "]", "; load " + name + " in eax");
-    contentsOfAReg = symbolTable.at(name).getInternalName();
+    emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "]", "; load " + name + " in eax"); // emit "mov eax,[name]; load name in eax"
+    contentsOfAReg = symbolTable.at(name).getInternalName(); // AReg = name
   }
-  if (symbolTable.at(name).getDataType() == INTEGER)
+  if (symbolTable.at(name).getDataType() == INTEGER) // if type of name is INTEGER
   {
-    emit("", "call", "WriteInt", "; write int in eax to standard out");
-  }
-  else
-  {
-    emit("", "cmp", "eax,0", "; compare to 0");
-    string firstLab = getLabel(), secLab = getLabel();
-    emit("", "je", "." + firstLab, "; jump if equal to print FALSE");
-    emit("", "mov", "edx,TRUELIT", "; load address of TRUE literal in edx");
-    emit("", "jmp", "." + secLab, "; unconditionally jump to ." + secLab);
-    emit("." + firstLab + ":");
-    emit("", "mov", "edx,FALSLIT", "; load address of FALSE literal in edx");
-    emit("." + secLab + ":");
-    emit("", "call", "WriteString", "; write string to standard out");
-
-    if (defStor == false)
-    {
-      defStor = true;
-      objectFile << endl;
-      emit("SECTION", ".data");
-      emit("TRUELIT", "db", "'TRUE',0", "; literal string TRUE");
-      emit("FALSLIT", "db", "'FALSE',0", "; literal string FALSE");
-      objectFile << endl;
-      emit("SECTION", ".text");
-    }
+    emit("", "call", "WriteInt", "; write int in eax to standard out"); // emit "call WriteInt; write int in eax to standard out"
   }
 
-  emit("", "call", "Crlf", "; write \\r\\n to standard out");
+  emit("", "call", "Crlf", "; write \\r\\n to standard out"); // emit "call Crlf; write \r\n to standard out"
 }
 
-void Compiler::emitAssignCode(string operand1, string operand2) // op2 = op1
+void Compiler::emitAssignCode(string operand1, string operand2) // operand2 = operand1
 {
-  if (symbolTable.count(operand1) == 0)
+  if (symbolTable.count(operand1) == 0) // if operand1 is not defined in symbolTable
   {
     processError("reference to undefined symbol " + operand1);
   }
 
-  else if (symbolTable.count(operand2) == 0)
+  else if (symbolTable.count(operand2) == 0) // if operand2 is not defined in symbolTable
   {
     processError("reference to undefined symbol " + operand2);
   }
 
-  if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
+  if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType()) // if both operands datatype is not same
   {
-    processError("incompatible types for operator ':='");
+    processError("incompatible types for operator ':='"); 
   }
 
-  if (symbolTable.at(operand2).getMode() != VARIABLE)
+  if (symbolTable.at(operand2).getMode() != VARIABLE) // if operand's mode is not variable
   {
     processError("symbol on left-hand side of assignment must have a storage mode of VARIABLE");
   }
 
-  if (operand1 == operand2)
+  if (operand1 == operand2) // if both operands are same
   {
-    return;
+    return; // do nothing
   }
 
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName()) // if AReg != operand1
   {
-    emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
+    emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1); // emit "mov eax,[operand1]; AReg = operand1"
   }
 
-  emit("", "mov", "[" + symbolTable.at(operand2).getInternalName() + "],eax", "; " + operand2 + " = AReg");
+  emit("", "mov", "[" + symbolTable.at(operand2).getInternalName() + "],eax", "; " + operand2 + " = AReg"); // emit "mov [operand2],eax; operand2 = AReg"
 
-  contentsOfAReg = symbolTable.at(operand2).getInternalName();
+  contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2
 
-  if (isTemporary(operand1))
+  if (isTemporary(operand1)) // if operand1 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--;
   }
 }
 
-void Compiler::emitAdditionCode(string operand1, string operand2) // op2 + op1
+void Compiler::emitAdditionCode(string operand1, string operand2) // operand2 + operand1
 {
-  if (symbolTable.find(operand1) == symbolTable.end())
+  if (symbolTable.find(operand1) == symbolTable.end()) // if operand1 is not defined in symbolTable
   {
     processError("reference to undefined symbol " + operand1);
   }
-  else if (symbolTable.find(operand2) == symbolTable.end())
+  else if (symbolTable.find(operand2) == symbolTable.end()) // if operand2 is not defined in symbolTable
   {
     processError("reference to undefined symbol " + operand2);
   }
-  if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER)
+  if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER) // if operand1 or operand2 are not INTEGERs
   {
     processError("binary '+' requires integer operands");
   }
   if (contentsOfAReg[ 0 ] == 'T' && contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
+      contentsOfAReg != symbolTable.at(operand2).getInternalName()) // if AReg == 'Tx' and AReg != operand1 and AReg != operand2
   {
-    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-    symbolTable.at(contentsOfAReg).setAlloc(YES);
-    contentsOfAReg = "";
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg"); // emit "mov [AReg],eax; deassign AReg"
+    symbolTable.at(contentsOfAReg).setAlloc(YES); // setAllocation of AReg
+    contentsOfAReg = ""; // deassign AReg
   }
 
-  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' &&
-      contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' &&  // if AReg is empty and AReg != 'Tx' and AReg != operand1 and AReg != operand2
+      contentsOfAReg != symbolTable.at(operand1).getInternalName() && 
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    contentsOfAReg = "";
+    contentsOfAReg = "";  // deassign AReg 
   }
 
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 && AReg != operand2
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-    contentsOfAReg = symbolTable.at(operand2).getInternalName();
+    emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2); // emit "mov eax,[operand2]; AReg = operand2"
+    contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2
   }
 
-  if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+  if (contentsOfAReg == symbolTable.at(operand2).getInternalName()) // if AReg is operand2
   {
-    emit("", "add", "eax,[" + symbolTable.at(operand1).getInternalName() + "]",
+    emit("", "add", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", // emit "add eax,[operand1]; AReg = operand2 + operand1"
          "; AReg = " + operand2 + " + " + operand1);
   }
   else
   {
-    emit("", "add", "eax,[" + symbolTable.at(operand2).getInternalName() + "]",
+    emit("", "add", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", // emit "add eax,[operand2]; AReg = operand1 + operand2"
          "; AReg = " + operand1 + " + " + operand2);
   }
 
-  if (isTemporary(operand1))
+  if (isTemporary(operand1)) // if operand1 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  if (isTemporary(operand2))
+  if (isTemporary(operand2)) // if operand2 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  contentsOfAReg = getTemp();
-  symbolTable.at(contentsOfAReg).setDataType(INTEGER);
-  pushOperand(contentsOfAReg);
+  contentsOfAReg = getTemp(); // AReg = "Tx" 
+  symbolTable.at(contentsOfAReg).setDataType(INTEGER); // set type of AReg to INTEGER
+  pushOperand(contentsOfAReg); // push AReg to Operand
 }
 
-void Compiler::emitSubtractionCode(string operand1, string operand2) // op2 - op1
+void Compiler::emitSubtractionCode(string operand1, string operand2) // operand2 - operand1
 {
-  if (symbolTable.find(operand1) == symbolTable.end())
+  if (symbolTable.find(operand1) == symbolTable.end()) // if operand1 is not defined in symbolTable
   {
-    processError("reference to undefined symbol " + operand1);
+    processError("reference to undefined symbol " + operand1); 
   }
-  else if (symbolTable.find(operand2) == symbolTable.end())
+  else if (symbolTable.find(operand2) == symbolTable.end()) // if operand2 is not defined in symbolTable
   {
     processError("reference to undefined symbol " + operand2);
   }
-  if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER)
+  if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER) // if both types are not INTEGERs
   {
     processError("binary '-' requires integer operands");
   }
 
   if (contentsOfAReg[ 0 ] == 'T' && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
-    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-    symbolTable.at(contentsOfAReg).setAlloc(YES);
-    contentsOfAReg = "";
+  { // if AReg == 'Tx' and AReg != operand2
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg"); // emit "mov [AReg],eax ;deassign AReg"
+    symbolTable.at(contentsOfAReg).setAlloc(YES); // allocate AReg at symbolTable
+    contentsOfAReg = ""; // deassign AReg
   }
-  if (contentsOfAReg[ 0 ] != 'T' && !contentsOfAReg.empty() &&
+  if (contentsOfAReg[ 0 ] != 'T' && !contentsOfAReg.empty() && // if AReg is not "Tx" and AReg is not empty and AReg != operand2
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    contentsOfAReg = "";
+    contentsOfAReg = ""; // deassign AReg
   }
-  if (contentsOfAReg != symbolTable.at(operand2).getInternalName())
+  if (contentsOfAReg != symbolTable.at(operand2).getInternalName()) // if AReg != operand2
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-    contentsOfAReg = symbolTable.at(operand2).getInternalName();
+    //emit "mov, eax[operand2]; AReg = operand2"
+    contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2;
   }
 
-  if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+  if (contentsOfAReg == symbolTable.at(operand2).getInternalName()) // if AReg == operand2
   {
-    emit("", "sub", "eax,[" + symbolTable.at(operand1).getInternalName() + "]",
+    // emit "sub eax,[operand1]; AReg = operand2 - operand1"
+    emit("", "sub", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", 
          "; AReg = " + operand2 + " - " + operand1);
   }
-  if (isTemporary(operand1))
+  if (isTemporary(operand1)) // if operand1 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  if (isTemporary(operand2))
+  if (isTemporary(operand2)) // if operand2 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  contentsOfAReg = getTemp();
-  symbolTable.at(contentsOfAReg).setDataType(INTEGER);
-  pushOperand(contentsOfAReg);
+  contentsOfAReg = getTemp(); // AReg = "Tx"
+  symbolTable.at(contentsOfAReg).setDataType(INTEGER); // set AReg to INTEGER
+  pushOperand(contentsOfAReg); // push AReg to Operand
 }
 
 void Compiler::emitNegationCode(string operand1, string operand2)
 {
-  if (symbolTable.find(operand1) == symbolTable.end())
+  if (symbolTable.find(operand1) == symbolTable.end()) // if operand1 is not defined in symbolTable
   {
     processError("reference to undefined symbol " + operand1);
   }
 
-  if (whichType(operand1) != INTEGER)
+  if (whichType(operand1) != INTEGER) // if type of operand1 is not INTEGER
   {
     processError("binary '-' requires integer operands");
   }
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg[ 0 ] == 'T')
-  {
-    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-    symbolTable.at(contentsOfAReg).setAlloc(YES);
-    contentsOfAReg = "";
+  { // if AReg != operand1 and AReg == "Tx"
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg"); // emit "mov [AReg],eax ; deassign AReg"
+    symbolTable.at(contentsOfAReg).setAlloc(YES); // set Allocation AReg
+    contentsOfAReg = ""; // deassign AReg
   }
 
-  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' &&
-      contentsOfAReg != symbolTable.at(operand1).getInternalName())
+  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' && // if AReg is empty and AReg == "Tx" and AReg != operand1
+      contentsOfAReg != symbolTable.at(operand1).getInternalName()) 
   {
-    contentsOfAReg = "";
+    contentsOfAReg = ""; // deassign AReg
   }
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName()) // if AReg != operand1
   {
+    // emit "mov eax,[operand1]; AReg = operand1"
     emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
-    contentsOfAReg = symbolTable.at(operand1).getInternalName();
+    contentsOfAReg = symbolTable.at(operand1).getInternalName(); // AReg = operand1
   }
 
-  emit("", "neg", "eax", "; AReg = -AReg");
-  if (isTemporary(operand1))
+  emit("", "neg", "eax", "; AReg = -AReg"); // emit "neg eax; AReg = AReg"
+  if (isTemporary(operand1)) // if operand1 = "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  contentsOfAReg = getTemp();
-  symbolTable.at(contentsOfAReg).setDataType(INTEGER);
-  pushOperand(contentsOfAReg);
+  contentsOfAReg = getTemp(); // AReg = "Tx"
+  symbolTable.at(contentsOfAReg).setDataType(INTEGER); // set AReg to INTEGER
+  pushOperand(contentsOfAReg); // push AReg to Operand
 }
 
 void Compiler::emitNotCode(string operand1, string operand2) // !op1
 {
-  if (symbolTable.find(operand1) == symbolTable.end())
+  if (symbolTable.find(operand1) == symbolTable.end()) // if operand1 is not defined in symbolTable
   {
     processError("reference to undefined symbol " + operand1);
   }
-  if (whichType(operand1) != BOOLEAN)
+  if (whichType(operand1) != BOOLEAN) // if type of operand1 is not BOOLEAN
   {
     processError("binary 'not' requires boolean operands");
   }
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg[ 0 ] == 'T')
   {
-    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-    symbolTable.at(contentsOfAReg).setAlloc(YES);
-    contentsOfAReg = "";
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg"); // emit "mov [AReg],eax ; deassign AReg"
+    symbolTable.at(contentsOfAReg).setAlloc(YES); // generate "Tx" in symbolTable
+    contentsOfAReg = ""; // deassign AReg
   }
 
-  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' &&
+  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' && // if Areg is not empty and AReg != "Tx" ad AReg != operand1
       contentsOfAReg != symbolTable.at(operand1).getInternalName())
   {
-    contentsOfAReg = "";
+    contentsOfAReg = ""; // deassign AReg
   }
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName()) // if AReg != operand1
   {
+    // emit "mov eax,[operand1]; Areg operand1"
     emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
     contentsOfAReg = symbolTable.at(operand1).getInternalName();
   }
 
-  emit("", "not", "eax", "; AReg = !AReg");
-  if (isTemporary(operand1))
+  emit("", "not", "eax", "; AReg = !AReg"); // emit "not eax; AReg = !AReg"
+
+  if (isTemporary(operand1)) // if operand1 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  contentsOfAReg = getTemp();
-  symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
-  pushOperand(contentsOfAReg);
+  contentsOfAReg = getTemp(); // Areg = "Tx"
+  symbolTable.at(contentsOfAReg).setDataType(BOOLEAN); // set type of AReg to BOOLEAN
+  pushOperand(contentsOfAReg); // push AReg to Operand
 }
 
 void Compiler::emitMultiplicationCode(string operand1, string operand2) // op2 * op1
 {
-  if (symbolTable.find(operand1) == symbolTable.end())
+  if (symbolTable.find(operand1) == symbolTable.end()) // if operand1 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand1);
   }
-  else if (symbolTable.find(operand2) == symbolTable.end())
+  else if (symbolTable.find(operand2) == symbolTable.end()) // if operand2 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand2);
   }
 
-  if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER)
+  if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER) // if both operand are not INTEGERs
   {
     processError("binary '*' requires integer operands");
   }
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 and AReg != operand2 and AReg == "Tx"
       contentsOfAReg != symbolTable.at(operand2).getInternalName() && contentsOfAReg[ 0 ] == 'T')
   {
-    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-    symbolTable.at(contentsOfAReg).setAlloc(YES);
-    contentsOfAReg = "";
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg"); // emit "mov [AReg], eax; deassign AReg"
+    symbolTable.at(contentsOfAReg).setAlloc(YES); // generate "Tx" at symbolTable
+    contentsOfAReg = ""; // deassign ARegg
   }
 
-  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' &&
+  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' && // if AReg is not empty and AReg != "Tx" and AReg != operand1 and AReg != operand2
       contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    contentsOfAReg = "";
+    contentsOfAReg = ""; // deassign AReg
   }
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 and AReg != operand2
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
+    //emit "mov eax,[operand2]; AReg operand2"
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-    contentsOfAReg = symbolTable.at(operand2).getInternalName();
+    contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2
   }
 
-  if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+  if (contentsOfAReg == symbolTable.at(operand2).getInternalName()) // if AReg == operand2
   {
-    emit("", "imul", "dword [" + symbolTable.at(operand1).getInternalName() + "]",
+    emit("", "imul", "dword [" + symbolTable.at(operand1).getInternalName() + "]", // emit imul dword [operand1]; AReg = operand2 * operand1
          "; AReg = " + operand2 + " * " + operand1);
   }
   else
   {
-    emit("", "imul", "dword [" + symbolTable.at(operand2).getInternalName() + "]",
+    emit("", "imul", "dword [" + symbolTable.at(operand2).getInternalName() + "]", // emit imul dword [operand2]; AReg = operand1 * operand2
          "; AReg = " + operand1 + " * " + operand2);
   }
 
-  if (isTemporary(operand1))
+  if (isTemporary(operand1)) // if operand1 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  if (isTemporary(operand2))
+  if (isTemporary(operand2)) // if operand2 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  contentsOfAReg = getTemp();
-  symbolTable.at(contentsOfAReg).setDataType(INTEGER);
-  pushOperand(contentsOfAReg);
+  contentsOfAReg = getTemp(); // AReg = "Tx"
+  symbolTable.at(contentsOfAReg).setDataType(INTEGER); // set AReg to INTEGER
+  pushOperand(contentsOfAReg); // push AReg to Operand
 }
 
 void Compiler::emitDivisionCode(string operand1, string operand2) // op2 / op1
 {
-  if (symbolTable.find(operand1) == symbolTable.end())
+  if (symbolTable.find(operand1) == symbolTable.end()) // if operand1 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand1);
   }
-  else if (symbolTable.find(operand2) == symbolTable.end())
+  else if (symbolTable.find(operand2) == symbolTable.end()) // if operand2 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand2);
   }
-  if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER)
+  if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER) // if both operands are not INTEGERs
   {
     processError("binary 'div' requires integer operands");
   }
   if (contentsOfAReg != "" && contentsOfAReg[ 0 ] == 'T' && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
-    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-    symbolTable.at(contentsOfAReg).setAlloc(YES);
-    contentsOfAReg = "";
+  { // if AReg is not empty and AReg is "Tx" and AReg != operand2 
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg"); // emit "mov [Areg],eax; deassign AReg"
+    symbolTable.at(contentsOfAReg).setAlloc(YES); // generate AReg at symbolTable
+    contentsOfAReg = ""; // deassign AReg
   }
 
-  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' &&
+  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' && // if AReg is not empty and AReg != "Tx" and AReg != operand2
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    contentsOfAReg = "";
+    contentsOfAReg = ""; // deassign AReg 
   }
-  if (contentsOfAReg != symbolTable.at(operand2).getInternalName())
+  if (contentsOfAReg != symbolTable.at(operand2).getInternalName()) // if AReg is not operand2
   {
-    emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-    contentsOfAReg = symbolTable.at(operand2).getInternalName();
+    // emit "mov eax,[operand2]; AReg = operand2"
+    emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2); 
+    contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2
   }
-  emit("", "cdq", "", "; sign extend dividend from eax to edx:eax");
+  emit("", "cdq", "", "; sign extend dividend from eax to edx:eax"); // emit "cdq; sign extended from eax to edx:eax"
   emit("", "idiv", "dword [" + symbolTable.at(operand1).getInternalName() + "]",
-       "; AReg = " + operand2 + " div " + operand1);
+       "; AReg = " + operand2 + " div " + operand1); // emit "idiv dword [operand1]; AReg = operand2 div operand1"
 
-  if (isTemporary(operand1))
+  if (isTemporary(operand1)) // if operand1 = "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  if (isTemporary(operand2))
+  if (isTemporary(operand2)) // if operand1 = "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  contentsOfAReg = getTemp();
-  symbolTable.at(contentsOfAReg).setDataType(INTEGER);
-  pushOperand(contentsOfAReg);
+  contentsOfAReg = getTemp(); // AReg = "Tx"
+  symbolTable.at(contentsOfAReg).setDataType(INTEGER); // set AReg to INTEGER
+  pushOperand(contentsOfAReg); // push AReg to Operand
 }
 
 void Compiler::emitModuloCode(string operand1, string operand2)
-{ // op2 %  op1 //done
-  if (symbolTable.find(operand1) == symbolTable.end())
+{ // op2 %  op1 
+  if (symbolTable.find(operand1) == symbolTable.end()) // if operand1 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand1);
   }
-  else if (symbolTable.find(operand2) == symbolTable.end())
+  else if (symbolTable.find(operand2) == symbolTable.end()) // if operand2 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand2);
   }
-  if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER)
+  if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER) // if both operand are not INTEGERs
   {
     processError("binary 'mod' requires integer operands");
   }
 
   if (contentsOfAReg[ 0 ] == 'T' && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
-    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-    symbolTable.at(contentsOfAReg).setAlloc(YES);
-    contentsOfAReg = "";
+  { // if AReg == "Tx" and AReg != operand2
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg"); // emit "mov [AReg],eax ; deassign AReg"
+    symbolTable.at(contentsOfAReg).setAlloc(YES); // generate AReg at symbolTable
+    contentsOfAReg = ""; // deassign AReg
   }
 
-  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' &&
+  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' && // if AReg is empty and AReg != "Tx" and AReg != operand2
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    contentsOfAReg = "";
+    contentsOfAReg = ""; // deassign AReg
   }
-  if (contentsOfAReg != symbolTable.at(operand2).getInternalName())
+  if (contentsOfAReg != symbolTable.at(operand2).getInternalName()) // if AReg != operand2
   {
+    // emit "mov eax,[operand2]; AReg = operand2"
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-    contentsOfAReg = symbolTable.at(operand2).getInternalName();
+    contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2
   }
 
-  emit("", "cdq", "", "; sign extend dividend from eax to edx:eax");
-  emit("", "idiv", "dword [" + symbolTable.at(operand1).getInternalName() + "]",
+  emit("", "cdq", "", "; sign extend dividend from eax to edx:eax"); // emit "cdq; sign extended dividened from eax to edx:eax"
+  emit("", "idiv", "dword [" + symbolTable.at(operand1).getInternalName() + "]", // emit "idiv dword [operand1]; AReg = op2 div op1"
        "; AReg = " + operand2 + " div " + operand1);
-  emit("", "xchg", "eax,edx", "; exchange quotient and remainder");
+  emit("", "xchg", "eax,edx", "; exchange quotient and remainder"); // emit "xchg eax,edx; exchange quotient and remainder"
 
-  if (isTemporary(operand1))
+  if (isTemporary(operand1)) // if operand1 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  if (isTemporary(operand2))
+  if (isTemporary(operand2))// if operand2 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  contentsOfAReg = getTemp();
-  symbolTable.at(contentsOfAReg).setDataType(INTEGER);
-  pushOperand(contentsOfAReg);
+  contentsOfAReg = getTemp(); // AReg = "Tx"
+  symbolTable.at(contentsOfAReg).setDataType(INTEGER); // set AReg to INTEGER
+  pushOperand(contentsOfAReg); // push AReg to Operand
 }
 
 void Compiler::emitAndCode(string operand1, string operand2) // op2 && op1
 {
-  if (symbolTable.find(operand1) == symbolTable.end())
+  if (symbolTable.find(operand1) == symbolTable.end()) // if operand1 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand1);
   }
-  else if (symbolTable.find(operand2) == symbolTable.end())
+  else if (symbolTable.find(operand2) == symbolTable.end()) // if operand2 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand2);
   }
 
-  if (whichType(operand1) != BOOLEAN || whichType(operand2) != BOOLEAN)
+  if (whichType(operand1) != BOOLEAN || whichType(operand2) != BOOLEAN) // if one of both opernads is not BOOLEAN
   {
     processError("binary 'and' requires boolean operands");
   }
 
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 and AReg != operand2 and AReg == "Tx"
       contentsOfAReg != symbolTable.at(operand2).getInternalName() && contentsOfAReg[ 0 ] == 'T')
   {
-    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-    symbolTable.at(contentsOfAReg).setAlloc(YES);
-    contentsOfAReg = "";
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg"); // emit "mov [AReg],eax; deassign AReg"
+    symbolTable.at(contentsOfAReg).setAlloc(YES); // generate Areg at symbolTable
+    contentsOfAReg = ""; // deassign AReg
   }
 
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
-      contentsOfAReg != symbolTable.at(operand2).getInternalName() && !contentsOfAReg.empty() &&
-      contentsOfAReg[ 0 ] != 'T')
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 and AReg != operand2 and AReg is not empty 
+      contentsOfAReg != symbolTable.at(operand2).getInternalName() && !contentsOfAReg.empty() && 
+      contentsOfAReg[ 0 ] != 'T') // and AReg is not "Tx"
   {
-    contentsOfAReg = "";
+    contentsOfAReg = ""; // deassign AReg
   }
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 and AReg != operand2
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
-  {
+  { // emit "mov eax,[operand2] ; AReg = operand2"
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-    contentsOfAReg = symbolTable.at(operand2).getInternalName();
+    contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2 
   }
 
-  if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+  if (contentsOfAReg == symbolTable.at(operand2).getInternalName()) // if AReg = operand2
   {
-    emit("", "and", "eax,[" + symbolTable.at(operand1).getInternalName() + "]",
+    emit("", "and", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", // emit "and eax,[operand1]; AReg = operand2 and operand1"
          "; AReg = " + operand2 + " and " + operand1);
   }
   else
   {
-    emit("", "and", "eax,[" + symbolTable.at(operand2).getInternalName() + "]",
-         "; AReg = " + operand1 + " and " + operand2);
+    emit("", "and", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", // emit "and eax,[operand2]; AReg = operand1 and operand2"
+         "; AReg = " + operand1 + " and " + operand2); 
   }
-  if (isTemporary(operand1))
+  if (isTemporary(operand1)) // if operand1 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  if (isTemporary(operand2))
+  if (isTemporary(operand2)) // if operand2 == "Tx"
   {
-    freeTemp();
+    freeTemp(); // currentTempNo--
   }
-  contentsOfAReg = getTemp();
-  symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
-  pushOperand(contentsOfAReg);
+  contentsOfAReg = getTemp(); // AReg = "Tx"
+  symbolTable.at(contentsOfAReg).setDataType(BOOLEAN); // set AReg to BOOLEAN
+  pushOperand(contentsOfAReg); // push AReg to Operand
 }
 
 void Compiler::emitOrCode(string operand1, string operand2) // op2 || op1
 {
-  if (symbolTable.find(operand1) == symbolTable.end())
+  if (symbolTable.find(operand1) == symbolTable.end()) // if operand1 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand1);
   }
-  else if (symbolTable.find(operand2) == symbolTable.end())
+  else if (symbolTable.find(operand2) == symbolTable.end()) // if operand2 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand2);
   }
 
-  if (whichType(operand1) != BOOLEAN || whichType(operand2) != BOOLEAN)
+  if (whichType(operand1) != BOOLEAN || whichType(operand2) != BOOLEAN)  // if one of both opernads is not BOOLEAN
   {
     processError("binary 'or' requires boolean operands");
   }
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 and AReg != operand2 and AReg == "Tx"
       contentsOfAReg != symbolTable.at(operand2).getInternalName() && contentsOfAReg[ 0 ] == 'T')
   {
-    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-    symbolTable.at(contentsOfAReg).setAlloc(YES);
-    contentsOfAReg = "";
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg"); // emit "mov [AReg],eax; deassign AReg"
+    symbolTable.at(contentsOfAReg).setAlloc(YES); // generate Areg at symbolTable
+    contentsOfAReg = ""; // deassign AReg
   }
 
-  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' &&
+  if (!contentsOfAReg.empty() && contentsOfAReg[ 0 ] != 'T' && // if AReg != operand1 and AReg != operand2 and AReg is not empty and AReg = "Tx"
       contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    contentsOfAReg = "";
+    contentsOfAReg = ""; // deassign AReg
   }
-  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() &&
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 and AReg != operand2
       contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-    contentsOfAReg = symbolTable.at(operand2).getInternalName();
+    emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2); // emit "mov eax,[operand2]; AReg = operand2"
+    contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2
   }
 
-  if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+  if (contentsOfAReg == symbolTable.at(operand2).getInternalName()) // if AReg == operand2
   {
-    emit("", "or", "eax,[" + symbolTable.at(operand1).getInternalName() + "]",
+    emit("", "or", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", // emit "or eax,[operand1]; AReg = operand2 or operand1"
          "; AReg = " + operand2 + " or " + operand1);
   }
   else
   {
-    emit("", "or", "eax,[" + symbolTable.at(operand2).getInternalName() + "]",
+    emit("", "or", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", // emit "or eax,[operand2]; AReg = operand1 or operand2"
          "; AReg = " + operand1 + " or " + operand2);
   }
 
-  if (isTemporary(operand1))
+  if (isTemporary(operand1)) // if operand1 == "Tx"
   {
-    freeTemp();
+    freeTemp(); //currentTempNo--
   }
-  if (isTemporary(operand2))
+  if (isTemporary(operand2)) // if operand2 == "Tx"
   {
-    freeTemp();
+    freeTemp(); //currentTempNo--
   }
-  contentsOfAReg = getTemp();
-  symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
-  pushOperand(contentsOfAReg);
+  contentsOfAReg = getTemp(); // AReg = "Tx"
+  symbolTable.at(contentsOfAReg).setDataType(BOOLEAN); // set AReg to BOOLEAN
+  pushOperand(contentsOfAReg); // push AReg to Operand
 }
 
 void Compiler::emitEqualityCode(string operand1, string operand2) // op2 == op1
@@ -2599,7 +2584,7 @@ string Compiler::nextToken() // returns the next token or end of file marker
       processError("'}' cannot begin token");
     }
     else if (isspace(ch))
-    {
+    { 
       nextChar();
     }
     else if (isSpecialSymbol(ch))
