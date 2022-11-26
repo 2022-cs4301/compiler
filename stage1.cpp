@@ -603,8 +603,6 @@ void Compiler::writeStmt()
     processError("\"(\" expected");
   }
 
-  else
-  {
     // We have a left paren. Advance token.
     nextToken();
 
@@ -618,7 +616,6 @@ void Compiler::writeStmt()
       {
         // if we have a ',', code current list item
         code("write", listItem);
-        contentsOfAReg = listItem;
 
         // reset list item for next characters
         listItem = "";
@@ -632,7 +629,6 @@ void Compiler::writeStmt()
 
     // code current list item
     code("write", listItem);
-    contentsOfAReg = listItem;
 
     // look for a right paren
     // call to ids() advanced token, so no need to advance now
@@ -649,7 +645,7 @@ void Compiler::writeStmt()
     {
       processError("';' expected");
     }
-  }
+  
 }
 
 // stage 1, production 9
@@ -1040,7 +1036,7 @@ bool Compiler::isKeyword(string s) const
   // instead of using a crazy, long string of conditional operators (||),
   // just make an array and loop through that
   string keywords[ 16 ] = {"program", "const", "var", "integer", "boolean", "begin", "end", "true",
-    "false", "not", "mov", "div", "and", "or", "read", "write"};
+    "false", "not", "mod", "div", "and", "or", "read", "write"};
 
   int len = *(&keywords + 1) - keywords; // length of keywords
 
@@ -1112,7 +1108,7 @@ bool Compiler::isBoolean(string s) const
 bool Compiler::isLiteral(string s) const // 10. LIT → INTEGER | BOOLEAN | 'not'
 // BOOLEAN | '+' INTEGER | '-' INTEGER
 {
-  if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-')
+  if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-' || s == "not")
   {
     return true;
   }
@@ -1554,7 +1550,6 @@ void Compiler::emitAssignCode(string operand1, string operand2) // operand2 = op
   }
   
   emit("", "mov", "[" + symbolTable.at(operand2).getInternalName() + "],eax", "; " + operand2 + " = AReg"); // emit "mov [operand2],eax; operand2 = AReg"
-
   
   contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2
 
@@ -1594,7 +1589,7 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // operand2 + 
   }
 
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 && AReg != operand2
-      contentsOfAReg != symbolTable.at(operand2).getInternalName() && isTemporary(contentsOfAReg))
+      contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2); // emit "mov eax,[operand2]; AReg = operand2"
     contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2
