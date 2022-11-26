@@ -1494,32 +1494,9 @@ void Compiler::emitWriteCode(string operand, string operand2)
         emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "]", "; load " + name + " in eax");
         contentsOfAReg = symbolTable.at(name).getInternalName();
       }
-      if (symbolTable.at(name).getDataType() == INTEGER)
+      if (symbolTable.at(name).getDataType() == INTEGER || symbolTable.at(name).getDataType() == BOOLEAN)
       {
         emit("", "call", "WriteInt", "; write int in eax to standard out");
-      }
-      else
-      {
-        emit("", "cmp", "eax,0", "; compare to 0");
-        string firstLab = getLabel(), secLab = getLabel();
-        emit("", "je", "." + firstLab, "; jump if equal to print FALSE");
-        emit("", "mov", "edx,TRUELIT", "; load address of TRUE literal in edx");
-        emit("", "jmp", "." + secLab, "; unconditionally jump to ." + secLab);
-        emit("." + firstLab + ":");
-        emit("", "mov", "edx,FALSLIT", "; load address of FALSE literal in edx");
-        emit("." + secLab + ":");
-        emit("", "call", "WriteString", "; write string to standard out");
-
-        if (defStor == false)
-        {
-          defStor = true;
-          objectFile << endl;
-          emit("SECTION", ".data");
-          emit("TRUELIT", "db", "'TRUE',0", "; literal string TRUE");
-          emit("FALSLIT", "db", "'FALSE',0", "; literal string FALSE");
-          objectFile << endl;
-          emit("SECTION", ".text");
-        }
       }
 
       emit("", "call", "Crlf", "; write \\r\\n to standard out");
