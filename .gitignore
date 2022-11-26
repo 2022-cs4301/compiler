@@ -4,5 +4,7 @@ stage1.o
 stage1main.o
 alldifs.txt
 allouts.txt
-*.lst
-*.asm
+/*.lst
+/*.asm
+input/**
+output/**

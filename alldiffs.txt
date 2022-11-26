@@ -4,91 +4,91 @@ All Listing and Assembly File Diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 102.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 103.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 104.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 105.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 106.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 107.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 108.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 109.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 110.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 111.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 112.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 113.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 14,15c14,15
 <    10|    b:
 < Error: Line 10: one of "*", "and", "div", "mod", ")", "+", "-", ";", "<", "<=", "<>", "=", ">", ">=", or "or" expected
@@ -101,49 +101,49 @@ All Listing and Assembly File Diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 115.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 116.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 117.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 118.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 119.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 120.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 12,13c12
 < 
 < Error: Line 7: can't read variables of this type
@@ -155,91 +155,91 @@ All Listing and Assembly File Diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 123.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 124.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 132.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 133.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 134.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 135.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 146.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 147.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 148.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 149.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 101.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:21 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 102.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:21 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 18a19
 >         mov     eax,[I6]                ; load z in eax 
 21c22,23
@@ -255,77 +255,77 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:21 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 104.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 105.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 106.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 107.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 108.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 109.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 110.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 111.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 112.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 113.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 10a11
 >         mov     [I4],eax                ; c = AReg
 ------------------------------
@@ -334,14 +334,14 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 115.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 20,34d19
 <         cmp     eax,0                   ; compare to 0
 <         je      .L0                     ; jump if equal to print FALSE
@@ -394,7 +394,7 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 23,37d22
 <         cmp     eax,0                   ; compare to 0
 <         je      .L0                     ; jump if equal to print FALSE
@@ -427,21 +427,21 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 118.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 119.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 43,57d42
 <         cmp     eax,0                   ; compare to 0
 <         je      .L6                     ; jump if equal to print FALSE
@@ -484,14 +484,14 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 122.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 111a112
 >         mov     eax,[I0]                ; load sum in eax 
 ------------------------------
@@ -500,7 +500,7 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 135a136
 >         mov     eax,[I0]                ; load sum in eax 
 ------------------------------
@@ -509,7 +509,7 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:23 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 75a76
 >         mov     eax,[I0]                ; load sum in eax 
 ------------------------------
@@ -518,7 +518,7 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:23 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 14c14
 <         jne     .L0                     ; if a <> b then jump to set eax to TRUE
 ---
@@ -569,21 +569,21 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:23 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 134.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:23 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 135.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:23 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 14,28d13
 <         cmp     eax,0                   ; compare to 0
 <         je      .L0                     ; jump if equal to print FALSE
@@ -675,21 +675,21 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:24 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 147.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:24 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 ------------------------------
 
 148.asm diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:24 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 52,66d51
 <         cmp     eax,0                   ; compare to 0
 <         je      .L6                     ; jump if equal to print FALSE
@@ -732,7 +732,7 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Thu Nov 19 08:15:24 2020
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:07:43 2022
 31a32
 >         mov     eax,[I0]                ; load a in eax 
 ------------------------------
