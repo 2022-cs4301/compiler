@@ -503,8 +503,10 @@ for i in "$MY_ASMS"*"$ASM_EXTEN" ; do
 	declare -i CANCOMPILE=$(grep "0 ERRORS" $MY_LSTS"$THENAME"$LST_EXTEN -c)
 	if [ "$CANCOMPILE" -ge 1 ]; then
 		echo "$i can (probably) compile.                               "
-		nasm -f elf32 -o "$i" -o "$MY_ASMS""$THENAME".o "$MY_ASMS""$THENAME""$ASM_EXTEN" -I/usr/local/4301/include/ -I.
-		ld -m elf_i386 --dynamic-linker /lib/ld-linux.so.2 -o "$MY_EXES""$THENAME""$EXE_EXTEN" "$MY_ASMS""$THENAME".o /usr/local/4301/src/Along32.o -lc
+		nasm -f elf32 -o "$MY_ASMS""$THENAME".o "$MY_ASMS""$THENAME""$ASM_EXTEN" -I/usr/local/4301/include/ -I.
+		# nasm -f elf32 -o "$i" -o "$MY_ASMS""$THENAME".o "$MY_ASMS""$THENAME""$ASM_EXTEN" -I/usr/local/4301/include/ -I.
+		ld -m elf_i386 --dynamic-linker /usr/lib32/ld-linux.so.2 -o "$MY_EXES""$THENAME""$EXE_EXTEN" "$MY_ASMS""$THENAME".o /usr/local/4301/src/Along32.o -L /usr/lib32 -lc
+		# ld -m elf_i386 --dynamic-linker /lib/ld-linux.so.2 -o "$MY_EXES""$THENAME""$EXE_EXTEN" "$MY_ASMS""$THENAME".o /usr/local/4301/src/Along32.o -lc
 	else
 		echo "$i can (probably) not compile, so I won't try."
 	fi

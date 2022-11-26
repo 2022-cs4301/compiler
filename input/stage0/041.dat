@@ -1,3 +1,0 @@
-program stage0no041;
-	var const = 2;   {non keyword id must follow var}
-      begin end.

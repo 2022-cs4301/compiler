@@ -1,2 +1,739 @@
 All Listing and Assembly File Diffs
 
+101.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+102.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+103.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+104.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+105.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+106.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+107.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+108.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+109.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+110.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+111.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+112.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+113.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+14,15c14,15
+<    10|    b:
+< Error: Line 10: one of "*", "and", "div", "mod", ")", "+", "-", ";", "<", "<=", "<>", "=", ">", ">=", or "or" expected
+---
+>    10|    b:=a
+> Error: Line 10: ";", "begin", "read","write", "end" expected
+------------------------------
+
+114.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+115.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+116.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+117.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+118.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+119.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+120.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+12,13c12
+< 
+< Error: Line 7: can't read variables of this type
+---
+> Error: Line 7: Can't read variables of this type
+------------------------------
+
+122.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+123.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+124.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+132.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+133.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+134.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+135.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+146.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+147.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+148.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+149.lst diffs
+1c1
+< STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
+---
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 07:17:03 2022
+------------------------------
+
+101.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:21 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+102.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:21 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+18a19
+>         mov     eax,[I6]                ; load z in eax 
+21c22,23
+<         add     eax,[I3]                ; AReg = z + b
+---
+>         mov     eax,[I3]                ; AReg = b
+>         add     eax,[I6]                ; AReg = b + z
+26a29
+>         mov     eax,[I4]                ; load c in eax 
+------------------------------
+
+103.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:21 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+104.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+105.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+106.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+107.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+108.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+109.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+110.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+111.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+112.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+113.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+10a11
+>         mov     [I4],eax                ; c = AReg
+------------------------------
+
+114.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+115.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+20,34d19
+<         cmp     eax,0                   ; compare to 0
+<         je      .L0                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L1                     ; unconditionally jump to .L1
+< .L0:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L1:                                    
+<         call    WriteString             ; write string to standard out
+< 
+< SECTION .data                           
+< TRUELIT db      'TRUE',0                ; literal string TRUE
+< FALSLIT db      'FALSE',0               ; literal string FALSE
+< 
+< SECTION .text                           
+<         call    Crlf                    ; write \r\n to standard out
+36,44d20
+<         cmp     eax,0                   ; compare to 0
+<         je      .L2                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L3                     ; unconditionally jump to .L3
+< .L2:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L3:                                    
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+46,54d21
+<         cmp     eax,0                   ; compare to 0
+<         je      .L4                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L5                     ; unconditionally jump to .L5
+< .L4:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L5:                                    
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+56,64d22
+<         cmp     eax,0                   ; compare to 0
+<         je      .L6                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L7                     ; unconditionally jump to .L7
+< .L6:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L7:                                    
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+------------------------------
+
+116.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+23,37d22
+<         cmp     eax,0                   ; compare to 0
+<         je      .L0                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L1                     ; unconditionally jump to .L1
+< .L0:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L1:                                    
+<         call    WriteString             ; write string to standard out
+< 
+< SECTION .data                           
+< TRUELIT db      'TRUE',0                ; literal string TRUE
+< FALSLIT db      'FALSE',0               ; literal string FALSE
+< 
+< SECTION .text                           
+<         call    Crlf                    ; write \r\n to standard out
+39,47d23
+<         cmp     eax,0                   ; compare to 0
+<         je      .L2                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L3                     ; unconditionally jump to .L3
+< .L2:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L3:                                    
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+------------------------------
+
+117.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+118.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+119.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+43,57d42
+<         cmp     eax,0                   ; compare to 0
+<         je      .L6                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L7                     ; unconditionally jump to .L7
+< .L6:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L7:                                    
+<         call    WriteString             ; write string to standard out
+< 
+< SECTION .data                           
+< TRUELIT db      'TRUE',0                ; literal string TRUE
+< FALSLIT db      'FALSE',0               ; literal string FALSE
+< 
+< SECTION .text                           
+<         call    Crlf                    ; write \r\n to standard out
+59,67d43
+<         cmp     eax,0                   ; compare to 0
+<         je      .L8                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L9                     ; unconditionally jump to .L9
+< .L8:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L9:                                    
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+69,77d44
+<         cmp     eax,0                   ; compare to 0
+<         je      .L10                    ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L11                    ; unconditionally jump to .L11
+< .L10:                                   
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L11:                                   
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+------------------------------
+
+120.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+122.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+111a112
+>         mov     eax,[I0]                ; load sum in eax 
+------------------------------
+
+123.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:22 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+135a136
+>         mov     eax,[I0]                ; load sum in eax 
+------------------------------
+
+124.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:23 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+75a76
+>         mov     eax,[I0]                ; load sum in eax 
+------------------------------
+
+132.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:23 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+14c14
+<         jne     .L0                     ; if a <> b then jump to set eax to TRUE
+---
+>         jne     .L0                     ; if b <> a then jump to set eax to TRUE
+28,42d27
+<         cmp     eax,0                   ; compare to 0
+<         je      .L2                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L3                     ; unconditionally jump to .L3
+< .L2:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L3:                                    
+<         call    WriteString             ; write string to standard out
+< 
+< SECTION .data                           
+< TRUELIT db      'TRUE',0                ; literal string TRUE
+< FALSLIT db      'FALSE',0               ; literal string FALSE
+< 
+< SECTION .text                           
+<         call    Crlf                    ; write \r\n to standard out
+45c30
+<         je      .L4                     ; if a = b then jump to set eax to TRUE
+---
+>         je      .L2                     ; if a = b then jump to set eax to TRUE
+47,48c32,33
+<         jmp     .L5                     ; unconditionally jump
+< .L4:                                    
+---
+>         jmp     .L3                     ; unconditionally jump
+> .L2:                                            
+50c35
+< .L5:                                    
+---
+> .L3:                                            
+59,67d43
+<         cmp     eax,0                   ; compare to 0
+<         je      .L6                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L7                     ; unconditionally jump to .L7
+< .L6:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L7:                                    
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+------------------------------
+
+133.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:23 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+134.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:23 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+135.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:23 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+14,28d13
+<         cmp     eax,0                   ; compare to 0
+<         je      .L0                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L1                     ; unconditionally jump to .L1
+< .L0:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L1:                                    
+<         call    WriteString             ; write string to standard out
+< 
+< SECTION .data                           
+< TRUELIT db      'TRUE',0                ; literal string TRUE
+< FALSLIT db      'FALSE',0               ; literal string FALSE
+< 
+< SECTION .text                           
+<         call    Crlf                    ; write \r\n to standard out
+30,38d14
+<         cmp     eax,0                   ; compare to 0
+<         je      .L2                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L3                     ; unconditionally jump to .L3
+< .L2:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L3:                                    
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+41,49c17
+<         cmp     eax,0                   ; compare to 0
+<         je      .L4                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L5                     ; unconditionally jump to .L5
+< .L4:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L5:                                    
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+---
+>         mov     eax,[B1]                ; load b in eax 
+52,62c20,23
+<         cmp     eax,0                   ; compare to 0
+<         je      .L6                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L7                     ; unconditionally jump to .L7
+< .L6:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L7:                                    
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+<         cmp     eax,[B0]                ; compare b and a
+<         je      .L8                     ; if a = b then jump to set eax to TRUE
+---
+>         mov     eax,[B1]                ; load b in eax 
+>         mov     eax,[B0]                ; AReg = a
+>         cmp     eax,[B1]                ; compare a and b
+>         je      .L0                     ; if a = b then jump to set eax to TRUE
+64,65c25,26
+<         jmp     .L9                     ; unconditionally jump
+< .L8:                                    
+---
+>         jmp     .L1                     ; unconditionally jump
+> .L0:                                            
+67c28
+< .L9:                                    
+---
+> .L1:                                            
+71,79d31
+<         cmp     eax,0                   ; compare to 0
+<         je      .L10                    ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L11                    ; unconditionally jump to .L11
+< .L10:                                   
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L11:                                   
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+81,89d32
+<         cmp     eax,0                   ; compare to 0
+<         je      .L12                    ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L13                    ; unconditionally jump to .L13
+< .L12:                                   
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L13:                                   
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+------------------------------
+
+146.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:24 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+147.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:24 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+------------------------------
+
+148.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:24 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+52,66d51
+<         cmp     eax,0                   ; compare to 0
+<         je      .L6                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L7                     ; unconditionally jump to .L7
+< .L6:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L7:                                    
+<         call    WriteString             ; write string to standard out
+< 
+< SECTION .data                           
+< TRUELIT db      'TRUE',0                ; literal string TRUE
+< FALSLIT db      'FALSE',0               ; literal string FALSE
+< 
+< SECTION .text                           
+<         call    Crlf                    ; write \r\n to standard out
+68,76d52
+<         cmp     eax,0                   ; compare to 0
+<         je      .L8                     ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L9                     ; unconditionally jump to .L9
+< .L8:                                    
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L9:                                    
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+78,86d53
+<         cmp     eax,0                   ; compare to 0
+<         je      .L10                    ; jump if equal to print FALSE
+<         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+<         jmp     .L11                    ; unconditionally jump to .L11
+< .L10:                                   
+<         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+< .L11:                                   
+<         call    WriteString             ; write string to standard out
+<         call    Crlf                    ; write \r\n to standard out
+------------------------------
+
+149.asm diffs
+1c1
+< ; YOUR NAME(S)       Thu Nov 19 08:15:24 2020
+---
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 07:17:03 2022
+31a32
+>         mov     eax,[I0]                ; load a in eax 
+------------------------------
+
