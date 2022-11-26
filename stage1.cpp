@@ -441,10 +441,8 @@ void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
     nextToken(); // advance token
     execStmts(); // recurse
   }
-  else if (token == "end")
-  {
-    return;
-  }
+  else if (token == "end");
+  
   else
   {
     processError("\";\", \"begin\", \"read\",\"write\", \"end\" expected");
@@ -1490,10 +1488,7 @@ void Compiler::emitWriteCode(string operand, string operand2)
         emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "]", "; load " + name + " in eax"); // emit "mov eax, [name]; load name in eax"
         contentsOfAReg = symbolTable.at(name).getInternalName(); // AReg = name
       }
-      if (symbolTable.at(name).getDataType() == INTEGER || BOOLEAN) // if datatype of name is INTEGER or BOOLEAN
-      {
-        emit("", "call", "WriteInt", "; write int in eax to standard out"); // emit "call WriteInt; write int in eax to standard out"
-      }
+      emit("", "call", "WriteInt", "; write int in eax to standard out"); // emit "call WriteInt; write int in eax to standard out"
 
       emit("", "call", "Crlf", "; write \\r\\n to standard out"); // emit "call Crlf; write \r\n to standard out"
     }
@@ -1509,10 +1504,7 @@ void Compiler::emitWriteCode(string operand, string operand2)
     emit("", "mov", "eax,[" + symbolTable.at(name).getInternalName() + "]", "; load " + name + " in eax"); // emit "mov eax,[name]; load name in eax"
     contentsOfAReg = symbolTable.at(name).getInternalName(); // AReg = name
   }
-  if (symbolTable.at(name).getDataType() == INTEGER) // if type of name is INTEGER
-  {
-    emit("", "call", "WriteInt", "; write int in eax to standard out"); // emit "call WriteInt; write int in eax to standard out"
-  }
+  emit("", "call", "WriteInt", "; write int in eax to standard out"); // emit "call WriteInt; write int in eax to standard out"
 
   emit("", "call", "Crlf", "; write \\r\\n to standard out"); // emit "call Crlf; write \r\n to standard out"
 }
