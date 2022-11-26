@@ -1552,9 +1552,11 @@ void Compiler::emitAssignCode(string operand1, string operand2) // operand2 = op
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1); // emit "mov eax,[operand1]; AReg = operand1"
   }
-
+  else 
+  
   emit("", "mov", "[" + symbolTable.at(operand2).getInternalName() + "],eax", "; " + operand2 + " = AReg"); // emit "mov [operand2],eax; operand2 = AReg"
 
+  
   contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2
 
   if (isTemporary(operand1)) // if operand1 == "Tx"
@@ -1593,7 +1595,7 @@ void Compiler::emitAdditionCode(string operand1, string operand2) // operand2 + 
   }
 
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 && AReg != operand2
-      contentsOfAReg != symbolTable.at(operand2).getInternalName())
+      contentsOfAReg != symbolTable.at(operand2).getInternalName() && isTemporary(contentsOfAReg))
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2); // emit "mov eax,[operand2]; AReg = operand2"
     contentsOfAReg = symbolTable.at(operand2).getInternalName(); // AReg = operand2
