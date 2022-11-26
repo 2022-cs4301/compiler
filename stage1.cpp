@@ -304,20 +304,17 @@ void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
 
   if (y == "not")
   {
-    string next = nextToken();
-
-    if (!isBoolean(next))
-    {
-      processError("boolean expected after \"not\"");
+		if (!isBoolean(nextToken()))
+    {	
+			processError("boolean expected after \"not\"");
     }
-
-    if (token == "true")
+		if (token == "true")
     {
-      y = "false";
+			y = "false";
     }
-    else
+		else
     {
-      y = "true";
+			y = "true";
     }
   }
 
