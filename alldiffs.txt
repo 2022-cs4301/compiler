@@ -4,91 +4,91 @@ All Listing and Assembly File Diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 102.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 103.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 104.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 105.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 106.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 107.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 108.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 109.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 110.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 111.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 112.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 113.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 14,15c14,15
 <    10|    b:
 < Error: Line 10: one of "*", "and", "div", "mod", ")", "+", "-", ";", "<", "<=", "<>", "=", ">", ">=", or "or" expected
@@ -101,231 +101,219 @@ All Listing and Assembly File Diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 115.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 116.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 117.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 118.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 119.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 120.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
-12,13c12
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+12d11
 < 
-< Error: Line 7: can't read variables of this type
----
-> Error: Line 7: Can't read variables of this type
 ------------------------------
 
 122.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 123.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 124.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 132.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 133.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 134.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 135.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 146.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 147.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 148.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 149.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 08:52:54 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 101.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 102.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-18a19
->         mov     eax,[I6]                ; load z in eax 
-21c22,23
-<         add     eax,[I3]                ; AReg = z + b
----
->         mov     eax,[I3]                ; AReg = b
->         add     eax,[I6]                ; AReg = b + z
-26a29
->         mov     eax,[I4]                ; load c in eax 
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 103.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 104.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 105.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 106.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 107.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 108.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 109.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 110.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 111.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 112.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 113.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 10a11
 >         mov     [I4],eax                ; c = AReg
 ------------------------------
@@ -334,204 +322,125 @@ All Listing and Assembly File Diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 115.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-20,21d19
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-23,24d20
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-26,27d21
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-29,30d22
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 116.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-23,24d22
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-26,27d23
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 117.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 118.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 119.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-43,44d42
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-46,47d43
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-49,50d44
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 120.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 122.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-111a112
->         mov     eax,[I0]                ; load sum in eax 
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 123.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-135a136
->         mov     eax,[I0]                ; load sum in eax 
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 124.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-75a76
->         mov     eax,[I0]                ; load sum in eax 
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 132.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-14c14
-<         jne     .L0                     ; if a <> b then jump to set eax to TRUE
----
->         jne     .L0                     ; if b <> a then jump to set eax to TRUE
-28,29d27
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-46,47d43
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 133.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 134.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 135.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-14,15d13
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-17,18d14
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-21,22c17
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
----
->         mov     eax,[B1]                ; load b in eax 
-25,27c20,22
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-<         cmp     eax,[B0]                ; compare b and a
----
->         mov     eax,[B1]                ; load b in eax 
->         mov     eax,[B0]                ; AReg = a
->         cmp     eax,[B1]                ; compare a and b
-37,38d31
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-40,41d32
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 146.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 147.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 148.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-52,53d51
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-55,56d52
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
-58,59d53
-<         call    WriteInt                ; write int in eax to standard out
-<         call    Crlf                    ; write \r\n to standard out
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
 149.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 08:52:54 2022
-31a32
->         mov     eax,[I0]                ; load a in eax 
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
 ------------------------------
 
