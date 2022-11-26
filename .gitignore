@@ -6,5 +6,7 @@ alldifs.txt
 allouts.txt
 /*.lst
 /*.asm
+/input
+/output
 input/**
 output/**
