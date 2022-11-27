@@ -127,26 +127,26 @@ Once you `make` `stage0` you can run `./compilerFastCheck.sh` and it will print 
 - [x] 156
 - [x] 157
 - [x] 158
-- [ ] 159
-- [ ] 160
-- [ ] 161
-- [ ] 162
-- [ ] 163
-- [ ] 164
-- [ ] 165
-- [ ] 166
-- [ ] 167
-- [ ] 168
-- [ ] 169
-- [ ] 170
-- [ ] 171
-- [ ] 172
-- [ ] 173
-- [ ] 174
-- [ ] 175
-- [ ] 176
-- [ ] 177
-- [ ] 178
+- [x] 159
+- [x] 160
+- [ ] 161 -- wrong error!
+- [x] 162
+- [x] 163
+- [x] 164
+- [ ] 165 -- wrong error!
+- [x] 166
+- [x] 167
+- [x] 168
+- [x] 169
+- [x] 170
+- [x] 171
+- [x] 172
+- [x] 173
+- [x] 174
+- [x] 175
+- [x] 176
+- [x] 177
+- [x] 178
 ## Compiler project for Algorithmic Languages and Compilers — Fall 2022
 
 CS 4301
