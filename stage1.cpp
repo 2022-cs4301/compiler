@@ -292,7 +292,7 @@ void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
   if (y == "not")
   {
     string z = nextToken();
-    cout << "z: " << z << "\n";
+
     if (!isBoolean(z) && !isNonKeyId(z))
     {
       processError("boolean expected after \"not\"");
