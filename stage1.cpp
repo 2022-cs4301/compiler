@@ -291,30 +291,33 @@ void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
 
   if (y == "not")
   {
-    string z = nextToken();
+    nextToken();
 
-    if (!isBoolean(z) && !isNonKeyId(z))
+    if (isBoolean(token) || isNonKeyId(token))
+    {
+      if (token == "true")
+      {
+        y = "false";
+      }
+      else if (token == "false")
+      {
+        y = "true";
+      }
+      else if (isNonKeyId(token))
+      {
+        if (symbolTable.at(token).getDataType() != BOOLEAN)
+        {
+          processError("boolean expected after \"not\"");
+        }
+        else
+        {
+          y = (symbolTable.at(token).getValue() == "0") ? "true" : "false";
+        }
+      }
+    }
+    else
     {
       processError("boolean expected after \"not\"");
-    }
-    if (token == "true")
-    {
-      y = "false";
-    }
-    else if (token == "false")
-    {
-      y = "true";
-    }
-    else if (isNonKeyId(token))
-    {
-      if (symbolTable.at(token).getDataType() != BOOLEAN)
-      {
-        processError("boolean expected after \"not\"");
-      }
-      else
-      {
-        y = (symbolTable.at(token).getValue() == "0") ? "true" : "false";
-      }
     }
   }
 
