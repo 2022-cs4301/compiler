@@ -291,7 +291,9 @@ void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
 
   if (y == "not")
   {
-    if (!isBoolean(nextToken()))
+    string z = nextToken();
+    cout << "z: " << z << "\n";
+    if (!isBoolean(z) && !isNonKeyId(z))
     {
       processError("boolean expected after \"not\"");
     }
@@ -299,9 +301,20 @@ void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
     {
       y = "false";
     }
-    else
+    else if (token == "false")
     {
       y = "true";
+    }
+    else if (isNonKeyId(token))
+    {
+      if (symbolTable.at(token).getDataType() != BOOLEAN)
+      {
+        processError("boolean expected after \"not\"");
+      }
+      else
+      {
+        y = (symbolTable.at(token).getValue() == "0") ? "true" : "false";
+      }
     }
   }
 
@@ -1212,7 +1225,6 @@ storeTypes Compiler::whichType(string name) // tells which data type a name has
 string Compiler::whichValue(string name) // tells which value a name has
 {
   string value;
-
   if (isLiteral(name))
   {
     if (name == "false")
