@@ -452,6 +452,7 @@ void Compiler::execStmt()
   {
     // cout << "assignment token: " << token << "\n";
     assignStmt();
+    cout << "token : " << token << endl;
   }
 
   else if (token == "read") // read statement
@@ -480,11 +481,15 @@ void Compiler::assignStmt()
     processError("non - keyword identifier expected");
   }
   //Token must be defined
-  if (symbolTable.count(token) == 0) processError("reference to undefined variable");
+  if (symbolTable.count(token) == 0)
   {
-    pushOperand(token);
-    nextToken();
+   processError("reference to undefined variable");
   }
+
+    pushOperand(token);
+
+    nextToken();
+    
   if (token != ":=")
   {
     processError("':=' expected; found " + token);
@@ -2031,6 +2036,10 @@ void Compiler::emitEqualityCode(string operand1, string operand2) // op2 == op1
   else if (symbolTable.find(operand2) == symbolTable.end()) // if operand2 is not defined in SymbolTable
   {
     processError("reference to undefined symbol " + operand2);
+  }
+    if (whichType(operand1) != whichType(operand2))  // if one of both opernads is not BOOLEAN
+  {
+    processError("incompatible types for operator '='");
   }
 
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && // if AReg != operand1 and AReg != operand2 and AReg = "Tx"
