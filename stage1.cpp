@@ -212,47 +212,33 @@ void Compiler::vars() // 4. VARS → 'var' VAR_STMTS
   varStmts();
 }
 
-void Compiler::beginEndStmt() // 5. BEGIN_END_STMT → 'begin' 'end' '.'
-// code(‘end’, ‘.’)
+void Compiler::beginEndStmt() 
 {
-  string x;
-
-  if (token != "begin")
+	if (token != "begin")
   {
-    processError("keyword \"begin\" expected");
+		processError("keyword \"begin\" expected");
   }
 
-  // advance
-  nextToken();
+	nextToken();
 
-  if (token != "end")
+	if (isNonKeyId(token) || token == "begin" || token == "read" || token == "write" || token == ";" ) 
   {
-    // check for exec statements
-    if (isNonKeyId(token) || token == "read" || token == "write")
-    {
-      execStmts();
-    }
-    else
-    {
-      processError("keyword \"end\" expected");
-    }
-
-    if (nextToken() != ".")
-    {
-      processError("period expected");
-    }
-
-    // check for tokens after .end
-    if (nextToken() != "$")
-    {
-      processError("no tokens may appear after \"end.\"");
-    }
-
-    else
-    {
-      code("end", ".");
-    }
+		execStmts();
+	}
+	
+	if (token != "end")
+  {
+		processError("keyword \"end\" expected");
   }
+
+	if (nextToken() != ".")
+  {
+		processError("period expected");
+  }
+
+	nextToken();
+
+	code("end", ".");
 }
 
 void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
