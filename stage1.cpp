@@ -438,7 +438,6 @@ void Compiler::execStmt()
   {
     // cout << "assignment token: " << token << "\n";
     assignStmt();
-    cout << "token : " << token << endl;
   }
 
   else if (token == "read") // read statement
@@ -491,7 +490,7 @@ void Compiler::assignStmt()
   {
     processError("one of \"*\", \"and\", \"div\", \"mod\", \")\", \"+\", \"-\", \";\", \"<\", \"<=\", \"<>\", \"=\", \">\", \">=\", or \"or\" expected");
   }
-  else
+  else  
   {
     express();
   }
@@ -744,13 +743,14 @@ void Compiler::factor()
   {
     factors();
   }
-  else if (token == ")" || token == ";" || token == "-" || token == "+" || token == "or" || token == "begin" ||
+  if (token == ")" || token == ";" || token == "-" || token == "+" || token == "or" || token == "begin" ||
     token == "=" || token == "<>" || token == "<=" || token == ">=" || token == "<" || token == ">")
   {
+    return;
   }
   else
   {
-    processError("invalid expression");
+    processError("one of \"*\", \"and\", \"div\", \"mod\", \")\", \"+\", \"-\", \";\", \"<\", \"<=\", \"<>\", \"=\", \">\", \">=\", or \"or\" expected");
   }
 }
 
@@ -1463,6 +1463,10 @@ void Compiler::emitWriteCode(string operand, string operand2)
     {
       name += operand[ i ];
       continue;
+    }
+    if(name.length() > 15)
+    {
+      name = name.substr(0, 15);
     }
 
     if (name != "") // if name is not empty
