@@ -95,34 +95,35 @@ void Compiler::processError(string error)
   code for insert() treats any external name beginning with an uppercase
   character as defined by the compiler.
 */
-string Compiler::genInternalName(storeTypes stype) const
+string Compiler::genInternalName(storeTypes storeType) const
 {
   static int I = 0; // integer
   static int B = 0; // boolean
   static int U = 0; // unknown
-  string iName;
-  if (stype == PROG_NAME)
+  string internalName;
+
+  if (storeType == PROG_NAME)
   {
-    iName = "P0";
+    internalName = "P0";
   }
-  else if (stype == INTEGER)
+  else if (storeType == INTEGER)
   {
-    iName = "I" + to_string(I);
+    internalName = "I" + to_string(I);
     I++;
   }
 
-  else if (stype == BOOLEAN)
+  else if (storeType == BOOLEAN)
   {
-    iName = "B" + to_string(B);
+    internalName = "B" + to_string(B);
     B++;
   }
-  else if (stype == UNKNOWN)
+  else if (storeType == UNKNOWN)
   {
-    iName = "U" + to_string(U);
+    internalName = "U" + to_string(U);
     U++;
   }
 
-  return iName;
+  return internalName;
 }
 
 /** STAGE 0 PRODUCTIONS **/
@@ -212,33 +213,33 @@ void Compiler::vars() // 4. VARS → 'var' VAR_STMTS
   varStmts();
 }
 
-void Compiler::beginEndStmt() 
+void Compiler::beginEndStmt()
 {
-	if (token != "begin")
+  if (token != "begin")
   {
-		processError("keyword \"begin\" expected");
+    processError("keyword \"begin\" expected");
   }
 
-	nextToken();
+  nextToken();
 
-	if (isNonKeyId(token) || token == "begin" || token == "read" || token == "write" || token == ";" ) 
+  if (isNonKeyId(token) || token == "begin" || token == "read" || token == "write" || token == ";")
   {
-		execStmts();
-	}
-	
-	if (token != "end")
-  {
-		processError("keyword \"end\" expected");
+    execStmts();
   }
 
-	if (nextToken() != ".")
+  if (token != "end")
   {
-		processError("period expected");
+    processError("keyword \"end\" expected");
   }
 
-	nextToken();
+  if (nextToken() != ".")
+  {
+    processError("period expected");
+  }
 
-	code("end", ".");
+  nextToken();
+
+  code("end", ".");
 }
 
 void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
@@ -460,7 +461,7 @@ void Compiler::execStmt()
 
 void Compiler::assignStmt()
 {
-  string secondOperand, firstOperand;
+  string op2, op1;
   if (!isNonKeyId(token))
   {
     processError("non - keyword identifier expected");
@@ -468,20 +469,21 @@ void Compiler::assignStmt()
   //Token must be defined
   if (symbolTable.count(token) == 0)
   {
-   processError("reference to undefined variable");
+    processError("reference to undefined variable");
   }
 
-    pushOperand(token);
+  pushOperand(token);
 
-    nextToken();
-    
+  nextToken();
+
   if (token != ":=")
   {
     processError("':=' expected; found " + token);
   }
   else
   {
-    pushOperator(":=");
+    pushOperator(token);
+    // pushOperator(":=");
   }
   nextToken();
 
@@ -490,13 +492,13 @@ void Compiler::assignStmt()
   {
     processError("one of \"*\", \"and\", \"div\", \"mod\", \")\", \"+\", \"-\", \";\", \"<\", \"<=\", \"<>\", \"=\", \">\", \">=\", or \"or\" expected");
   }
-  else  
+  else
   {
     express();
   }
-  secondOperand = popOperand();
-  firstOperand = popOperand();
-  code(popOperator(), secondOperand, firstOperand);
+  op2 = popOperand();
+  op1 = popOperand();
+  code(popOperator(), op2, op1);
 }
 
 void Compiler::readStmt()
@@ -640,6 +642,7 @@ void Compiler::express()
   {
     processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", non - keyword identifier or integer expected");
   }
+
   term();
 
   if (token == "=" || token == "<" || token == ">" || token == ">=" || token == "<=" || token == "<>")
@@ -652,7 +655,7 @@ void Compiler::express()
 void Compiler::expresses()
 {
   string x = "";
-  string operand1, operand2;
+  string op1, op2;
   if (token != "=" && token != "<" && token != ">" && token != "<>" && token != "<=" && token != ">=")
   {
     processError("\"=\", \"<>\", \"<=\", \">=\", \"<\", or \">\" expected");
@@ -669,10 +672,10 @@ void Compiler::expresses()
   {
     term();
   }
-  operand1 = popOperand();
-  operand2 = popOperand();
+  op1 = popOperand();
+  op2 = popOperand();
 
-  code(popOperator(), operand1, operand2);
+  code(popOperator(), op1, op2);
 
   if (token == "<>" || token == "<" || token == ">" || token == "=" || token == "<=" || token == ">=")
   {
@@ -700,7 +703,7 @@ void Compiler::term()
 void Compiler::terms()
 {
   string x = "";
-  string operand1, operand2;
+  string op1, op2;
 
   if (token != "or" && token != "+" && token != "-")
   {
@@ -718,9 +721,9 @@ void Compiler::terms()
   {
     factor();
   }
-  operand1 = popOperand();
-  operand2 = popOperand();
-  code(popOperator(), operand1, operand2);
+  op1 = popOperand();
+  op2 = popOperand();
+  code(popOperator(), op1, op2);
 
   if (token == "-" || token == "+" || token == "or")
   {
@@ -758,7 +761,7 @@ void Compiler::factor()
 void Compiler::factors()
 {
   string x = "";
-  string operand1, operand2;
+  string op1, op2;
   if (token != "*" && token != "mod" && token != "div" && token != "and")
   {
     processError("\"*\", \"div\", \"mod\", or \"and\" expected");
@@ -774,9 +777,9 @@ void Compiler::factors()
   {
     part();
   }
-  operand1 = popOperand();
-  operand2 = popOperand();
-  code(popOperator(), operand1, operand2);
+  op1 = popOperand();
+  op2 = popOperand();
+  code(popOperator(), op1, op2);
   if (token == "*" || token == "mod" || token == "and" || token == "div")
   {
     factors();
@@ -942,16 +945,16 @@ string Compiler::popOperator() // pop name from operatorStk
   return op;
 }
 
-void Compiler::pushOperand(string operand) // push name onto operatorStk
+void Compiler::pushOperand(string op) // push name onto operatorStk
 {
-  if (symbolTable.count(operand) == 0)
+  if (symbolTable.count(op) == 0)
   {
-    if (isInteger(operand) || isBoolean(operand))
+    if (isInteger(op) || isBoolean(op))
     {
-      insert(operand, whichType(operand), CONSTANT, whichValue(operand), YES, 1);
+      insert(op, whichType(op), CONSTANT, whichValue(op), YES, 1);
     }
   }
-  operandStk.push(operand);
+  operandStk.push(op);
 }
 
 string Compiler::popOperand() // pop name from operandStk
@@ -998,16 +1001,16 @@ string Compiler::getTemp()
 
 string Compiler::getLabel()
 {
-  string iName; // Label
+  string internalName; // Label
   static int L = 0;
 
-  iName = "L" + to_string(L);
+  internalName = "L" + to_string(L);
 
   L++;
 
-  return iName;
+  return internalName;
 }
-bool Compiler::isTemporary(string s) const // determines if s represents a temporary
+bool Compiler::isTemporary(string s) const
 {
   if (s[ 0 ] == 'T')
     return true;
@@ -1464,7 +1467,7 @@ void Compiler::emitWriteCode(string operand, string operand2)
       name += operand[ i ];
       continue;
     }
-    if(name.length() > 15)
+    if (name.length() > 15)
     {
       name = name.substr(0, 15);
     }
@@ -2027,7 +2030,7 @@ void Compiler::emitEqualityCode(string operand1, string operand2) // op2 == op1
   {
     processError("reference to undefined symbol " + operand2);
   }
-    if (whichType(operand1) != whichType(operand2))  // if one of both opernads is not BOOLEAN
+  if (whichType(operand1) != whichType(operand2))  // if one of both opernads is not BOOLEAN
   {
     processError("incompatible types for operator '='");
   }
@@ -2648,7 +2651,7 @@ string Compiler::nextToken() // returns the next token or end of file marker
       processError("illegal symbol");
     }
   }
-  token = token.substr(0,15);
+  token = token.substr(0, 15);
 
   return token;
 }

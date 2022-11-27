@@ -4,146 +4,140 @@ All Listing and Assembly File Diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 102.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 103.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 104.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 105.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 106.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 107.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 108.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 109.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 110.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 111.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 112.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 113.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
-14,15c14,15
-<    10|    b:
-< Error: Line 10: one of "*", "and", "div", "mod", ")", "+", "-", ";", "<", "<=", "<>", "=", ">", ">=", or "or" expected
----
->    10|    b:=a
-> Error: Line 10: ";", "begin", "read","write", "end" expected
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 114.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 115.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 116.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 117.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 118.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 119.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 120.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 12d11
 < 
 ------------------------------
@@ -152,295 +146,293 @@ All Listing and Assembly File Diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 123.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 124.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 132.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 133.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 134.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 135.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 146.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 147.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 148.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:43 2022
 ------------------------------
 
 149.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 17:39:34 2022
+> STAGE0:  Jeff Caldwell, Kangmin Kim       Sat Nov 26 21:30:43 2022
 ------------------------------
 
 101.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 102.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 103.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 104.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 105.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 106.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 107.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 108.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 109.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 110.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 111.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 112.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 113.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
-10a11
->         mov     [I4],eax                ; c = AReg
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 114.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 115.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 116.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 117.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 118.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 119.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 120.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 122.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 123.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 124.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 132.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 133.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 134.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 135.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 146.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 147.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:42 2022
 ------------------------------
 
 148.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:43 2022
 ------------------------------
 
 149.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 17:39:34 2022
+> ; Kangmin Kim, Jeff Caldwell       Sat Nov 26 21:30:43 2022
 ------------------------------
 
