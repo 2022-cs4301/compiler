@@ -28,12 +28,12 @@ Compiler::~Compiler() //  close all open files
 
 void Compiler::createListingHeader() // destructor
 {
-  // print "STAGE0:", name(s), DATE, TIME OF DAY
+  // print "STAGE1:", name(s), DATE, TIME OF DAY
   // print "LINE NO:", "SOURCE STATEMENT"
   time_t now = time(0);
 
   // line numbers and source statements should be aligned under the headings
-  listingFile << "STAGE0:  "
+  listingFile << "STAGE1:  "
     << "Jeff Caldwell, Kangmin Kim       " << ctime(&now) << "\n";
   listingFile << "LINE NO."
     << "               SOURCE STATEMENT\n\n";
