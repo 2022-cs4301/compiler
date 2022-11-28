@@ -33,7 +33,7 @@ void Compiler::createListingHeader() // destructor
   time_t now = time(0);
 
   // line numbers and source statements should be aligned under the headings
-  listingFile << "STAGE1:  "
+  listingFile << "STAGE2:  "
     << "Jeff Caldwell, Kangmin Kim       " << ctime(&now) << "\n";
   listingFile << "LINE NO."
     << "               SOURCE STATEMENT\n\n";
@@ -66,65 +66,6 @@ void Compiler::createListingTrailer()
     << (errorCount != 1 ? " ERRORS " : " ERROR ") << "ENCOUNTERED\n";
 }
 // private: uint errorCount = 0; // total number of errors encountered
-
-void Compiler::processError(string error)
-{
-  listingFile << "\n"
-    << "Error: Line " << lineNo << ": " << error << "\n";
-  errorCount++;
-  createListingTrailer();
-  // close files to ensure output will be written
-  // calling exit() before closing the files seems
-  // to preempt writing to them
-  listingFile.close();
-  objectFile.close();
-  exit(EXIT_FAILURE);
-}
-/*
-  Note that insert() calls genInternalName(), a function that has one argument,
-  the type of the name being inserted. genInternalName() returns a unique
-  internal name each time it is called, a name that is known to be a valid
-  symbolic name. As a visual aid, we use different forms of internal names for
-  each data-type of interest. The general form is: dn where d denotes the
-  data-type of the name ("I" for integer, "B" for boolean) and n is a
-  non-negative integer starting at 0. The generated source code for 001.dat
-  clearly shows the effects of calling genInternalName(). The compiler itself
-  will also need to generate names to appear in the object code, but since the
-  compiler is defining these itself, there is no need to convert these names
-  into any other form. The external and internal forms will be the same. The
-  code for insert() treats any external name beginning with an uppercase
-  character as defined by the compiler.
-*/
-string Compiler::genInternalName(storeTypes storeType) const
-{
-  static int I = 0; // integer
-  static int B = 0; // boolean
-  static int U = 0; // unknown
-  string internalName;
-
-  if (storeType == PROG_NAME)
-  {
-    internalName = "P0";
-  }
-  else if (storeType == INTEGER)
-  {
-    internalName = "I" + to_string(I);
-    I++;
-  }
-
-  else if (storeType == BOOLEAN)
-  {
-    internalName = "B" + to_string(B);
-    B++;
-  }
-  else if (storeType == UNKNOWN)
-  {
-    internalName = "U" + to_string(U);
-    U++;
-  }
-
-  return internalName;
-}
 
 /** STAGE 0 PRODUCTIONS **/
 
@@ -936,326 +877,36 @@ void Compiler::part()
   }
 }
 
+/** STAGE 2 PRODUCTIONS **/
+void Compiler::ifStmt() // stage 2, production 3
+{
+
+}
+
+void Compiler::elsePt() // stage 2, production 4
+{
+
+}
+
+void Compiler::whileStmt() // stage 2, production 5
+{
+
+}
+
+void Compiler::repeatStmt() // stage 2, production 6
+{
+
+}
+
+void Compiler::nullStmt() // stage 2, production 7
+{
+
+}
+
 /** END PRODUCTIONS **/
 
-/** STACK FUNCTIONS **/
 
-void Compiler::pushOperator(string op)
-{
-  operatorStk.push(op);
-}
-
-string Compiler::popOperator() // pop name from operatorStk
-{
-  string op;
-
-  if (!operatorStk.empty())
-  {
-    op = operatorStk.top();
-    operatorStk.pop();
-  }
-  else
-  {
-    processError("operator stack underflow");
-  }
-  return op;
-}
-
-void Compiler::pushOperand(string op) // push name onto operatorStk
-{
-  if (symbolTable.count(op) == 0)
-  {
-    if (isInteger(op) || isBoolean(op))
-    {
-      insert(op, whichType(op), CONSTANT, whichValue(op), YES, 1);
-    }
-  }
-  operandStk.push(op);
-}
-
-string Compiler::popOperand() // pop name from operandStk
-{
-  string op;
-  if (!operandStk.empty())
-  {
-    op = operandStk.top();
-    operandStk.pop();
-  }
-  else
-  {
-    processError("operand stack underflow");
-  }
-
-  return op;
-}
-
-void Compiler::freeTemp()
-{
-  currentTempNo--;
-  if (currentTempNo < -1)
-  {
-    processError("compiler error: currentTempNo should be greater than or equal to –1");
-  }
-}
-
-string Compiler::getTemp()
-{
-  currentTempNo++;
-  string temp;
-
-  temp = "T" + to_string(currentTempNo);
-
-  if (currentTempNo > maxTempNo)
-  {
-    insert(temp, UNKNOWN, VARIABLE, "1", NO, 1);
-    symbolTable.at(temp).setInternalName(temp);
-    maxTempNo++;
-  }
-
-  return temp;
-}
-
-string Compiler::getLabel()
-{
-  string internalName; // Label
-  static int L = 0;
-
-  internalName = "L" + to_string(L);
-
-  L++;
-
-  return internalName;
-}
-bool Compiler::isTemporary(string s) const
-{
-  if (s[ 0 ] == 'T')
-    return true;
-  else
-    return false;
-}
-
-/** TYPE CHECKING FUNCTIONS **/
-bool Compiler::isKeyword(string s) const
-{
-
-  // instead of using a crazy, long string of conditional operators (||),
-  // just make an array and loop through that
-  string keywords[ 16 ] = {"program", "const", "var", "integer", "boolean", "begin", "end", "true",
-    "false", "not", "mod", "div", "and", "or", "read", "write"};
-
-  int len = *(&keywords + 1) - keywords; // length of keywords
-
-  for (int i = 0; i < len; i++)
-  {
-    if (keywords[ i ] == s)
-    {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-bool Compiler::isSpecialSymbol(char c) const
-{
-  char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.', '*', '(', ')', '>', '<'};
-
-  int len = *(&symbols + 1) - symbols;
-
-  for (int i = 0; i < len; i++)
-  {
-    if (symbols[ i ] == c)
-    {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-bool Compiler::isInteger(string s) const
-{
-  // Check for '+' or '-' without digits
-  if (s.length() == 1)
-  {
-    if (s == "+" || s == "-")
-    {
-      return false;
-    }
-  }
-
-  for (uint i = 0; i < s.length(); i++)
-  {
-    // if the first character is not a '+' or a '-'
-    // of if any character is not a digit, it is not an integer
-    if (!(isdigit(s[ i ]) || s[ 0 ] == '+' || s[ 0 ] == '-'))
-    {
-      return false;
-    }
-  }
-
-  // if we made it this far we have an integer
-  return true;
-}
-
-bool Compiler::isBoolean(string s) const
-{
-  if (s == "true" || s == "false")
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
-}
-
-bool Compiler::isLiteral(string s) const // 10. LIT → INTEGER | BOOLEAN | 'not'
-// BOOLEAN | '+' INTEGER | '-' INTEGER
-{
-  if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-' || s == "not")
-  {
-    return true;
-  }
-
-  return false;
-}
-
-bool Compiler::isNonKeyId(string s) const
-{
-  if (!isInteger(s) && !isKeyword(s) && !isSpecialSymbol(s[ 0 ]))
-  {
-    return true;
-  }
-
-  return false;
-}
-
-/** ACTION ROUTINES **/
-
-void Compiler::insert(string externalName, // create symbol table entry for each identifier in list
-                      storeTypes inType,   // of external names
-                      modes inMode,        // Multiple inserted names are illegal
-                      string inValue, allocation inAlloc, int inUnits)
-{
-  string name;
-  uint i = 0;
-
-  while (i < externalName.length())
-  {
-    name = "";
-
-    while (i < externalName.length() && externalName[ i ] != ',')
-    {
-      name = name + externalName[ i ];
-      i++;
-    }
-
-    if (!name.empty())
-    {
-      if (symbolTable.find(name) != symbolTable.end())
-      {
-        processError("symbol " + name + " is multiply defined");
-      }
-      else if (isKeyword(name) && !isBoolean(name))
-      {
-        processError("illegal use of " + name + " keyword"); // do we need to look out for booleans?
-      }
-      else
-      {
-        if (isupper(name[ 0 ]))
-        {
-          symbolTable.insert({name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
-        }
-        else if (name == "true")
-        {
-          symbolTable.insert({name.substr(0, 15), SymbolTableEntry("TRUE", inType, inMode, inValue, inAlloc, inUnits)});
-        }
-        else if (name == "false")
-        {
-          symbolTable.insert(
-              {name.substr(0, 15), SymbolTableEntry("FALSE", inType, inMode, inValue, inAlloc, inUnits)});
-        }
-        else
-        {
-          symbolTable.insert({name.substr(0, 15),
-                              SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
-        }
-      }
-    }
-
-    if (symbolTable.size() > 256)
-    {
-      processError("symbol table overflow");
-    }
-    if (i == externalName.length())
-    {
-      break;
-    }
-    i++;
-  }
-}
-
-storeTypes Compiler::whichType(string name) // tells which data type a name has
-{                                           // 9. TYPE → 'integer'
-  storeTypes type;                          //		  → 'boolean'
-
-  if (isLiteral(name))
-  {
-    if (isInteger(name))
-    {
-      type = INTEGER;
-    }
-    else if (isBoolean(name))
-    {
-      type = BOOLEAN;
-    }
-  }
-  else // name is an identifier and hopefully a constant
-  {
-    if (symbolTable.find(name) != symbolTable.end())
-    {
-      type = symbolTable.find(name)->second.getDataType();
-    }
-    else
-    {
-      processError("variable " + name + " is undefined");
-    }
-  }
-  return type;
-}
-
-string Compiler::whichValue(string name) // tells which value a name has
-{
-  string value;
-  if (isLiteral(name))
-  {
-    if (name == "false")
-    {
-      value = "0";
-    }
-    else if (name == "true")
-    {
-      value = "-1";
-    }
-    else
-      value = name;
-  }
-  else // name is an identifier and hopefully a constant
-  {
-    if (symbolTable.find(name) != symbolTable.end())
-    {
-      value = symbolTable.at(name).getValue();
-    }
-    else
-    {
-      processError("constant " + name + " is undefined");
-    }
-  }
-  return value;
-}
-
-/** EMIT FUNCTIONS **/
+/************ STAGE 0 EMIT FUNCTIONS ************/
 
 void Compiler::code(string op, string operand1, string operand2)
 {
@@ -1415,6 +1066,8 @@ void Compiler::emitStorage()
     }
   }
 }
+
+/************ STAGE 1 EMIT FUNCTIONS ************/
 
 void Compiler::emitReadCode(string operand, string operand2)
 {
@@ -2574,7 +2227,61 @@ void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2) //
   pushOperand(contentsOfAReg); // push AReg to Operand
 }
 
-/** LEXER FUNCTIONS **/
+/************ STAGE 2 EMIT FUNCTIONS ************/
+
+// emit code which follows 'then' and statement predicate
+void Compiler::emitThenCode(string operand1, string = "")
+{
+
+}
+
+// emit code which follows 'else' clause of 'if' statement
+void Compiler::emitElseCode(string operand1, string = "")
+{
+
+}
+
+// emit code which follows end of 'if' statement
+void Compiler::emitPostIfCode(string operand1, string = "")
+{
+
+}
+
+// emit code following 'while'
+void Compiler::emitWhileCode(string = "", string = "")
+{
+
+}
+
+// emit code following 'do'
+void Compiler::emitDoCode(string operand1, string = "")
+{
+
+}
+
+// emit code at end of 'while' loop;
+// operand2 is the label of the beginning of the loop
+// operand1 is the label which should follow the end of the loop
+void Compiler::emitPostWhileCode(string operand1, string operand2)
+{
+
+}
+
+// emit code which follows 'repeat'
+void Compiler::emitRepeatCode(string = "", string = "")
+{
+
+}
+
+// emit code which follows 'until' and the predicate of loop
+// operand1 is the value of the predicate
+// operand2 is the label which points to the beginning of the loop
+void Compiler::emitUntilCode(string operand1, string operand2)
+{
+
+}
+
+/************ LEXER FUNCTIONS ************/
 /*nextToken() catches LEXICAL ERRORS*/
 string Compiler::nextToken() // returns the next token or end of file marker
 {
@@ -2707,4 +2414,390 @@ char Compiler::nextChar() // returns the next character or end of file marker
 
   // done
   return ch;
+}
+
+/************ ACTION ROUTINES ************/
+
+void Compiler::insert(string externalName, // create symbol table entry for each identifier in list
+                      storeTypes inType,   // of external names
+                      modes inMode,        // Multiple inserted names are illegal
+                      string inValue, allocation inAlloc, int inUnits)
+{
+  string name;
+  uint i = 0;
+
+  while (i < externalName.length())
+  {
+    name = "";
+
+    while (i < externalName.length() && externalName[ i ] != ',')
+    {
+      name = name + externalName[ i ];
+      i++;
+    }
+
+    if (!name.empty())
+    {
+      if (symbolTable.find(name) != symbolTable.end())
+      {
+        processError("symbol " + name + " is multiply defined");
+      }
+      else if (isKeyword(name) && !isBoolean(name))
+      {
+        processError("illegal use of " + name + " keyword"); // do we need to look out for booleans?
+      }
+      else
+      {
+        if (isupper(name[ 0 ]))
+        {
+          symbolTable.insert({name.substr(0, 15), SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
+        }
+        else if (name == "true")
+        {
+          symbolTable.insert({name.substr(0, 15), SymbolTableEntry("TRUE", inType, inMode, inValue, inAlloc, inUnits)});
+        }
+        else if (name == "false")
+        {
+          symbolTable.insert(
+              {name.substr(0, 15), SymbolTableEntry("FALSE", inType, inMode, inValue, inAlloc, inUnits)});
+        }
+        else
+        {
+          symbolTable.insert({name.substr(0, 15),
+                              SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
+        }
+      }
+    }
+
+    if (symbolTable.size() > 256)
+    {
+      processError("symbol table overflow");
+    }
+    if (i == externalName.length())
+    {
+      break;
+    }
+    i++;
+  }
+}
+
+storeTypes Compiler::whichType(string name) // tells which data type a name has
+{                                           // 9. TYPE → 'integer'
+  storeTypes type;                          //		  → 'boolean'
+
+  if (isLiteral(name))
+  {
+    if (isInteger(name))
+    {
+      type = INTEGER;
+    }
+    else if (isBoolean(name))
+    {
+      type = BOOLEAN;
+    }
+  }
+  else // name is an identifier and hopefully a constant
+  {
+    if (symbolTable.find(name) != symbolTable.end())
+    {
+      type = symbolTable.find(name)->second.getDataType();
+    }
+    else
+    {
+      processError("variable " + name + " is undefined");
+    }
+  }
+  return type;
+}
+
+string Compiler::whichValue(string name) // tells which value a name has
+{
+  string value;
+  if (isLiteral(name))
+  {
+    if (name == "false")
+    {
+      value = "0";
+    }
+    else if (name == "true")
+    {
+      value = "-1";
+    }
+    else
+      value = name;
+  }
+  else // name is an identifier and hopefully a constant
+  {
+    if (symbolTable.find(name) != symbolTable.end())
+    {
+      value = symbolTable.at(name).getValue();
+    }
+    else
+    {
+      processError("constant " + name + " is undefined");
+    }
+  }
+  return value;
+}
+
+/************ STACK FUNCTIONS ************/
+
+void Compiler::pushOperator(string op)
+{
+  operatorStk.push(op);
+}
+
+string Compiler::popOperator() // pop name from operatorStk
+{
+  string op;
+
+  if (!operatorStk.empty())
+  {
+    op = operatorStk.top();
+    operatorStk.pop();
+  }
+  else
+  {
+    processError("operator stack underflow");
+  }
+  return op;
+}
+
+void Compiler::pushOperand(string op) // push name onto operatorStk
+{
+  if (symbolTable.count(op) == 0)
+  {
+    if (isInteger(op) || isBoolean(op))
+    {
+      insert(op, whichType(op), CONSTANT, whichValue(op), YES, 1);
+    }
+  }
+  operandStk.push(op);
+}
+
+string Compiler::popOperand() // pop name from operandStk
+{
+  string op;
+  if (!operandStk.empty())
+  {
+    op = operandStk.top();
+    operandStk.pop();
+  }
+  else
+  {
+    processError("operand stack underflow");
+  }
+
+  return op;
+}
+
+/************ HELPER FUNCTIONS ************/
+bool Compiler::isKeyword(string s) const
+{
+
+  // instead of using a crazy, long string of conditional operators (||),
+  // just make an array and loop through that
+  string keywords[ 16 ] = {"program", "const", "var", "integer", "boolean", "begin", "end", "true",
+    "false", "not", "mod", "div", "and", "or", "read", "write"};
+
+  int len = *(&keywords + 1) - keywords; // length of keywords
+
+  for (int i = 0; i < len; i++)
+  {
+    if (keywords[ i ] == s)
+    {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+bool Compiler::isSpecialSymbol(char c) const
+{
+  char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.', '*', '(', ')', '>', '<'};
+
+  int len = *(&symbols + 1) - symbols;
+
+  for (int i = 0; i < len; i++)
+  {
+    if (symbols[ i ] == c)
+    {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+bool Compiler::isInteger(string s) const
+{
+  // Check for '+' or '-' without digits
+  if (s.length() == 1)
+  {
+    if (s == "+" || s == "-")
+    {
+      return false;
+    }
+  }
+
+  for (uint i = 0; i < s.length(); i++)
+  {
+    // if the first character is not a '+' or a '-'
+    // of if any character is not a digit, it is not an integer
+    if (!(isdigit(s[ i ]) || s[ 0 ] == '+' || s[ 0 ] == '-'))
+    {
+      return false;
+    }
+  }
+
+  // if we made it this far we have an integer
+  return true;
+}
+
+bool Compiler::isBoolean(string s) const
+{
+  if (s == "true" || s == "false")
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+bool Compiler::isLiteral(string s) const // 10. LIT → INTEGER | BOOLEAN | 'not'
+// BOOLEAN | '+' INTEGER | '-' INTEGER
+{
+  if (isInteger(s) || isBoolean(s) || s.front() == '+' || s.front() == '-' || s == "not")
+  {
+    return true;
+  }
+
+  return false;
+}
+
+bool Compiler::isNonKeyId(string s) const
+{
+  if (!isInteger(s) && !isKeyword(s) && !isSpecialSymbol(s[ 0 ]))
+  {
+    return true;
+  }
+
+  return false;
+}
+
+
+/** OTHER FUNCTIONS **/
+
+/*
+  Note that insert() calls genInternalName(), a function that has one argument,
+  the type of the name being inserted. genInternalName() returns a unique
+  internal name each time it is called, a name that is known to be a valid
+  symbolic name. As a visual aid, we use different forms of internal names for
+  each data-type of interest. The general form is: dn where d denotes the
+  data-type of the name ("I" for integer, "B" for boolean) and n is a
+  non-negative integer starting at 0. The generated source code for 001.dat
+  clearly shows the effects of calling genInternalName(). The compiler itself
+  will also need to generate names to appear in the object code, but since the
+  compiler is defining these itself, there is no need to convert these names
+  into any other form. The external and internal forms will be the same. The
+  code for insert() treats any external name beginning with an uppercase
+  character as defined by the compiler.
+*/
+string Compiler::genInternalName(storeTypes storeType) const
+{
+  static int I = 0; // integer
+  static int B = 0; // boolean
+  static int U = 0; // unknown
+  string internalName;
+
+  if (storeType == PROG_NAME)
+  {
+    internalName = "P0";
+  }
+  else if (storeType == INTEGER)
+  {
+    internalName = "I" + to_string(I);
+    I++;
+  }
+
+  else if (storeType == BOOLEAN)
+  {
+    internalName = "B" + to_string(B);
+    B++;
+  }
+  else if (storeType == UNKNOWN)
+  {
+    internalName = "U" + to_string(U);
+    U++;
+  }
+
+  return internalName;
+}
+
+void Compiler::processError(string error)
+{
+  listingFile << "\n"
+    << "Error: Line " << lineNo << ": " << error << "\n";
+  errorCount++;
+  createListingTrailer();
+  // close files to ensure output will be written
+  // calling exit() before closing the files seems
+  // to preempt writing to them
+  listingFile.close();
+  objectFile.close();
+  exit(EXIT_FAILURE);
+}
+
+void Compiler::freeTemp()
+{
+  currentTempNo--;
+  if (currentTempNo < -1)
+  {
+    processError("compiler error: currentTempNo should be greater than or equal to –1");
+  }
+}
+
+string Compiler::getTemp()
+{
+  currentTempNo++;
+  string temp;
+
+  temp = "T" + to_string(currentTempNo);
+
+  if (currentTempNo > maxTempNo)
+  {
+    insert(temp, UNKNOWN, VARIABLE, "1", NO, 1);
+    symbolTable.at(temp).setInternalName(temp);
+    maxTempNo++;
+  }
+
+  return temp;
+}
+
+string Compiler::getLabel()
+{
+  string internalName; // Label
+  static int L = 0;
+
+  internalName = "L" + to_string(L);
+
+  L++;
+
+  return internalName;
+}
+
+bool Compiler::isTemporary(string s) const
+{
+  if (s[ 0 ] == 'T')
+    return true;
+  else
+    return false;
+}
+
+bool Compiler::isLabel(string s) const
+{
+
 }
