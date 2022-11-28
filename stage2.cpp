@@ -9,7 +9,7 @@
 
 // Kangmin Kim and Jeff Caldwell
 // CS 4301
-// Compiler - Stage1
+// Compiler - Stage2
 
 Compiler::Compiler(char **argv) // constructor
 {
