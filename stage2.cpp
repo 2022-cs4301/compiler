@@ -168,9 +168,9 @@ void Compiler::beginEndStmt()
     execStmts();
   }
 
-  if (token != "end")
+  if (token != "end" || token != "read" || token != "write")
   {
-    processError("keyword \"end\" expected");
+    processError("non-keyword identifier, \"end\", \"read\", or \"write\" expected");
   }
 
   if (nextToken() != ".")
@@ -880,27 +880,121 @@ void Compiler::part()
 /** STAGE 2 PRODUCTIONS **/
 void Compiler::ifStmt() // stage 2, production 3
 {
+  	if (token != "if")
+	{
+		processError("if expected; found " + token);
+	}
+	
+	nextToken();
+	express();
 
+	if (token != "then")
+	{
+		processError("then expected; found " + token);
+	}
+
+	string temp = popOperand();
+	code("then", temp);
+	nextToken();
+
+	if (isNonKeyId(token) || token == "read" || token == "write" || token == "if" || token == "while" || token == "repeat" || token == ";" || token == "begin")
+	{
+		execStmt();
+	}
+	
+	elsePt();
 }
 
 void Compiler::elsePt() // stage 2, production 4
 {
+  if (token == "else")
+	{	
+		string temp = popOperand();
+		code("else", temp);
+		nextToken();
 
+		execStmt();
+		code("post_if", popOperand());
+	}
+	else if (isNonKeyId(token) || token == "end" || token == "write" || token == "read" || token == "repeat" || token == "if" || token == "while" || token == "begin" || token == "until" || token == ";")
+	{
+		code("post_if", popOperand());
+	}
+	else
+	{
+		processError("illegal character");
+	}
 }
 
 void Compiler::whileStmt() // stage 2, production 5
 {
-
+  if (token != "while")
+	{
+		processError("received " + token + " expected while");
+	}
+	
+	code("while");
+	nextToken();
+	express();
+	
+	if (token != "do")
+	{
+		processError("received " + token + " expected do");
+	}
+	
+	code("do", popOperand());
+	nextToken();
+	
+	execStmt();
+	
+	string second = popOperand();
+	string first = popOperand();
+	
+	code("post_while", second, first);
 }
 
 void Compiler::repeatStmt() // stage 2, production 6
 {
+  if (token != "repeat")
+	{
+		processError("received " + token + " expected repeat");
+	}
 
+	code("repeat");
+	nextToken();
+
+	if (!isNonKeyId(token) && token != "read" && token != "write" && token != "end" && token != "write" && token != "read" && token != "repeat" && token != "if" && token != "while" && token != "begin" && token != "until" && token != ";")
+	{
+		processError("error1");
+	}
+	
+	execStmts();
+
+	if (token != "until")
+	{
+		processError("error2" + token);
+	}
+	
+	nextToken();
+	express();
+	string second = popOperand();
+	string first = popOperand();
+	
+	code("until", second, first);
+	
+	if (token != ";")
+	{
+		processError("received " + token + " expected ;");
+	}
 }
 
 void Compiler::nullStmt() // stage 2, production 7
 {
-
+  if (token != ";")
+	{
+		processError("received " + token + " expected ;");
+	}
+	nextToken();
 }
 
 /** END PRODUCTIONS **/
@@ -963,7 +1057,7 @@ void Compiler::code(string op, string operand1, string operand2)
     emitEqualityCode(operand1, operand2);
   }
   else if (op == "<>")
-  {
+  {// not equal
     emitInequalityCode(operand1, operand2);
   }
   else if (op == "or")
@@ -990,6 +1084,39 @@ void Compiler::code(string op, string operand1, string operand2)
   {
     emitAssignCode(operand1, operand2);
   }
+  else if (op == "then")
+	{
+		emitThenCode(operand1);
+	}
+
+	else if (op == "else")
+	{
+		emitElseCode(operand1);
+	}
+	else if (op == "while")
+	{
+		emitWhileCode();
+	}
+	else if (op == "do")
+	{
+		emitDoCode(operand1);
+	}
+	else if (op == "repeat")
+	{
+		emitRepeatCode();
+	}
+	else if (op == "until")
+	{
+		emitUntilCode(operand1, operand2);
+	}
+	else if (op == "post_if")
+	{
+		emitPostIfCode(operand1);
+	}
+	else if (op == "post_while")
+	{
+		emitPostWhileCode(operand1, operand2);
+	}
   else
   {
     processError("compiler error since function code should not be called with illegal arguments ");
@@ -1286,7 +1413,7 @@ void Compiler::emitSubtractionCode(string operand1, string operand2) // operand2
   }
   if (whichType(operand1) != INTEGER || whichType(operand2) != INTEGER) // if both types are not INTEGERs
   {
-    processError("binary '-' requires integer operands");
+    processError("unary '-' requires an integer operand");
   }
 
   if (contentsOfAReg[ 0 ] == 'T' && contentsOfAReg != symbolTable.at(operand2).getInternalName())
@@ -1374,7 +1501,7 @@ void Compiler::emitNotCode(string operand1, string operand2) // !op1
   }
   if (whichType(operand1) != BOOLEAN) // if type of operand1 is not BOOLEAN
   {
-    processError("binary 'not' requires boolean operands");
+    processError("unary 'not' requires a boolean operand");
   }
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg[ 0 ] == 'T')
   {
@@ -2232,53 +2359,146 @@ void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2) //
 // emit code which follows 'then' and statement predicate
 void Compiler::emitThenCode(string operand1, string = "")
 {
+  	string tempLabel;
 
+	if (symbolTable.at(operand1).getDataType() != BOOLEAN)
+	{
+		processError("the predicate of \"if\" must be of type BOOLEAN");
+	}
+
+	tempLabel = getLabel();
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
+	{
+		emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
+	}
+	
+	emit("", "cmp", "eax,0", "; compare eax to 0");
+
+	emit("", "je", "." + tempLabel, "; if " + operand1 + " is false then jump to end of if");	
+
+	pushOperand(tempLabel);
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = "";
 }
 
-// emit code which follows 'else' clause of 'if' statement
 void Compiler::emitElseCode(string operand1, string = "")
 {
+  	string tempLabel;
 
+	tempLabel = getLabel();
+
+	emit("", "jmp", "." + tempLabel, "; jump to end if");
+
+	emit ("." + operand1 + ":", "", "", "; else");	
+
+	pushOperand(tempLabel);
+
+	contentsOfAReg = "";
 }
 
-// emit code which follows end of 'if' statement
 void Compiler::emitPostIfCode(string operand1, string = "")
 {
+	emit ("." + operand1 + ":", "", "", "; end if");	
 
+	contentsOfAReg = "";
 }
 
-// emit code following 'while'
 void Compiler::emitWhileCode(string = "", string = "")
 {
+  string tempLabel;
 
+	tempLabel = getLabel();
+
+	emit ("." + tempLabel + ":", "", "", "; while");	
+	
+	pushOperand(tempLabel);
+
+	contentsOfAReg = "";
 }
 
-// emit code following 'do'
 void Compiler::emitDoCode(string operand1, string = "")
 {
+  string tempLabel;
 
+	if (symbolTable.at(operand1).getDataType() != BOOLEAN)
+	{
+		processError("while predicate must be of type boolean");
+	}
+
+	tempLabel = getLabel();
+
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
+	{
+		emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
+	}
+	
+	emit("", "cmp", "eax,0", "; compare eax to 0");
+
+	emit("", "je", "." + tempLabel, "; if " + operand1 + " is false then jump to end while");
+
+	pushOperand(tempLabel);
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = "";
 }
 
-// emit code at end of 'while' loop;
-// operand2 is the label of the beginning of the loop
-// operand1 is the label which should follow the end of the loop
 void Compiler::emitPostWhileCode(string operand1, string operand2)
 {
 
+	emit("", "jmp", "." + operand2, "; end while");
+
+	emit ("." + operand1 + ":", "", "", "");	
+
+	contentsOfAReg = "";
 }
 
-// emit code which follows 'repeat'
 void Compiler::emitRepeatCode(string = "", string = "")
 {
+  string tempLabel;
 
+	tempLabel = getLabel();
+
+	emit("." + tempLabel + ":", "", "", "; repeat");
+
+	pushOperand(tempLabel);
+
+	contentsOfAReg = "";
 }
 
-// emit code which follows 'until' and the predicate of loop
-// operand1 is the value of the predicate
-// operand2 is the label which points to the beginning of the loop
 void Compiler::emitUntilCode(string operand1, string operand2)
 {
+if (symbolTable.at(operand1).getDataType() != BOOLEAN)
+	{
+		processError("the predicate of \"if\" must be of type BOOLEAN");
+	}
 
+	if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
+	{
+		emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + symbolTable.at(operand1).getInternalName());
+
+		contentsOfAReg = symbolTable.at(operand1).getInternalName();
+	}
+	
+	emit("", "cmp", "eax,0", "; compare eax to 0");
+
+	emit("", "je", "." + operand2, "; until " + operand1 + " is true");
+
+	if (isTemporary(operand1))
+	{
+		freeTemp();
+	}
+
+	contentsOfAReg = "";
 }
 
 /************ LEXER FUNCTIONS ************/
@@ -2678,7 +2898,7 @@ bool Compiler::isLiteral(string s) const // 10. LIT → INTEGER | BOOLEAN | 'not
   return false;
 }
 
-bool Compiler::isNonKeyId(string s) const
+bool Compiler::isNonKeyId(string s) const // This function determines if the string is NonKeyId
 {
   if (!isInteger(s) && !isKeyword(s) && !isSpecialSymbol(s[ 0 ]))
   {
@@ -2706,12 +2926,11 @@ bool Compiler::isNonKeyId(string s) const
   code for insert() treats any external name beginning with an uppercase
   character as defined by the compiler.
 */
-string Compiler::genInternalName(storeTypes storeType) const
-{
-  static int I = 0; // integer
-  static int B = 0; // boolean
-  static int U = 0; // unknown
-  string internalName;
+string Compiler::genInternalName(storeTypes storeType) const 
+{ // this function returns initialized alphabet characters with numbers
+  static int I = 0, B = 0, U = 0; // integer, boolean, unknown
+
+  string internalName; 
 
   if (storeType == PROG_NAME)
   {
@@ -2760,7 +2979,7 @@ void Compiler::freeTemp()
   }
 }
 
-string Compiler::getTemp()
+string Compiler::getTemp() // return "T0" or "T1" ... "Tx"
 {
   currentTempNo++;
   string temp;
@@ -2770,17 +2989,20 @@ string Compiler::getTemp()
   if (currentTempNo > maxTempNo)
   {
     insert(temp, UNKNOWN, VARIABLE, "1", NO, 1);
+
     symbolTable.at(temp).setInternalName(temp);
+
     maxTempNo++;
   }
 
   return temp;
 }
 
-string Compiler::getLabel()
+string Compiler::getLabel() // return "L0" or "L1" ... "Lx"
 {
-  string internalName; // Label
-  static int L = 0;
+  string internalName; 
+
+  static int L = 0; 
 
   internalName = "L" + to_string(L);
 
@@ -2789,7 +3011,7 @@ string Compiler::getLabel()
   return internalName;
 }
 
-bool Compiler::isTemporary(string s) const
+bool Compiler::isTemporary(string s) const // determines if the string is temporary
 {
   if (s[ 0 ] == 'T')
     return true;
@@ -2797,7 +3019,10 @@ bool Compiler::isTemporary(string s) const
     return false;
 }
 
-bool Compiler::isLabel(string s) const
+bool Compiler::isLabel(string s) const // determines if the string is label
 {
-
+  if (s[ 0 ] == 'L')
+    return true;
+  else
+    return false;
 }
