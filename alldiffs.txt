@@ -4,245 +4,263 @@ All Listing and Assembly File Diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:52 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:42 2022
 ------------------------------
 
 002.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:52 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:42 2022
 ------------------------------
 
 003.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:52 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:42 2022
 ------------------------------
 
 004.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:52 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:42 2022
 ------------------------------
 
 018.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:52 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:42 2022
 ------------------------------
 
 026.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:42 2022
 ------------------------------
 
 028.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:42 2022
 ------------------------------
 
 029.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+11,12c11
+<     7|    begin   end.    { this is a comment after "end." }
+< 
+---
+>     7|    begin   end. 
 ------------------------------
 
 030.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 031.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+9d8
+< 
 ------------------------------
 
 032.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 033.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 034.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:54 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+11d10
+< 
 ------------------------------
 
 035.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:54 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+8,9c8
+<     4|    end.    {comments are OK after end.}
+< 
+---
+>     4|    end. 
 ------------------------------
 
 036.lst diffs
 1c1
 < STAGE0:  YOUR NAME(S)       Mon Nov  7 15:02:54 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 101.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 102.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 103.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 104.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 105.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 106.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 107.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 108.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 109.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 110.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 111.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 112.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 113.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+15c15
+< Error: Line 10: one of "*", "and", "div", "mod", ")", "+", "-", ";", "<", "<=", "<>", "=", ">", ">=", or "or" expected
+---
+> Error: Line 10: non-keyword id, "read", or "write" expected 
 ------------------------------
 
 114.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 115.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 116.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 117.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 118.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 119.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 120.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 12d11
 < 
 ------------------------------
@@ -251,398 +269,908 @@ All Listing and Assembly File Diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 123.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 124.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 132.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 133.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 134.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 135.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 146.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 147.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 148.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 149.lst diffs
 1c1
 < STAGE1:  YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> STAGE1:  Jeff Caldwell, Kangmin Kim       Sun Nov 27 22:35:04 2022
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+202.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+203.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+204.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+206.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+207.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+208.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+212.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+217.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+218.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+224.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:17 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+225.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:17 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+226.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:17 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+230.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:17 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
+------------------------------
+
+237.lst diffs
+1c1
+< STAGE2:  YOUR NAME(S)       Mon Nov 28 09:26:17 2022
+---
+> STAGE2:  Kangmin Kim, Jeff Caldwell       Sun Dec  4 17:45:43 2022
 ------------------------------
 
 001.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:52 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:42 2022
 ------------------------------
 
 002.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:52 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:42 2022
 ------------------------------
 
 003.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:52 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:42 2022
 ------------------------------
 
 004.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:52 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:42 2022
 ------------------------------
 
 018.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:42 2022
 ------------------------------
 
 026.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:42 2022
 ------------------------------
 
 028.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:42 2022
 ------------------------------
 
 029.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 030.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 031.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 032.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 033.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:53 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 034.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:54 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 035.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:54 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 036.asm diffs
 1c1
 < ; YOUR NAME(S)       Mon Nov  7 15:02:54 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 101.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 102.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 103.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 104.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 105.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 106.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 107.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 108.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 109.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 110.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 111.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 112.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 113.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+10a11
+>         mov     [I4],eax                ; c = AReg
 ------------------------------
 
 114.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 115.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+20c20,33
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L0                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L1                     ; unconditionally jump to .L1
+> .L0:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L1:                                            
+>         call    WriteString             ; write string to standard out
+> 
+> SECTION .data                                   
+> TRUELIT db      'TRUE',0                ; literal string TRUE
+> FALSLIT db      'FALSE',0               ; literal string FALSE
+> 
+> SECTION .text                                   
+23c36,43
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L2                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L3                     ; unconditionally jump to .L3
+> .L2:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L3:                                            
+>         call    WriteString             ; write string to standard out
+26c46,53
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L4                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L5                     ; unconditionally jump to .L5
+> .L4:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L5:                                            
+>         call    WriteString             ; write string to standard out
+29c56,63
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L6                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L7                     ; unconditionally jump to .L7
+> .L6:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L7:                                            
+>         call    WriteString             ; write string to standard out
 ------------------------------
 
 116.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+23c23,36
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L0                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L1                     ; unconditionally jump to .L1
+> .L0:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L1:                                            
+>         call    WriteString             ; write string to standard out
+> 
+> SECTION .data                                   
+> TRUELIT db      'TRUE',0                ; literal string TRUE
+> FALSLIT db      'FALSE',0               ; literal string FALSE
+> 
+> SECTION .text                                   
+26c39,46
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L2                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L3                     ; unconditionally jump to .L3
+> .L2:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L3:                                            
+>         call    WriteString             ; write string to standard out
 ------------------------------
 
 117.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 118.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 119.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+43c43,56
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L6                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L7                     ; unconditionally jump to .L7
+> .L6:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L7:                                            
+>         call    WriteString             ; write string to standard out
+> 
+> SECTION .data                                   
+> TRUELIT db      'TRUE',0                ; literal string TRUE
+> FALSLIT db      'FALSE',0               ; literal string FALSE
+> 
+> SECTION .text                                   
+46c59,66
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L8                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L9                     ; unconditionally jump to .L9
+> .L8:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L9:                                            
+>         call    WriteString             ; write string to standard out
+49c69,76
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L10                    ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L11                    ; unconditionally jump to .L11
+> .L10:                                           
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L11:                                           
+>         call    WriteString             ; write string to standard out
 ------------------------------
 
 120.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 122.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:25 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 123.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 124.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 132.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+28c28,41
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L2                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L3                     ; unconditionally jump to .L3
+> .L2:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L3:                                            
+>         call    WriteString             ; write string to standard out
+> 
+> SECTION .data                                   
+> TRUELIT db      'TRUE',0                ; literal string TRUE
+> FALSLIT db      'FALSE',0               ; literal string FALSE
+> 
+> SECTION .text                                   
+32c45
+<         je      .L2                     ; if a = b then jump to set eax to TRUE
+---
+>         je      .L4                     ; if a = b then jump to set eax to TRUE
+34,35c47,48
+<         jmp     .L3                     ; unconditionally jump
+< .L2:                                    
+---
+>         jmp     .L5                     ; unconditionally jump
+> .L4:                                            
+37c50
+< .L3:                                    
+---
+> .L5:                                            
+46c59,66
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L6                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L7                     ; unconditionally jump to .L7
+> .L6:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L7:                                            
+>         call    WriteString             ; write string to standard out
 ------------------------------
 
 133.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 134.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 135.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:26 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+14c14,27
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L0                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L1                     ; unconditionally jump to .L1
+> .L0:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L1:                                            
+>         call    WriteString             ; write string to standard out
+> 
+> SECTION .data                                   
+> TRUELIT db      'TRUE',0                ; literal string TRUE
+> FALSLIT db      'FALSE',0               ; literal string FALSE
+> 
+> SECTION .text                                   
+17c30,37
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L2                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L3                     ; unconditionally jump to .L3
+> .L2:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L3:                                            
+>         call    WriteString             ; write string to standard out
+21c41,48
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L4                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L5                     ; unconditionally jump to .L5
+> .L4:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L5:                                            
+>         call    WriteString             ; write string to standard out
+25c52,59
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L6                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L7                     ; unconditionally jump to .L7
+> .L6:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L7:                                            
+>         call    WriteString             ; write string to standard out
+28c62
+<         je      .L0                     ; if a = b then jump to set eax to TRUE
+---
+>         je      .L8                     ; if a = b then jump to set eax to TRUE
+30,31c64,65
+<         jmp     .L1                     ; unconditionally jump
+< .L0:                                    
+---
+>         jmp     .L9                     ; unconditionally jump
+> .L8:                                            
+33c67
+< .L1:                                    
+---
+> .L9:                                            
+37c71,78
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L10                    ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L11                    ; unconditionally jump to .L11
+> .L10:                                           
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L11:                                           
+>         call    WriteString             ; write string to standard out
+40c81,88
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L12                    ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L13                    ; unconditionally jump to .L13
+> .L12:                                           
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L13:                                           
+>         call    WriteString             ; write string to standard out
 ------------------------------
 
 146.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 147.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
 148.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+52c52,65
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L6                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L7                     ; unconditionally jump to .L7
+> .L6:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L7:                                            
+>         call    WriteString             ; write string to standard out
+> 
+> SECTION .data                                   
+> TRUELIT db      'TRUE',0                ; literal string TRUE
+> FALSLIT db      'FALSE',0               ; literal string FALSE
+> 
+> SECTION .text                                   
+55c68,75
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L8                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L9                     ; unconditionally jump to .L9
+> .L8:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L9:                                            
+>         call    WriteString             ; write string to standard out
+58c78,85
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L10                    ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L11                    ; unconditionally jump to .L11
+> .L10:                                           
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L11:                                           
+>         call    WriteString             ; write string to standard out
 ------------------------------
 
 149.asm diffs
 1c1
 < ; YOUR NAME(S)       Fri Nov 18 15:45:27 2022
 ---
-> ; Kangmin Kim, Jeff Caldwell       Sun Nov 27 22:35:04 2022
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+202.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+203.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+204.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+206.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+207.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+208.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+212.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+217.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+218.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:16 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+224.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:17 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+225.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:17 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+226.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:17 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+34c34,47
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L6                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L7                     ; unconditionally jump to .L7
+> .L6:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L7:                                            
+>         call    WriteString             ; write string to standard out
+> 
+> SECTION .data                                   
+> TRUELIT db      'TRUE',0                ; literal string TRUE
+> FALSLIT db      'FALSE',0               ; literal string FALSE
+> 
+> SECTION .text                                   
+45c58,65
+<         call    WriteInt                ; write int in eax to standard out
+---
+>         cmp     eax,0                   ; compare to 0
+>         je      .L8                     ; jump if equal to print FALSE
+>         mov     edx,TRUELIT             ; load address of TRUE literal in edx
+>         jmp     .L9                     ; unconditionally jump to .L9
+> .L8:                                            
+>         mov     edx,FALSLIT             ; load address of FALSE literal in edx
+> .L9:                                            
+>         call    WriteString             ; write string to standard out
+------------------------------
+
+230.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:17 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
+------------------------------
+
+237.asm diffs
+1c1
+< ; YOUR NAME(S)       Mon Nov 28 09:26:17 2022
+---
+> ;Kangmin Kim, Jeff Caldwell      Sun Dec  4 17:45:43 2022
 ------------------------------
 
