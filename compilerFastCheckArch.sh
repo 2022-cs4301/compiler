@@ -72,8 +72,8 @@
 #Set COMPILERNAME to the name of your compiler program executable.
 #
 #COMPILERNAME=./stage0
-COMPILERNAME=./stage1
-#COMPILERNAME=./stage2
+# COMPILERNAME=./stage1
+COMPILERNAME=./stage2
 #
 #Set the ASM_NAME_STRING to contain the same string as your list of
 #names of people who worked on your compiler. For example, if your 

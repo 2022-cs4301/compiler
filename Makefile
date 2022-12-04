@@ -53,7 +53,7 @@ targets1srcfile =
 $(targets1srcfile): $$@.o
 	$(CC) -o $@ $@.o $(LINK_DIRS) $(LFLAGS)
 
-targets2srcfiles = stage1
+targets2srcfiles = stage2
 
 $(targets2srcfiles): $$@main.o $$@.o
 	$(CC) -o $@ $@main.o $@.o $(LINK_DIRS) $(LFLAGS)
