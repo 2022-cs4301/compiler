@@ -10,6 +10,8 @@
 // Kangmin Kim and Jeff Caldwell
 // CS 4301
 // Compiler - Stage2
+bool Check = false;
+int  Count = 0;
 
 Compiler::Compiler(char **argv) // constructor
 {
@@ -179,8 +181,23 @@ void Compiler::beginEndStmt()
   }
 
   nextToken();
-
-  code("end", ".");
+  
+  if(token == ".")
+  {
+    code("end", ".");
+  }
+  else if (token == ";" && Check == false && Count == 0)
+	{
+    processError("{Final end lacks period, has semicolon instead.}");
+	}
+  else if (token == ";")
+  {
+    return;
+  }
+	else
+	{
+		processError("'.' or ';' expected following \"end\"");
+	}
 }
 
 void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
@@ -376,24 +393,28 @@ string Compiler::ids() // 8. IDS → NON_KEY_ID ( ',' IDS | ε )
 /** STAGE 1 PRODUCTIONS **/
 void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
 {                          // -> ε
-  if (isNonKeyId(token) || token == "read" || token == "write" || token == ";")
+  if (isNonKeyId(token) || token == "read" || token == "write" || token == "begin" || token == "if" || token == "while" || token == "repeat" || token == ";")
   {
     execStmt();  // token will be at end of last exec statement
     nextToken(); // advance token
     execStmts(); // recurse
   }
   else if (token == "end")
-    ;
-
+  {
+    return;
+  }
+  else if (token == "until")
+  {
+    return;
+  }
   else
   {
-    processError("\";\", \"begin\", \"read\",\"write\", \"end\" expected");
+    processError("one of \";\", \"begin\", \"if\", \"read\", \"repeat\", \"while\", \"write\", \"end\", or \"until\" expected");
   }
 }
 
 void Compiler::execStmt()
 {
-  cout << "token: " << token << "\n";
   if (isNonKeyId(token)) // assignment statement
   {
     // cout << "assignment token: " << token << "\n";
@@ -412,29 +433,39 @@ void Compiler::execStmt()
     writeStmt();
   }
 
-  else if (token == "if")
+  else if (token == "if") // if statement
   {
     ifStmt();
   }
 
-  else if (token == "while")
+  else if (token == "while") // while statement
   {
     whileStmt();
   }
 
-  else if (token == "repeat")
+  else if (token == "repeat") // repeat statement
   {
     repeatStmt();
   }
 
-  else if (token == ";")
+  else if (token == ";") // null statement
   {
     nullStmt();
   }
 
-  else if (token == "begin")
+  else if (token == "begin") // begin statement
   {
+    Count++;
+    Check = true;
     beginEndStmt();
+  }
+  else if (token == "end")
+  {
+    Count--;
+    if(Count == 0)
+    {
+      Check = false;
+    }
   }
 
   else
