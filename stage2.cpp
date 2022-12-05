@@ -11,7 +11,7 @@
 #include <iomanip>
 
 
-//fix 142 143 150 155 165 114 113 120
+
 using namespace std;
 
 bool beginEndCheck = false;
@@ -26,98 +26,95 @@ int  beginEndCount = 0;
  void varStmts(); // stage 0, production 7
  string ids(); // stage 0, production 8*/
 
- //map<string, SymbolTableEntry>::iterator i;
 
- // Constructor
 Compiler::Compiler(char** argv)
 {
-	// open sourceFile using argv[1]				
-	sourceFile.open(argv[ 1 ]);					//<<<<<<<<<<<<<<<<ios				
-	// open listingFile using argv[2]
-	listingFile.open(argv[ 2 ]);					//<<<<<<<<<<<<<<<<ios
-	// open objectFile using argv[3]
-	objectFile.open(argv[ 3 ]);					//<<<<<<<<<<<<<<<<ios
+  // open sourceFile using argv[1]				
+  sourceFile.open(argv[ 1 ]);
+  // open listingFile using argv[2]
+  listingFile.open(argv[ 2 ]);
+  // open objectFile using argv[3]
+  objectFile.open(argv[ 3 ]);
 }
 
-// Destructor
 Compiler::~Compiler()
 {
-	// close all open files and Print the symbol table
-	sourceFile.close();
-	listingFile.close();
-	objectFile.close();
+  // close all open files and Print the symbol table
+  sourceFile.close();
+  listingFile.close();
+  objectFile.close();
 }
 
 void Compiler::createListingHeader()
 {
-	// line numbers and source statements should be aligned under the headings
-	time_t now = time(NULL);
-	listingFile << "STAGE2:  " << "Kangmin Kim, Jeff Caldwell   " << ctime(&now) << endl;
-	listingFile << "LINE NO." << setw(30) << "SOURCE STATEMENT" << endl;			//<<<<<<<setw, work on it
-	listingFile << endl;
+  // line numbers and source statements should be aligned under the headings
+  time_t now = time(NULL);
+  listingFile << "STAGE2:  " << "Kangmin Kim, Jeff Caldwell   " << ctime(&now) << endl;
+  listingFile << "LINE NO." << setw(30) << "SOURCE STATEMENT" << endl;			//<<<<<<<setw, work on it
+  listingFile << endl;
 }
 
 void Compiler::parser()
 {
-	nextChar();
-	// ch must be initialized to the first character of the source file
+  nextChar();
+  // ch must be initialized to the first character of the source file
 
-	// set the character to the first character in the file
-	if (nextToken() != "program")
-	{
-		processError("keyword \"program\" expected");
-	}
-	// a call to nextToken() has two effects
-	// (1) the variable, token, is assigned the value of the next token
-	// (2) the next token is read from the source file in order to make
-	// the assignment. The value returned by nextToken() is also
-	// the next token.
+  // set the character to the first character in the file
+  if (nextToken() != "program")
+  {
+    processError("keyword \"program\" expected");
+  }
+  // a call to nextToken() has two effects
+  // (1) the variable, token, is assigned the value of the next token
+  // (2) the next token is read from the source file in order to make
+  // the assignment. The value returned by nextToken() is also
+  // the next token.
 
-	prog();
-	//parser implements the grammar rules, calling first rule
+  prog();
+  //parser implements the grammar rules, calling first rule
 }
 
 void Compiler::createListingTrailer()
 {
-	// print "COMPILATION TERMINATED", "# ERRORS ENCOUNTERED"
-	listingFile << endl << "COMPILATION TERMINATED" << right << setw(7) << errorCount << " ERRORS ENCOUNTERED" << endl;
+  // print "COMPILATION TERMINATED", "# ERRORS ENCOUNTERED"
+  listingFile << endl << "COMPILATION TERMINATED" << right << setw(7) << errorCount << " ERRORS ENCOUNTERED" << endl;
 }
 //token should be "program"
 void Compiler::prog()
 {
-	if (token != "program")
-	{
-		processError("keyword \"program\" expected");
-	}
+  if (token != "program")
+  {
+    processError("keyword \"program\" expected");
+  }
 
-	progStmt();
+  progStmt();
 
-	if (token == "const")
-	{
-		consts();
-	}
+  if (token == "const")
+  {
+    consts();
+  }
 
-	if (token == "var")
-	{
-		vars();
-	}
+  if (token == "var")
+  {
+    vars();
+  }
 
-	if (token != "begin")
-	{
-		processError("keyword \"begin\" expected");
-	}
+  if (token != "begin")
+  {
+    processError("keyword \"begin\" expected");
+  }
 
-	beginEndStmt();
+  beginEndStmt();
 }
 void Compiler::processError(string err)
 {
-	// for processing errors outputs at the bottom with the specified error
-	//Output err to listingFile
-	//Call exit() to terminate program
-	listingFile << endl << "Error: Line " << lineNo << ": " << err << endl;
-	errorCount += 1;
-	listingFile << "\nCOMPILATION TERMINATED      " << errorCount << " ERROR ENCOUNTERED" << endl;
-	exit(-1);
+  // for processing errors outputs at the bottom with the specified error
+  //Output err to listingFile
+  //Call exit() to terminate program
+  listingFile << endl << "Error: Line " << lineNo << ": " << err << endl;
+  errorCount += 1;
+  listingFile << "\nCOMPILATION TERMINATED      " << errorCount << " ERROR ENCOUNTERED" << endl;
+  exit(-1);
 }
 
 string Compiler::genInternalName(storeTypes storeType) const
@@ -154,29 +151,29 @@ string Compiler::genInternalName(storeTypes storeType) const
 //token should be "program"
 void Compiler::progStmt()
 {
-	string x;
+  string x;
 
-	if (token != "program")
-	{
-		processError("keyword \"program\" expected");
-	}
+  if (token != "program")
+  {
+    processError("keyword \"program\" expected");
+  }
 
-	x = nextToken(); //may need to change to nextToken()
+  x = nextToken(); //may need to change to nextToken()
 
-	// if token is not a non_key_id
-	if (!isNonKeyId(token))
-	{
-		processError("program name expected");
-	}
+  // if token is not a non_key_id
+  if (!isNonKeyId(token))
+  {
+    processError("program name expected");
+  }
 
-	if (nextToken() != ";")
-	{
-		processError("semicolon expected");
-	}
+  if (nextToken() != ";")
+  {
+    processError("semicolon expected");
+  }
 
-	nextToken();
-	code("program", x);
-	insert(x, PROG_NAME, CONSTANT, x, NO, 0);
+  nextToken();
+  code("program", x);
+  insert(x, PROG_NAME, CONSTANT, x, NO, 0);
 
 }
 
@@ -210,37 +207,37 @@ void Compiler::vars() // 4. VARS → 'var' VAR_STMTS
 
 void Compiler::beginEndStmt()
 {
-	if (token != "begin")
-	{
-		processError("begin expected");
-	}
+  if (token != "begin")
+  {
+    processError("begin expected");
+  }
 
-	nextToken();
-	execStmts();
-	if (token != "end")
-	{
-		processError("error");
-	}
-	nextToken();
+  nextToken();
+  execStmts();
+  if (token != "end")
+  {
+    processError("error");
+  }
+  nextToken();
 
 
-	if (token == ".")
-	{
-		code("end", ".");
-	}
-	else if (token == ";" && beginEndCheck == false && beginEndCount == 0)
-	{
-		processError("{Final end lacks period, has semicolon instead.}");
-	}
-	else if (token == ";")
-	{
-		return;
-	}
+  if (token == ".")
+  {
+    code("end", ".");
+  }
+  else if (token == ";" && beginEndCheck == false && beginEndCount == 0)
+  {
+    processError("{Final end lacks period, has semicolon instead.}");
+  }
+  else if (token == ";")
+  {
+    return;
+  }
 
-	else
-	{
-		processError("'.' or ';' expected following \"end\"");
-	}
+  else
+  {
+    processError("'.' or ';' expected following \"end\"");
+  }
 }
 // token should be a non_key_id
 void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
@@ -436,81 +433,81 @@ string Compiler::ids() // 8. IDS → NON_KEY_ID ( ',' IDS | ε )
 /** STAGE 1 PRODUCTIONS **/
 void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
 {                          // -> ε
-	if (token[ 0 ] == '$')
-	{
+  if (token[ 0 ] == '$')
+  {
 
-	}
-	if (isNonKeyId(token) || token == "read" || token == "write" || token == "begin" || token == "if" || token == "while" || token == "repeat" || token == ";")
-	{
-		execStmt();
-		execStmts();
-	}
+  }
+  if (isNonKeyId(token) || token == "read" || token == "write" || token == "begin" || token == "if" || token == "while" || token == "repeat" || token == ";")
+  {
+    execStmt();
+    execStmts();
+  }
 
-	else if (token == "end")
-	{
+  else if (token == "end")
+  {
 
-	}
+  }
 
-	else if (token == "until")
-	{
+  else if (token == "until")
+  {
 
-	}
+  }
 
-	else
-	{
-		processError("one of \";\", \"begin\", \"if\", \"read\", \"repeat\", \"while\", \"write\", \"end\", or \"until\" expected");		//error here
-	}
+  else
+  {
+    processError("one of \";\", \"begin\", \"if\", \"read\", \"repeat\", \"while\", \"write\", \"end\", or \"until\" expected");		//error here
+  }
 
 
 }
 
 void Compiler::execStmt()
 {
-	if (isNonKeyId(token))
-	{
-		assignStmt();
-	}
-	else if (token == "begin")
-	{
-		beginEndCount++;
-		beginEndCheck = true;
-		beginEndStmt();
-	}
-	else if (token == "end")
-	{
-		beginEndCount--;
-		if (beginEndCount == 0)
-			beginEndCheck = false;
-		return;
-	}
-	else if (token == "read")
-	{
-		readStmt();
-	}
-	else if (token == "write")
-	{
-		writeStmt();
-	}
-	if (token == "if")
-	{
-		ifStmt();
-	}
-	else if (token == "while")
-	{
-		whileStmt();
-	}
-	else if (token == "repeat")
-	{
-		repeatStmt();
-	}
-	else if (token == ";")
-	{
-		nullStmt();
-	}
-	else
-	{
-		processError("non-keyword id, \"read\", or \"write\" expected ");
-	}
+  if (isNonKeyId(token))
+  {
+    assignStmt();
+  }
+  else if (token == "begin")
+  {
+    beginEndCount++;
+    beginEndCheck = true;
+    beginEndStmt();
+  }
+  else if (token == "end")
+  {
+    beginEndCount--;
+    if (beginEndCount == 0)
+      beginEndCheck = false;
+    return;
+  }
+  else if (token == "read")
+  {
+    readStmt();
+  }
+  else if (token == "write")
+  {
+    writeStmt();
+  }
+  if (token == "if")
+  {
+    ifStmt();
+  }
+  else if (token == "while")
+  {
+    whileStmt();
+  }
+  else if (token == "repeat")
+  {
+    repeatStmt();
+  }
+  else if (token == ";")
+  {
+    nullStmt();
+  }
+  else
+  {
+    processError("non-keyword id, \"read\", or \"write\" expected ");
+  }
 }
 
 void Compiler::assignStmt()
@@ -787,26 +784,26 @@ void Compiler::terms()
 //stage 1 production 13
 void Compiler::factor()
 {
-	if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
-	{
-		processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", INTEGER, or NON_KEY_ID expected");
-	}
+  if (token != "not" && token != "true" && token != "false" && token != "(" && token != "+" && token != "-" && !isInteger(token) && !isNonKeyId(token))
+  {
+    processError("\"not\", \"true\", \"false\", \"(\", \"+\", \"-\", INTEGER, or NON_KEY_ID expected");
+  }
 
-	part();
+  part();
 
-	if (token == "*" || token == "div" || token == "mod" || token == "and")
-	{
-		factors();
-	}
+  if (token == "*" || token == "div" || token == "mod" || token == "and")
+  {
+    factors();
+  }
 
-	if (token == "<>" || token == "=" || token == "<=" || token == ">=" || token == "<" || token == ">" || token == ")" || token == "," || token == ";" || token == "-" || token == "+" || token == "or" || token == "begin" || token == "then" || token == "do")
-	{
+  if (token == "<>" || token == "=" || token == "<=" || token == ">=" || token == "<" || token == ">" || token == ")" || token == "," || token == ";" || token == "-" || token == "+" || token == "or" || token == "begin" || token == "then" || token == "do")
+  {
 
-	}
-	else
-	{
-		processError("one of \"*\", \"and\", \"div\", \"mod\", \")\", \"+\", \"-\", \";\", \"<\", \"<=\", \"<>\", \"=\", \">\", \">=\", or \"or\" expected");
-	}
+  }
+  else
+  {
+    processError("one of \"*\", \"and\", \"div\", \"mod\", \")\", \"+\", \"-\", \";\", \"<\", \"<=\", \"<>\", \"=\", \">\", \">=\", or \"or\" expected");
+  }
 
 }
 
@@ -977,128 +974,128 @@ void Compiler::part()
 // stage 2, production 3
 void Compiler::ifStmt()
 {
-	if (token != "if")
-	{
-		processError("if expected; found " + token);
-	}
-	nextToken();
-	express();
+  if (token != "if")
+  {
+    processError("if expected; found " + token);
+  }
+  nextToken();
+  express();
 
-	if (token != "then")
-	{
-		processError("then expected; found " + token);
-	}
+  if (token != "then")
+  {
+    processError("then expected; found " + token);
+  }
 
-	string temp = popOperand();
-	code("then", temp);
-	nextToken();
+  string temp = popOperand();
+  code("then", temp);
+  nextToken();
 
-	if (isNonKeyId(token) || token == "read" || token == "write" || token == "if" || token == "while" || token == "repeat" || token == ";" || token == "begin")
-	{
-		execStmt();
-	}
+  if (isNonKeyId(token) || token == "read" || token == "write" || token == "if" || token == "while" || token == "repeat" || token == ";" || token == "begin")
+  {
+    execStmt();
+  }
 
-	elsePt();
+  elsePt();
 }
 
 
 // stage 2, production 4
 void Compiler::elsePt()
 {
-	if (token == "else")
-	{
-		string temp = popOperand();
-		code("else", temp);
-		nextToken();
+  if (token == "else")
+  {
+    string temp = popOperand();
+    code("else", temp);
+    nextToken();
 
-		execStmt();
-		code("post_if", popOperand());
-	}
-	else if (isNonKeyId(token) || token == "end" || token == "write" || token == "read" || token == "repeat" || token == "if" || token == "while" || token == "begin" || token == "until" || token == ";")
-	{
-		code("post_if", popOperand());
-	}
-	else
-	{
-		processError("illegal character");
-	}
+    execStmt();
+    code("post_if", popOperand());
+  }
+  else if (isNonKeyId(token) || token == "end" || token == "write" || token == "read" || token == "repeat" || token == "if" || token == "while" || token == "begin" || token == "until" || token == ";")
+  {
+    code("post_if", popOperand());
+  }
+  else
+  {
+    processError("illegal character");
+  }
 }
 
 // stage 2, production 5
 void Compiler::whileStmt()
 {
-	if (token != "while")
-	{
-		processError("while expected");
-	}
+  if (token != "while")
+  {
+    processError("while expected");
+  }
 
-	code("while");
-	nextToken();
-	express();
+  code("while");
+  nextToken();
+  express();
 
-	if (token != "do")
-	{
-		processError("do expected");
-	}
+  if (token != "do")
+  {
+    processError("do expected");
+  }
 
-	code("do", popOperand());
+  code("do", popOperand());
 
-	nextToken();
+  nextToken();
 
-	execStmt();
+  execStmt();
 
-	string op2 = popOperand();
+  string op2 = popOperand();
 
-	string op1 = popOperand();
+  string op1 = popOperand();
 
-	code("post_while", op2, op1);
+  code("post_while", op2, op1);
 
 }
 
 void Compiler::repeatStmt()
 {
-	if (token != "repeat")
-	{
-		processError("received " + token + " expected repeat");
-	}
+  if (token != "repeat")
+  {
+    processError("received " + token + " expected repeat");
+  }
 
-	code("repeat");
-	nextToken();
+  code("repeat");
+  nextToken();
 
-	if (!isNonKeyId(token) && token != "read" && token != "write" && token != "end" && token != "write" && token != "read" && token != "repeat" && token != "if" && token != "while" && token != "begin" && token != "until" && token != ";")
-	{
-		processError("error1");
-	}
+  if (!isNonKeyId(token) && token != "read" && token != "write" && token != "end" && token != "write" && token != "read" && token != "repeat" && token != "if" && token != "while" && token != "begin" && token != "until" && token != ";")
+  {
+    processError("error1");
+  }
 
-	execStmts();
+  execStmts();
 
-	if (token != "until")
-	{
-		processError("error2" + token);
-	}
+  if (token != "until")
+  {
+    processError("error2" + token);
+  }
 
-	nextToken();
-	express();
-	string op2 = popOperand();
-	string op1 = popOperand();
+  nextToken();
+  express();
+  string op2 = popOperand();
+  string op1 = popOperand();
 
-	code("until", op2, op1);
+  code("until", op2, op1);
 
-	if (token != ";")
-	{
-		processError("received " + token + " expected ;");
-	}
+  if (token != ";")
+  {
+    processError("received " + token + " expected ;");
+  }
 }
 
 // stage 2, production 7
 void Compiler::nullStmt()
 {
-	if (token != ";")
-	{
-		processError("received " + token + " expected ;");
-	}
+  if (token != ";")
+  {
+    processError("received " + token + " expected ;");
+  }
 
-	nextToken();
+  nextToken();
 }
 
 /** END PRODUCTIONS **/
@@ -1161,7 +1158,7 @@ bool Compiler::isKeyword(string s) const
   // instead of using a crazy, long string of conditional operators (||),
   // just make an array and loop through that
   string keywords[ 23 ] = {"program", "const", "var", "integer", "boolean", "begin", "end", "true",
-    "false", "not", "mod", "div", "and", "or", "read", "write", "if", "do", "repeat", "then", "until", "else","while"};
+    "false", "not", "mod", "div", "and", "or", "read", "write", "if", "do", "repeat", "then", "until", "else", "while"};
 
   int len = *(&keywords + 1) - keywords; // length of keywords
 
@@ -1261,60 +1258,60 @@ void Compiler::insert(string externalName, // create symbol table entry for each
                       modes inMode,        // Multiple inserted names are illegal
                       string inValue, allocation inAlloc, int inUnits)
 {
-	string name;
-	uint listName = 0;
+  string name;
+  uint listName = 0;
 
-	while (listName < externalName.length())
-	{
-		name = "";
-		while (name == "")
-		{
-			while (listName < externalName.length() && externalName[ listName ] != ',')
-			{
-				name += externalName[ listName ];
-				listName += 1;
-			}
+  while (listName < externalName.length())
+  {
+    name = "";
+    while (name == "")
+    {
+      while (listName < externalName.length() && externalName[ listName ] != ',')
+      {
+        name += externalName[ listName ];
+        listName += 1;
+      }
 
-			listName += 1;
+      listName += 1;
 
-			name = name.substr(0, 15);
+      name = name.substr(0, 15);
 
-			if (symbolTable.count(name) > 0)
-			{
-				processError("symbol x is multiply defined");
-			}
+      if (symbolTable.count(name) > 0)
+      {
+        processError("symbol x is multiply defined");
+      }
 
-			else if (isKeyword(name) && name != "true" && name != "false")
-			{
-				processError("illegal use of keyword");
-			}
+      else if (isKeyword(name) && name != "true" && name != "false")
+      {
+        processError("illegal use of keyword");
+      }
 
-			else
-			{
-				if (name == "true" || name == "TRUE")
-				{
-					symbolTable.insert({"true", SymbolTableEntry("TRUE", inType, inMode, inValue, inAlloc, inUnits)});
-				}
-				else if (name == "false" || name == "FALSE")
-				{
-					symbolTable.insert({"false", SymbolTableEntry("FALSE", inType, inMode, inValue, inAlloc, inUnits)});
-				}
-				else if (isupper(name[ 0 ]))
-				{
-					symbolTable.insert({name, SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
-				}
-				else
-				{
-					symbolTable.insert({name, SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
-				}
-			}
-		}
+      else
+      {
+        if (name == "true" || name == "TRUE")
+        {
+          symbolTable.insert({"true", SymbolTableEntry("TRUE", inType, inMode, inValue, inAlloc, inUnits)});
+        }
+        else if (name == "false" || name == "FALSE")
+        {
+          symbolTable.insert({"false", SymbolTableEntry("FALSE", inType, inMode, inValue, inAlloc, inUnits)});
+        }
+        else if (isupper(name[ 0 ]))
+        {
+          symbolTable.insert({name, SymbolTableEntry(name, inType, inMode, inValue, inAlloc, inUnits)});
+        }
+        else
+        {
+          symbolTable.insert({name, SymbolTableEntry(genInternalName(inType), inType, inMode, inValue, inAlloc, inUnits)});
+        }
+      }
+    }
 
-		if (symbolTable.size() > 256)
-		{
-			processError("symbol table cannot exceed 256");
-		}
-	}
+    if (symbolTable.size() > 256)
+    {
+      processError("symbol table cannot exceed 256");
+    }
+  }
 }
 
 storeTypes Compiler::whichType(string name) // tells which data type a name has
@@ -1346,7 +1343,7 @@ storeTypes Compiler::whichType(string name) // tells which data type a name has
   return type;
 }
 
-string Compiler::whichValue(string name) 
+string Compiler::whichValue(string name)
 {
   string value;
   if (isLiteral(name))
@@ -1380,132 +1377,132 @@ string Compiler::whichValue(string name)
 
 void Compiler::code(string op, string operand1, string operand2)
 {
-	if (op == "program")
-	{
-		emitPrologue(operand1);
-	}
-	else if (op == "end")
-	{
-		emitEpilogue();
-	}
-	else if (op == "read")
-	{
-		emitReadCode(operand1, operand2);
-	}
-	else if (op == "write")
-	{
-		emitWriteCode(operand1, operand2);
-	}
-	else if (op == "+")
-	{ // binary plus
-		emitAdditionCode(operand1, operand2);
-	}
-	else if (op == "-")
-	{ // binary minus
-		emitSubtractionCode(operand1, operand2);
-	}
-	else if (op == "neg")
-	{ // unary minus
-		emitNegationCode(operand1, operand2);
-	}
-	else if (op == "not")
-	{
-		emitNotCode(operand1, operand2);
-	}
-	else if (op == "*")
-	{
-		emitMultiplicationCode(operand1, operand2);
-	}
-	else if (op == "div")
-	{
-		emitDivisionCode(operand1, operand2);
-	}
-	else if (op == "mod")
-	{
-		emitModuloCode(operand1, operand2);
-	}
-	else if (op == "and")
-	{
-		emitAndCode(operand1, operand2);
-	}
-	else if (op == "or")
-	{
-		emitOrCode(operand1, operand2);
-	}
-	else if (op == "<")
-	{
-		emitLessThanCode(operand1, operand2);
-	}
-	else if (op == ">")
-	{
-		emitGreaterThanCode(operand1, operand2);
-	}
-	else if (op == "<=")
-	{
-		emitLessThanOrEqualToCode(operand1, operand2);
-	}
-	else if (op == ">=")
-	{
-		emitGreaterThanOrEqualToCode(operand1, operand2);
-	}
-	else if (op == "<>")
-	{
-		emitInequalityCode(operand1, operand2);
-	}
-	else if (op == "=")
-	{
-		emitEqualityCode(operand1, operand2);
-	}
-	else if (op == ":=")
-	{
-		emitAssignCode(operand1, operand2);
-	}
-	else if (op == "then")
-	{
-		emitThenCode(operand1, "");
-	}
-	else if (op == "else")
-	{
-		emitElseCode(operand1, "");
-	}
-	else if (op == "post_if")
-	{
-		emitPostIfCode(operand1, "");
-	}
-	else if (op == "while")
-	{
-		emitWhileCode("", "");
-	}
-	else if (op == "do")
-	{
-		emitDoCode(operand1, "");
-	}
-	else if (op == "post_while")
-	{
-		emitPostWhileCode(operand1, operand2);
-	}
-	else if (op == "repeat")
-	{
-		emitRepeatCode("", "");
-	}
-	else if (op == "until")
-	{
-		emitUntilCode(operand1, operand2);
-	}
-	else
-	{
-		processError("undefined constant");
-	}
+  if (op == "program")
+  {
+    emitPrologue(operand1);
+  }
+  else if (op == "end")
+  {
+    emitEpilogue();
+  }
+  else if (op == "read")
+  {
+    emitReadCode(operand1, operand2);
+  }
+  else if (op == "write")
+  {
+    emitWriteCode(operand1, operand2);
+  }
+  else if (op == "+")
+  { // binary plus
+    emitAdditionCode(operand1, operand2);
+  }
+  else if (op == "-")
+  { // binary minus
+    emitSubtractionCode(operand1, operand2);
+  }
+  else if (op == "neg")
+  { // unary minus
+    emitNegationCode(operand1, operand2);
+  }
+  else if (op == "not")
+  {
+    emitNotCode(operand1, operand2);
+  }
+  else if (op == "*")
+  {
+    emitMultiplicationCode(operand1, operand2);
+  }
+  else if (op == "div")
+  {
+    emitDivisionCode(operand1, operand2);
+  }
+  else if (op == "mod")
+  {
+    emitModuloCode(operand1, operand2);
+  }
+  else if (op == "and")
+  {
+    emitAndCode(operand1, operand2);
+  }
+  else if (op == "or")
+  {
+    emitOrCode(operand1, operand2);
+  }
+  else if (op == "<")
+  {
+    emitLessThanCode(operand1, operand2);
+  }
+  else if (op == ">")
+  {
+    emitGreaterThanCode(operand1, operand2);
+  }
+  else if (op == "<=")
+  {
+    emitLessThanOrEqualToCode(operand1, operand2);
+  }
+  else if (op == ">=")
+  {
+    emitGreaterThanOrEqualToCode(operand1, operand2);
+  }
+  else if (op == "<>")
+  {
+    emitInequalityCode(operand1, operand2);
+  }
+  else if (op == "=")
+  {
+    emitEqualityCode(operand1, operand2);
+  }
+  else if (op == ":=")
+  {
+    emitAssignCode(operand1, operand2);
+  }
+  else if (op == "then")
+  {
+    emitThenCode(operand1, "");
+  }
+  else if (op == "else")
+  {
+    emitElseCode(operand1, "");
+  }
+  else if (op == "post_if")
+  {
+    emitPostIfCode(operand1, "");
+  }
+  else if (op == "while")
+  {
+    emitWhileCode("", "");
+  }
+  else if (op == "do")
+  {
+    emitDoCode(operand1, "");
+  }
+  else if (op == "post_while")
+  {
+    emitPostWhileCode(operand1, operand2);
+  }
+  else if (op == "repeat")
+  {
+    emitRepeatCode("", "");
+  }
+  else if (op == "until")
+  {
+    emitUntilCode(operand1, operand2);
+  }
+  else
+  {
+    processError("undefined constant");
+  }
 }
 
 void Compiler::emit(string label, string instruction, string operands, string comment)
 {
-	//   Turn on left justification in objectFile
+  //   Turn on left justification in objectFile
   //   Output label in a field of width 8
   //   Output instruction in a field of width 8
   //   Output the operands in a field of width 24
   //   Output the comment
-	objectFile << left << setw(8) << label << setw(8) << instruction << setw(24) << operands << comment << endl;
+  objectFile << left << setw(8) << label << setw(8) << instruction << setw(24) << operands << comment << endl;
 }
 
 void Compiler::emitPrologue(string progName, string operand2)
@@ -2351,94 +2348,94 @@ void Compiler::emitInequalityCode(string operand1, string operand2) // op2 != op
 // operand2 less than operand1
 void Compiler::emitLessThanCode(string operand1, string operand2)
 {
-	if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
-		processError("binary '<' requires integer operands");
+  if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
+    processError("binary '<' requires integer operands");
 
-	if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
-	{
-		emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-
-		symbolTable.at(contentsOfAReg).setAlloc(YES);
-
-		contentsOfAReg = "";
-	}
-
-	if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName())
-	{
-		if (contentsOfAReg != symbolTable.at(operand2).getInternalName())
-		{
-			contentsOfAReg = "";
-		}
-	}
-
-	if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
-	{
-		if (contentsOfAReg != symbolTable.at(operand2).getInternalName())
-		{
-			emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-
-			contentsOfAReg = symbolTable.at(operand2).getInternalName();
-		}
-	}
-
-	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
-	{
-		emit("", "cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
-	}
-	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
-	{
-		emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
-
-		emit("", "cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
-	}
-
-	string firstlabel = getLabel();
-
-	if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+  if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-		emit("", "jl", "." + firstlabel, "; if " + operand2 + " < " + operand1 + " then jump to set eax to TRUE");
-  }
-	else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
-  {
-		emit("", "jl", "." + firstlabel, "; if " + operand2 + " < " + operand1 + " then jump to set eax to TRUE");
+    emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
+
+    symbolTable.at(contentsOfAReg).setAlloc(YES);
+
+    contentsOfAReg = "";
   }
 
-	emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
-
-	if (symbolTable.count("false") == 0)
+  if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName())
   {
-		insert("FALSE", BOOLEAN, CONSTANT, "0", YES, 1);
+    if (contentsOfAReg != symbolTable.at(operand2).getInternalName())
+    {
+      contentsOfAReg = "";
+    }
   }
 
-	string secondLabel = getLabel();
-
-	emit("", "jmp", "." + secondLabel, "; unconditionally jump");
-
-	emit("." + firstlabel + ":");
-
-	emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
-
-	if (symbolTable.count("true") == 0)
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
   {
-		insert("TRUE", BOOLEAN, CONSTANT, "-1", YES, 1);
+    if (contentsOfAReg != symbolTable.at(operand2).getInternalName())
+    {
+      emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+
+      contentsOfAReg = symbolTable.at(operand2).getInternalName();
+    }
   }
 
-	emit("." + secondLabel + ":");
-
-	if (isTemporary(operand1))
+  if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
   {
-		freeTemp();
+    emit("", "cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
   }
-	if (isTemporary(operand2))
+  else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
   {
-		freeTemp();
+    emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
+
+    emit("", "cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
   }
 
-	contentsOfAReg = getTemp();
+  string firstlabel = getLabel();
 
-	symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+  if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
+  {
+    emit("", "jl", "." + firstlabel, "; if " + operand2 + " < " + operand1 + " then jump to set eax to TRUE");
+  }
+  else if (contentsOfAReg == symbolTable.at(operand1).getInternalName())
+  {
+    emit("", "jl", "." + firstlabel, "; if " + operand2 + " < " + operand1 + " then jump to set eax to TRUE");
+  }
 
-	pushOperand(contentsOfAReg);
+  emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
+
+  if (symbolTable.count("false") == 0)
+  {
+    insert("FALSE", BOOLEAN, CONSTANT, "0", YES, 1);
+  }
+
+  string secondLabel = getLabel();
+
+  emit("", "jmp", "." + secondLabel, "; unconditionally jump");
+
+  emit("." + firstlabel + ":");
+
+  emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
+
+  if (symbolTable.count("true") == 0)
+  {
+    insert("TRUE", BOOLEAN, CONSTANT, "-1", YES, 1);
+  }
+
+  emit("." + secondLabel + ":");
+
+  if (isTemporary(operand1))
+  {
+    freeTemp();
+  }
+  if (isTemporary(operand2))
+  {
+    freeTemp();
+  }
+
+  contentsOfAReg = getTemp();
+
+  symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
+
+  pushOperand(contentsOfAReg);
 }
 
 void Compiler::emitLessThanOrEqualToCode(string operand1, string operand2) // op2 <= op1
@@ -2726,147 +2723,147 @@ void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2) //
 ////emit code that follows 'then' and statement predicate
 void Compiler::emitThenCode(string operand1, string operand2)
 {
-	string tempLabel;
+  string tempLabel;
 
-	if (symbolTable.at(operand1).getDataType() != BOOLEAN)
-	{
-		processError("if predicate must be of type boolean");
-	}
-
-	tempLabel = getLabel();
-
-	if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
-	{
-		emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
-	}
-
-	emit("", "cmp", "eax,0", "; compare eax to 0");
-
-	emit("", "je", "." + tempLabel, "; if " + operand1 + " is false then jump to end of if");
-
-	pushOperand(tempLabel);
-
-	if (isTemporary(operand1))
+  if (symbolTable.at(operand1).getDataType() != BOOLEAN)
   {
-		freeTemp();
+    processError("if predicate must be of type boolean");
   }
 
-	contentsOfAReg = ""; // deassign AReg
+  tempLabel = getLabel();
+
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
+  {
+    emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
+  }
+
+  emit("", "cmp", "eax,0", "; compare eax to 0");
+
+  emit("", "je", "." + tempLabel, "; if " + operand1 + " is false then jump to end of if");
+
+  pushOperand(tempLabel);
+
+  if (isTemporary(operand1))
+  {
+    freeTemp();
+  }
+
+  contentsOfAReg = ""; // deassign AReg
 }
 
 void Compiler::emitElseCode(string operand1, string operand2)
 {
-	string tempLabel;
+  string tempLabel;
 
-	tempLabel = getLabel();
+  tempLabel = getLabel();
 
-	emit("", "jmp", "." + tempLabel, "; jump to end if");
+  emit("", "jmp", "." + tempLabel, "; jump to end if");
 
-	emit("." + operand1 + ":", "", "", "; else");
+  emit("." + operand1 + ":", "", "", "; else");
 
-	pushOperand(tempLabel);
+  pushOperand(tempLabel);
 
-	contentsOfAReg = "";
+  contentsOfAReg = "";
 
 }
 
 void Compiler::emitPostIfCode(string operand1, string)
 {
-	emit("." + operand1 + ":", "", "", "; end if");
+  emit("." + operand1 + ":", "", "", "; end if");
 
-	contentsOfAReg = "";
+  contentsOfAReg = "";
 }
 
 void Compiler::emitWhileCode(string operand1, string operand2)
 {
-	string tempLabel;
+  string tempLabel;
 
-	tempLabel = getLabel();
+  tempLabel = getLabel();
 
-	emit("." + tempLabel + ":", "", "", "; while");
+  emit("." + tempLabel + ":", "", "", "; while");
 
-	pushOperand(tempLabel);
+  pushOperand(tempLabel);
 
-	contentsOfAReg = "";
+  contentsOfAReg = "";
 
 }
 
 void Compiler::emitDoCode(string operand1, string operand2)
 {
-	string tempLabel;
+  string tempLabel;
 
-	if (symbolTable.at(operand1).getDataType() != BOOLEAN)
+  if (symbolTable.at(operand1).getDataType() != BOOLEAN)
   {
-		processError("while predicate must be of type boolean");
+    processError("while predicate must be of type boolean");
   }
 
-	tempLabel = getLabel();
+  tempLabel = getLabel();
 
-	if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
   {
-		emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
+    emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);
   }
 
-	emit("", "cmp", "eax,0", "; compare eax to 0");
+  emit("", "cmp", "eax,0", "; compare eax to 0");
 
-	emit("", "je", "." + tempLabel, "; if " + operand1 + " is false then jump to end while");
+  emit("", "je", "." + tempLabel, "; if " + operand1 + " is false then jump to end while");
 
-	pushOperand(tempLabel);
+  pushOperand(tempLabel);
 
-	if (isTemporary(operand1))
+  if (isTemporary(operand1))
   {
-		freeTemp();
+    freeTemp();
   }
 
-	contentsOfAReg = "";
+  contentsOfAReg = "";
 }
 
 void Compiler::emitPostWhileCode(string operand1, string operand2)
 {
-	emit("", "jmp", "." + operand2, "; end while");
+  emit("", "jmp", "." + operand2, "; end while");
 
-	emit("." + operand1 + ":", "", "", "");
+  emit("." + operand1 + ":", "", "", "");
 
-	contentsOfAReg = "";
+  contentsOfAReg = "";
 
 }
 
 void Compiler::emitRepeatCode(string operand1, string operand2)
 {
-	string tempLabel;
+  string tempLabel;
 
-	tempLabel = getLabel();
+  tempLabel = getLabel();
 
-	emit("." + tempLabel + ":", "", "", "; repeat");
+  emit("." + tempLabel + ":", "", "", "; repeat");
 
-	pushOperand(tempLabel);
+  pushOperand(tempLabel);
 
-	contentsOfAReg = "";
+  contentsOfAReg = "";
 }
 
 void Compiler::emitUntilCode(string operand1, string operand2)
 {
-	if (symbolTable.at(operand1).getDataType() != BOOLEAN)
+  if (symbolTable.at(operand1).getDataType() != BOOLEAN)
   {
-		processError("predicate of until must be of type boolean");
+    processError("predicate of until must be of type boolean");
   }
 
-	if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
-	{
-		emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + symbolTable.at(operand1).getInternalName());
-		contentsOfAReg = symbolTable.at(operand1).getInternalName(); // reassign
-	}
-
-	emit("", "cmp", "eax,0", "; compare eax to 0");
-
-	emit("", "je", "." + operand2, "; until " + operand1 + " is true");
-
-	if (isTemporary(operand1))
+  if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
   {
-		freeTemp();
+    emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + symbolTable.at(operand1).getInternalName());
+    contentsOfAReg = symbolTable.at(operand1).getInternalName(); // reassign
   }
 
-	contentsOfAReg = "";
+  emit("", "cmp", "eax,0", "; compare eax to 0");
+
+  emit("", "je", "." + operand2, "; until " + operand1 + " is true");
+
+  if (isTemporary(operand1))
+  {
+    freeTemp();
+  }
+
+  contentsOfAReg = "";
 }
 
 
