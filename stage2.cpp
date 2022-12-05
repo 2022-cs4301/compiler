@@ -1972,7 +1972,7 @@ void Compiler::emitNegationCode(string operand1, string operand2)
 
   if (whichType(operand1) != INTEGER) // if type of operand1 is not INTEGER
   {
-    processError("binary '-' requires integer operands");
+    processError("unary '-' requires an integer operand");
   }
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg[ 0 ] == 'T')
   { // if AReg != operand1 and AReg == "Tx"
@@ -2011,7 +2011,7 @@ void Compiler::emitNotCode(string operand1, string operand2)
   }
   if (whichType(operand1) != BOOLEAN) // if type of operand1 is not BOOLEAN
   {
-    processError("binary 'not' requires boolean operands");
+    processError("unary 'not' requires a boolean operand");
   }
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg[ 0 ] == 'T')
   {
