@@ -1,31 +1,16 @@
+
+
+#include "stage2.h"
+#include <ctime>
+#include <iomanip>
 #include <iostream>
 #include <fstream>
-#include <sstream>
-#include <string>
-#include <map>
-#include <stage2.h>
-#include <vector>
-#include <ctime>
-#include <cctype>
-#include <stack>
-#include <iomanip>
 
-
+// Kangmin Kim and Jeff Caldwell
+// CS 4301
+// Compiler - Stage2
 
 using namespace std;
-
-bool beginEndCheck = false;
-int  beginEndCount = 0;
-// Methods implementing the grammar productions
- /*void prog(); // stage 0, production 1
- void progStmt(); // stage 0, production 2
- void consts(); // stage 0, production 3
- void vars(); // stage 0, production 4
- void beginEndStmt(); // stage 0, production 5
- void constStmts(); // stage 0, production 6
- void varStmts(); // stage 0, production 7
- string ids(); // stage 0, production 8*/
-
 
 Compiler::Compiler(char** argv)
 {
@@ -79,6 +64,7 @@ void Compiler::createListingTrailer()
   // print "COMPILATION TERMINATED", "# ERRORS ENCOUNTERED"
   listingFile << endl << "COMPILATION TERMINATED" << right << setw(7) << errorCount << " ERRORS ENCOUNTERED" << endl;
 }
+
 //token should be "program"
 void Compiler::prog()
 {
@@ -460,6 +446,9 @@ void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
 
 
 }
+
+bool beginEndCheck = false;
+int  beginEndCount = 0;
 
 void Compiler::execStmt()
 {
