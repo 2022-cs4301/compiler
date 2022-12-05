@@ -1,5 +1,3 @@
-
-
 #include "stage2.h"
 #include <ctime>
 #include <iomanip>
