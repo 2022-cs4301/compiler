@@ -192,6 +192,7 @@ void Compiler::beginEndStmt()
 
 	nextToken();
 	execStmts();
+
 	if (token != "end")
 	{
 		processError("error");
