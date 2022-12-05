@@ -227,6 +227,7 @@ void Compiler::beginEndStmt()
     processError("'.' or ';' expected following \"end\"");
   }
 }
+
 // token should be a non_key_id
 void Compiler::constStmts() // 6. CONST_STMTS → NON_KEY_IDx '='( NON_KEY_IDy |
 // 'not' NON_KEY_IDy | LITy ) ';'
@@ -394,6 +395,7 @@ void Compiler::varStmts() // token should be NON_KEY_ID
     varStmts();
   }
 }
+
 string Compiler::ids() // 8. IDS → NON_KEY_ID ( ',' IDS | ε )
 {
   string temp, tempString;
@@ -445,10 +447,7 @@ void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
   {
     processError("one of \";\", \"begin\", \"if\", \"read\", \"repeat\", \"while\", \"write\", \"end\", or \"until\" expected");		//error here
   }
-
-
 }
-
 
 void Compiler::execStmt()
 {
@@ -672,7 +671,6 @@ void Compiler::writeStmt()
   {
     processError("';' expected");
   }
-
 }
 
 //done //stage 1 production 9
@@ -690,6 +688,7 @@ void Compiler::express()
     expresses();
   }
 }
+
 // stage 1, production 10
 void Compiler::expresses()
 {
@@ -824,6 +823,7 @@ void Compiler::factors()
     factors();
   }
 }
+
 // stage 1, production 15
 void Compiler::part()
 {
@@ -1162,8 +1162,6 @@ bool Compiler::isKeyword(string s) const
   return false;
 }
 
-
-
 bool Compiler::isSpecialSymbol(char c) const
 {
   char symbols[ 12 ] = {':', ',', ';', '=', '+', '-', '.', '*', '(', ')', '>', '<'};
@@ -1180,8 +1178,6 @@ bool Compiler::isSpecialSymbol(char c) const
 
   return false;
 }
-
-
 
 bool Compiler::isNonKeyId(string s) const
 {
@@ -1217,7 +1213,6 @@ bool Compiler::isInteger(string s) const
   // if we made it this far we have an integer
   return true;
 }
-
 
 bool Compiler::isBoolean(string s) const
 {
