@@ -190,6 +190,8 @@ void Compiler::vars() // 4. VARS → 'var' VAR_STMTS
   varStmts();
 }
 
+bool beginEndCheck = false;
+int  beginEndCount = 0;
 
 void Compiler::beginEndStmt()
 {
@@ -447,8 +449,6 @@ void Compiler::execStmts() // -> EXEC_STMT | EXEC_STMTS
 
 }
 
-bool beginEndCheck = false;
-int  beginEndCount = 0;
 
 void Compiler::execStmt()
 {
