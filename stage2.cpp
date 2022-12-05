@@ -3089,7 +3089,6 @@ void Compiler::emitGreaterThanCode(string operand1, string operand2)
 
 void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2)
 {
-  // check that neither operand is empty
   if (symbolTable.count(operand1) == 0)
   {
     processError("reference to undefined symbol " + operand1);
@@ -3100,39 +3099,29 @@ void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2)
     processError("reference to undefined symbol " + operand2);
   }
 
-  //if types of operands are not the same
   if (symbolTable.at(operand1).getDataType() != symbolTable.at(operand2).getDataType())
   {
     processError("incompatible types");
   }
 
-  //if the A Register holds a temp not operand1 nor operand2 then 
   if (isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    //emit code to store that temp into memory
     emit("", "mov", "[" + contentsOfAReg + "],eax", "; deassign AReg");
-    //change the allocate entry for it in the symbol table to yes
     symbolTable.at(contentsOfAReg).setAlloc(YES);
-    //deassign it
     contentsOfAReg = "";
   }
 
-  //if the A register holds a non-temp not operand2 nor operand1 then deassign it
   if (!isTemporary(contentsOfAReg) && contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    //deassign it
     contentsOfAReg = "";
   }
 
-  // if neither operand is in the A register then
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName() && contentsOfAReg != symbolTable.at(operand2).getInternalName())
   {
-    //emit code to load operand2 into the A register
     emit("", "mov", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; AReg = " + operand2);
     contentsOfAReg = symbolTable.at(operand2).getInternalName();
   }
 
-  //emit code to perform a register-memory compare
   if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
   {
     emit("", "cmp", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; compare " + operand2 + " and " + operand1);
@@ -3143,7 +3132,6 @@ void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2)
     emit("", "cmp", "eax,[" + symbolTable.at(operand2).getInternalName() + "]", "; compare " + operand1 + " and " + operand2);
   }
 
-  //emit code to jump if NOT equal to the next available Ln (call getLabel)
   string newLabel = getLabel();
 
   if (contentsOfAReg == symbolTable.at(operand2).getInternalName())
@@ -3156,10 +3144,8 @@ void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2)
     emit("", "jge", "." + newLabel, "; if " + operand2 + " >= " + operand1 + " then jump to set eax to TRUE");
   }
 
-  //emit code to load FALSE into the A register
   emit("", "mov", "eax,[FALSE]", "; else set eax to FALSE");
 
-  //insert FALSE in symbol table with value 0 and external name false
   if (symbolTable.count("false") == 0)
   {
     insert("false", BOOLEAN, CONSTANT, "0", YES, 1);
@@ -3167,24 +3153,19 @@ void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2)
   }
 
   string secondLabel = getLabel();
-  //emit code to perform an unconditional jump to the next label (call getLabel should be L(n+1))
   emit("", "jmp", "." + secondLabel, "; unconditionally jump");
 
   emit("." + newLabel + ":");
-  //emit code to load TRUE into A register
   emit("", "mov", "eax,[TRUE]", "; set eax to TRUE");
 
-  //insert TRUE in symbol table with value -1 and external name true
   if (symbolTable.count("true") == 0)
   {
     insert("true", BOOLEAN, CONSTANT, "-1", YES, 1);
     symbolTable.at("true").setInternalName("TRUE");
   }
 
-  //emit code to label the next instruction with the second acquired label L(n+1)
   emit("." + secondLabel + ":");
 
-  //deassign all temporaries involved and free those names for reuse
   if (isTemporary(operand1))
   {
     freeTemp();
@@ -3195,35 +3176,16 @@ void Compiler::emitGreaterThanOrEqualToCode(string operand1, string operand2)
     freeTemp();
   }
 
-  //A Register = next available temporary name and change type of its symbol table entry to boolean
   contentsOfAReg = getTemp();
   symbolTable.at(contentsOfAReg).setDataType(BOOLEAN);
 
-  //push the name of the result onto operandStk
   pushOperand(contentsOfAReg);
 }
 
 
 
-// Emit functions for Stage 2
-// emit code which follows 'then' and statement predicate
 void Compiler::emitThenCode(string operand1, string)
 {
-  /*
-  if the type of operand1 is not boolean
-  processError(if predicate must be of type boolean)
-  assign next label to tempLabel
-  if operand1 is not in the A register then
-  emit instruction to move operand1 to the A register
-  emit instruction to compare the A register to zero (false)
-  emit code to branch to tempLabel if the compare indicates equality
-  push tempLabel onto operandStk so that it can be referenced when emitElseCode() or
-  emitPostIfCode() is called
-  if operand1 is a temp then
-  free operand's name for reuse
-  deassign operands from all registers
-  */
-
   string tempLabel;
 
   if (symbolTable.at(operand1).getDataType() != BOOLEAN)
@@ -3231,7 +3193,6 @@ void Compiler::emitThenCode(string operand1, string)
     processError("the predicate of \"if\" must be of type BOOLEAN");
   }
 
-  //assign next label to tempLabel
   tempLabel = getLabel();
 
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
@@ -3242,92 +3203,66 @@ void Compiler::emitThenCode(string operand1, string)
   emit("", "cmp", "eax,0", "; compare eax to 0");	// instruction to compare the A register to zero (false)
   emit("", "je", "." + tempLabel, "; if " + operand1 + " is false then jump to end of if");	// code to branch to tempLabel if the compare indicates equality
 
-  // push tempLabel onto operandStk
   pushOperand(tempLabel);
 
-  // if operand1 is a temp
   if (isTemporary(operand1))
   {
-    // free operand's name for reuse (is this right?)
     freeTemp();
   }
 
-  // deassign operands from all registers (is this right?)
   contentsOfAReg = "";
 }
 
 
-
-// emit code which follows 'else' clause of 'if' statement
 void Compiler::emitElseCode(string operand1, string)
 {
   string tempLabel;
 
-  // assign next label to tempLabel
   tempLabel = getLabel();
 
-  // emit instruction to branch unconditionally to tempLabel
   emit("", "jmp", "." + tempLabel, "; jump to end if");
 
-  // emit instruction to label this point of object code with the argument operand1
   emit("." + operand1 + ":", "", "", "; else");
 
-  // push tempLabel onto operandStk
   pushOperand(tempLabel);
 
-  // deassign operands from all registers
   contentsOfAReg = "";
 }
 
 
-
-// emit code which follows end of 'if' statement 
 void Compiler::emitPostIfCode(string operand1, string)
 {
-  //emit instruction to label this point of object code with the argument operand1
   emit("." + operand1 + ":", "", "", "; end if");
 
-  //deassign operands from all registers
   contentsOfAReg = "";
 }
 
 
-
-// emit code following 'while'
 void Compiler::emitWhileCode(string, string)
 {
   string tempLabel;
 
-  // assign next label to tempLabel
   tempLabel = getLabel();
 
-  // emit instruction to label this point of object code as tempLabel
   emit("." + tempLabel + ":", "", "", "; while");
 
-  // push tempLabel onto operandStk
   pushOperand(tempLabel);
 
-  // deassign operands from all registers
   contentsOfAReg = "";
 }
 
 
-
-// emit code following 'do'
 void Compiler::emitDoCode(string operand1, string)
 {
   string tempLabel;
 
-  // if the type of operand1 is not boolean
   if (symbolTable.at(operand1).getDataType() != BOOLEAN)
   {
     processError("while predicate must be of type boolean");
   }
 
-  // assign next label to tempLabel
   tempLabel = getLabel();
 
-  // if operand1 is not in the A register then
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
   {
     emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + operand1);	// instruction to move operand1 to the A register
@@ -3336,77 +3271,44 @@ void Compiler::emitDoCode(string operand1, string)
   emit("", "cmp", "eax,0", "; compare eax to 0");	// instruction to compare the A register to zero (false)
   emit("", "je", "." + tempLabel, "; if " + operand1 + " is false then jump to end while");	// code to branch to tempLabel if the compare indicates equality
 
-  // push tempLabel onto operandStk
   pushOperand(tempLabel);
 
-  // if operand1 is a temp
   if (isTemporary(operand1))
   {
-    // free operand's name for reuse (is this right?)
     freeTemp();
   }
 
-  // deassign operands from all registers (is this right?)
   contentsOfAReg = "";
 }
 
 
-
-// emit code at end of 'while' loop;
-// operand2 is the label of the beginning of the loop
-// operand1 is the label which should follow the end of the loop
 void Compiler::emitPostWhileCode(string operand1, string operand2)
 {
-  // emit instruction which branches unconditionally to the beginning of the loop, i.e., to the value of operand2
   emit("", "jmp", "." + operand2, "; end while");
 
-  // emit instruction which labels this point of the object code with the argument operand1
   emit("." + operand1 + ":", "", "", "");
 
-  // deassign operands from all registers (is this right?)
   contentsOfAReg = "";
 }
 
 
-
-// emit code which follows 'repeat'
 void Compiler::emitRepeatCode(string, string)
 {
 
   string tempLabel;
 
-  // assign next label to tempLabel
   tempLabel = getLabel();
 
-  // emit instruction to label this point in the object code with the value of tempLabel
   emit("." + tempLabel + ":", "", "", "; repeat");
 
-  // push tempLabel onto operandStk
   pushOperand(tempLabel);
 
-  // deassign operands from all registers (is this right?)
   contentsOfAReg = "";
 }
 
 
-
-// emit code which follows 'until' and the predicate of loop
-// operand1 is the value of the predicate
-// operand2 is the label which points to the beginning of the loop
 void Compiler::emitUntilCode(string operand1, string operand2)
 {
-  /*
-  if the type of operand1 is not boolean
-  processError(if predicate must be of type boolean)
-  if operand1 is not in the A register then
-  emit instruction to move operand1 to the A register
-  emit instruction to compare the A register to zero (false)
-  emit code to branch to operand2 if the compare indicates equality
-  if operand1 is a temp then
-  free operand1's name for reuse
-  deassign operands from all registers
-  */
-
   if (symbolTable.at(operand1).getDataType() != BOOLEAN)
   {
     processError("the predicate of \"if\" must be of type BOOLEAN");
@@ -3414,31 +3316,25 @@ void Compiler::emitUntilCode(string operand1, string operand2)
 
   if (contentsOfAReg != symbolTable.at(operand1).getInternalName())
   {
-    // instruction to move operand1 to the A register
     emit("", "mov", "eax,[" + symbolTable.at(operand1).getInternalName() + "]", "; AReg = " + symbolTable.at(operand1).getInternalName());
-    contentsOfAReg = symbolTable.at(operand1).getInternalName(); // reassign
+    contentsOfAReg = symbolTable.at(operand1).getInternalName();
   }
 
-  // instruction to compare the A register to zero (false)
   emit("", "cmp", "eax,0", "; compare eax to 0");
 
-  // code to branch to tempLabel if the compare indicates equality
   emit("", "je", "." + operand2, "; until " + operand1 + " is true");
 
-  // if operand1 is a temp
   if (isTemporary(operand1))
   {
-    // free operand's name for reuse (is this right?)
     freeTemp();
   }
 
-  // deassign operands from all registers (is this right?)
   contentsOfAReg = "";
 }
 
 
 
-string Compiler::nextToken()    //returns the next token or end of file marker {            
+string Compiler::nextToken()
 {
   token = "";
   while (token == "")
@@ -3538,9 +3434,8 @@ string Compiler::nextToken()    //returns the next token or end of file marker {
 
 
 
-char Compiler::nextChar()   //returns the next character or end of file marker
+char Compiler::nextChar()
 {
-  // read in next character   
   sourceFile.get(ch);
 
   static char prev = '\n';
@@ -3552,10 +3447,8 @@ char Compiler::nextChar()   //returns the next character or end of file marker
 
   else
   {
-    // print to listing file (starting new line if necessary) 
     if (prev == '\n')
     {
-      // ADD A NEW LINE COMPONENT HERE
       lineNo += 1;
       listingFile << right << setw(5) << lineNo << '|';
     }
@@ -3569,23 +3462,19 @@ char Compiler::nextChar()   //returns the next character or end of file marker
 }
 
 
-
-void Compiler::pushOperator(string name) //push name onto operatorStk
+void Compiler::pushOperator(string name)
 {
   operatorStk.push(name);
 }
 
 
-
 void Compiler::pushOperand(string name) //push name onto operandStk
-//if name is a literal, also create a symbol table entry for it
 {
   if (symbolTable.count(name) == 0)
   {
     if (isInteger(name) || name == "true" || name == "false")
     {
-      insert(name, whichType(name), CONSTANT, whichValue(name), YES, 1);		//insert symbol table entry, call whichType to determine the data type of the literal
-      // may want to be like this instead insert(x,whichType(y),CONSTANT,whichValue(y),YES,1); 																																	
+      insert(name, whichType(name), CONSTANT, whichValue(name), YES, 1);
     }
   }
 
@@ -3671,8 +3560,6 @@ string Compiler::getLabel()
 }
 
 
-
-// if s[0] == 'T' then s is temporary
 bool Compiler::isTemporary(string s) const
 {
   if (s[ 0 ] == 'T')
